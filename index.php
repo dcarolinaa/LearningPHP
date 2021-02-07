@@ -17,10 +17,7 @@
     }
 
     function isSelectedPreference($preference, $selectedPreferncesArr){
-        if(in_array($preference, (array)$selectedPreferncesArr)){
-            return 'checked';
-        }
-        return '';
+        return in_array($preference, (array)$selectedPreferncesArr) ? 'checked' : '';
     }
 
     $selectedContury = @$_POST['country'];
