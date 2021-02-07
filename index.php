@@ -8,6 +8,7 @@
         return '';
     }
 
+
     $selectedContury = @$_POST['country'];
     $selectedGender = @$_POST['gender'];
 
@@ -88,27 +89,22 @@
                     <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input id="gendermale" type="radio" <?php 
-                            /**
-                             * Esto no se debe hacer :3 pero se deja para ejemplo de que también funciona c:
-                             */
-                            if($selectedGender === 'M'):?>
-                                checked
-                            <?php endif?>  
-                            name="gender" value="M" class="form-check-input">
+                            <input id="gendermale" type="radio" <?php
+                                if($selectedGender === 'M'){
+                                    echo 'checked';
+                                }
+                            ?>  name="gender" value="M" class="form-check-input">
                             <label class="form-check-label" for="gendermale">
                                 Male
                             </label>
                         </div>
                         <div class="form-check">
                             <input id="genderfemale" type="radio"                             
-                            <?php 
-                            /**
-                             * Esto no se debe hacer :3 pero se deja para ejemplo de que también funciona c:
-                             */
-                            if($selectedGender === 'F'):?>
-                                checked
-                            <?php endif?>
+                            <?php
+                                if($selectedGender === 'F'){
+                                    echo 'checked';
+                                }
+                            ?>
                             name="gender" value="F" class="form-check-input">
                             <label class="form-check-label" for="genderfemale">
                                 Female
