@@ -17,10 +17,8 @@
     }
 
     function isSelectedPreference($preference, $selectedPreferncesArr){
-        foreach((array)$selectedPreferncesArr as $selectedPreference){
-            if($preference === $selectedPreference){
-                return 'checked';
-            }        
+        if(in_array($preference, (array)$selectedPreferncesArr)){
+            return 'checked';
         }
         return '';
     }
