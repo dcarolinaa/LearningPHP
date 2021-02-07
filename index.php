@@ -11,11 +11,9 @@ $frutitasArr = explode(', ',$frutitas);
 <body>
     <h1>Frutitas</h1>
     <ul> 
-        <?php
-        foreach($frutitasArr as $index => $frutita){
-            printf('<li> %2$s - %1$s </li>',$frutita,$index);
-        }
-        ?>
+        <?php foreach($frutitasArr as $frutita): ?>
+            <li> <?=$frutita?> </li>
+        <?php endforeach ?>
     </ul>
 </body>
 </html>
