@@ -8,9 +8,26 @@
         return '';
     }
 
+    function isSelectedGender($gender,$selectedGender){       
+        if($selectedGender === $gender){
+            return 'checked';
+        }
+
+        return '';
+    }
+
+    function isSelectedPreference($preference, $selectedPreferncesArr){
+        foreach((array)$selectedPreferncesArr as $selectedPreference){
+            if($preference === $selectedPreference){
+                return 'checked';
+            }        
+        }
+        return '';
+    }
 
     $selectedContury = @$_POST['country'];
     $selectedGender = @$_POST['gender'];
+    $selectedPreferncesArr = @$_POST['preference'];
 
     $CountriesArr=[
         [
@@ -89,23 +106,13 @@
                     <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input id="gendermale" type="radio" <?php
-                                if($selectedGender === 'M'){
-                                    echo 'checked';
-                                }
-                            ?>  name="gender" value="M" class="form-check-input">
+                            <input id="gendermale" type="radio" <?= isSelectedGender("M", $selectedGender)?>  name="gender" value="M" class="form-check-input">
                             <label class="form-check-label" for="gendermale">
                                 Male
                             </label>
                         </div>
                         <div class="form-check">
-                            <input id="genderfemale" type="radio"                             
-                            <?php
-                                if($selectedGender === 'F'){
-                                    echo 'checked';
-                                }
-                            ?>
-                            name="gender" value="F" class="form-check-input">
+                            <input id="genderfemale" type="radio" <?= isSelectedGender("F", $selectedGender)?> name="gender" value="F" class="form-check-input">
                             <label class="form-check-label" for="genderfemale">
                                 Female
                             </label>
@@ -119,19 +126,19 @@
                     <legend class="col-form-label col-sm-2 pt-0">Preferences:</legend>
                     <div class="col-sm-10">
                         <div class="form-check">
-                            <input id="green" type="checkbox" checked name="preference[]" value="green" class="form-check-input">
+                            <input id="green" type="checkbox" name="preference[]" <?= isSelectedPreference("green", $selectedPreferncesArr)?> value="green" class="form-check-input">
                             <label class="form-check-label" for="green">
                                 Green
                             </label>
                         </div>
                         <div class="form-check">
-                            <input id="blue" type="checkbox" name="preference[]" value="blue" class="form-check-input">
+                            <input id="blue" type="checkbox" name="preference[]" <?= isSelectedPreference("blue", $selectedPreferncesArr)?> value="blue" class="form-check-input">
                             <label class="form-check-label" for="blue">
                                 Blue
                             </label>
                         </div>
                         <div class="form-check">
-                            <input id="black" type="checkbox" checked name="preference[]" value="black" class="form-check-input">
+                            <input id="black" type="checkbox" name="preference[]" <?= isSelectedPreference("black", $selectedPreferncesArr)?> value="black" class="form-check-input">
                             <label class="form-check-label" for="black">
                                 Black
                             </label>
