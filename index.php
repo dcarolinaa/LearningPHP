@@ -1,4 +1,7 @@
 <?php
+    $mbd = new PDO('mysql:host=localhost;dbname=karydb','root','toor');
+    var_dump($mbd);
+    
     function isSelectedCountry($country, $selectedContury) {
         
         if($country['value'] === $selectedContury) {
@@ -24,33 +27,24 @@
     $selectedGender = @$_POST['gender'];
     $selectedPreferncesArr = @$_POST['preference'];
 
-    $CountriesArr=[
+    $CountriesArr =[
         [
             'value'=> "",
             'name' => 'Select a country'
-        ],
-        [
-            'value' => 'mx',
-            'name' => 'México'
-        ],
-        [
-            'value' => 'us',
-            'name' => 'U.S.'
-        ],
-        [
-            'value' => 'pr',
-            'name' => 'Preú'
-        ],
-        [
-            'value' => 'ch',
-            'name' => 'Chile'
-        ],
-        [
-            'value' => 'col',
-            'name' => 'Colombia'
-        ]               
+        ]
     ];
 
+    $result = $mbd->query('Select * from countries');
+    foreach($result as $fila){
+       // print_r($fila);
+       $CountriesArr[]=[
+           'value'=> $fila['code'],
+           'name' => $fila['name']
+       ];
+       
+    }
+
+    
 
 ?>
 
