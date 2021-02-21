@@ -1,16 +1,38 @@
 <?php
 namespace App\controllers;
 
-class Preferences{ //Clase
-    public function index(){ //Método        
-        include 'views/preferences/index.php';
+class Preferences extends Controller{ //Clase
+
+    public function __constructor(){
+        $this->setTitle('Preferences');
+    }
+
+    public function index(){ //Método    
+        $url = $this->getURL('create');
+        $this->view('preferences/index',[
+           'preferences' => [],
+           'newURL' => $url
+        ]);
     }
 
     public function edit(){
-        include 'views/preferences/edit.php';
+        $this->view('preferences/edit',[]);
     }
 
     public function create(){
-        include 'views/preferences/create.php';
+        $this->view('preferences/create',[
+            'urlAction' => $this->getURL('store')
+        ]);
     }
+
+    public function store(){
+        $preference = new \App\models\Preference;
+        $preference->setShortName($_POST['shortName']);
+        $preference->setName($_POST['name']);
+        $preference->save();
+        $this->redirectTo($this->getURL('index'));
+           
+    }
+
+
 }

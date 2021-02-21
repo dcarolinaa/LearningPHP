@@ -1,0 +1,12 @@
+<?php
+namespace App;
+
+class Config{
+        
+    const DB_HOST = 'host';
+    const DB_USER = 'user';
+    const DB_PASSWORD = '***';
+    const DB_PORT = 'port';
+    const DB_NAME = 'db';
+
+}

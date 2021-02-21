@@ -1,7 +1,7 @@
 <?php
 namespace App\controllers;
 
-class Countries{ //Clase
+class Countries extends Controller{ //Clase
     public function index(){ //Método        
         //echo "Hola POO!";
         include 'views/countries/index.php';
