@@ -1,12 +1,13 @@
 <form action="<?=$urlAction ?>" method="POST">
+    <input type="hidden" id="id" name="id" value="<?= $preference->getId() ?>" >
     <div>
         <label for="shortName"> Short Name: </label>
-        <input type="text" id="shortName" name="shortName">
+        <input type="text" id="shortName" name="short_name" value="<?= $preference->getShortName() ?>">
     </div>
 
     <div>
         <label for="name"> Name: </label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" value="<?= $preference->getName() ?>">
     </div>
 
     <button type="submit"> Send </button>

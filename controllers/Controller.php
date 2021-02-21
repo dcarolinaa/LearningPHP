@@ -2,6 +2,8 @@
 
 namespace App\controllers;
 
+use App\services\GetURL;
+
 class Controller{
     private $title = "";
 
@@ -34,24 +36,12 @@ class Controller{
     }
 
     public function getURL($method, $controller = null, $data = []){
+        $getUrl = new GetURL();
         if(null === $controller){
             $controller = $this;
         }
 
-        if(true === is_object($controller)){
-            $arrControllerParts = explode('\\',get_class($controller));
-            $controller = $arrControllerParts[count($arrControllerParts)-1];
-        }
-        $data = array_merge(
-            [
-                'controller' => $controller,
-                'method' => $method
-            ],
-            $data
-        );
-
-        $query = http_build_query($data);
-        return sprintf('?%s', http_build_query($data));
+        return $getUrl($method, $controller, $data);        
     }
 
     public function redirectTo($URL){

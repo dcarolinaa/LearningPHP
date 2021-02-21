@@ -1,11 +1,14 @@
 <?php
+
 namespace App; //lo primero en el archivo
 
+include './vendor/autoload.php';
+
 //Index es el punto de acceso y la siguiente funcion crea los includes "dinamicos"
-spl_autoload_register(function($className){
+/*spl_autoload_register(function($className){
     include __DIR__.str_replace('\\','/',substr($className,3)).'.php';
 });
-
+*/
 //require('controllers/Countries.php'); //Importar clase xD
 /*
 include 'controllers/Controller.php';
