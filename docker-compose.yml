@@ -1,0 +1,72 @@
+version: '3.2'
+
+services:
+  www:
+    build:
+      context: ./docker/php-apache
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME}_www
+    ports:
+      - ${HTTP_PORT}:80
+    environment:
+      GIT_AUTHOR_NAME: ${GIT_USER}
+      GIT_AUTHOR_EMAIL: ${GIT_USER_EMAIL}    
+    volumes:
+      - ./docker/config/ssh/id_rsa:/root/.ssh/id_rsa:ro
+      - ./docker/config/ssh/id_rsa.pub:/root/.ssh/id_rsa.pub:ro      
+      - ./docker/config/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+      - ./docker/data/logs/:/var/logs/
+      - ./docker/data/ssh/known_hosts:/root/.ssh/known_hosts
+      - ./:/root/repository
+      - ./code:/var/www/html
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - ${MYSQL_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    volumes:
+      - ./docker/data/mysql:/var/lib/mysql
+    container_name: ${PROJECT_NAME}_mysql
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.0
+    container_name: ${PROJECT_NAME}_mailhog
+    ports:
+      - "${MAILHOG_SMPT_PORT}:1025"
+      - "${MAILHOG_WEB_PORT}:8025"    
+  
+  phpmyadmin:
+    image: phpmyadmin:apache
+    container_name: ${PROJECT_NAME}_phpmyadmin
+    ports:
+      - ${PHPMYADMIN_PORT}:80
+    environment:
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=${ROOT_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+
+  selenium_chrome:
+    image: selenium/node-chrome:4.0.0-beta-1-20210215
+    container_name: ${PROJECT_NAME}_selenium_chrome
+    ports:
+      - "6900:5900"
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    volumes:
+      - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub
+      - www
+
+  selenium-hub:
+    image: selenium/hub:4.0.0-beta-1-20210215
+    container_name: ${PROJECT_NAME}_selenium-hub
+    ports:
+      - "${SELENIUM_HUB_PORT_1}:4442"
+      - "${SELENIUM_HUB_PORT_2}:4443"
+      - "${SELENIUM_HUB_PORT_3}:4444"

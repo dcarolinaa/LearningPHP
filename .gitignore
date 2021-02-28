@@ -1,2 +1,3 @@
-Config.php
-vendor
+docker/data
+docker/config/ssh
+.env

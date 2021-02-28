@@ -1,0 +1,18 @@
+{
+    "autoload": {
+        "psr-4": {
+            "App\\" : "./",
+            "Tests\\Selenium\\": "./tests/selenium"
+        }
+    },
+    "require-dev": {       
+        "fzaninotto/faker": "^1.5", 
+        "squizlabs/php_codesniffer": "3.*",
+        "phpunit/phpunit": "^9.5",
+        "php-webdriver/webdriver": "^1.9"
+    },
+    "require": {
+        "doctrine/migrations": "^3.1",
+       
+    }
+}

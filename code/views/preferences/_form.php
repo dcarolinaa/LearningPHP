@@ -2,7 +2,7 @@
     <input type="hidden" id="id" name="id" value="<?= $preference->getId() ?>" >
     <div>
         <label for="shortName"> Short Name: </label>
-        <input type="text" id="shortName" name="short_name" value="<?= $preference->getShortName() ?>">
+        <input type="text" id="shortName" name="shortname" value="<?= $preference->getShortName() ?>">
     </div>
 
     <div>

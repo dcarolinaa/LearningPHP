@@ -58,7 +58,7 @@ class Preference{
         if(isset($data['id'])){
             $this->setId($data['id']);
         }        
-        $this->setShortName($data['short_name']);
+        $this->setShortName($data['shortname']);
         $this->setName($data['name']);
     }
 
@@ -122,11 +122,11 @@ class Preference{
         $conection = $this->getConection();        
         if(null === $this->id){
             try{    
-                $insert = 'Insert into preferences(name, short_name) values(:name, :short_name)';        
+                $insert = 'Insert into preferences(name, shortname) values(:name, :shortname)';        
                 $insertStatement = $conection->prepare($insert);
                 $insertStatement->execute([
                     ':name' => $this->getName(),
-                    ':short_name' => $this->getShortName()
+                    ':shortname' => $this->getShortName()
                 ]);
                 
                 $this->setId($conection->lastInsertId());
@@ -138,11 +138,11 @@ class Preference{
         }
        
         try{
-            $sql = 'UPDATE preferences SET short_name = :short_name, name = :name where id = :id';
+            $sql = 'UPDATE preferences SET short_name = :shortname, name = :name where id = :id';
             $statement = $conection->prepare($sql);
             $statement->execute([
                 ':id' => $this->getId(),
-                ':short_name' => $this->getShortName(),
+                ':shortname' => $this->getShortName(),
                 ':name' => $this->getName()
             ]);
             $this->setId($conection->lastInsertId());
