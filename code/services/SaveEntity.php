@@ -23,26 +23,31 @@ class SaveEntity{
         return $conection;
     }
 
+    private function getValues($attributes, $entity){
+        $values = [];
+        foreach($attributes as $attribute){
+            $getter = sprintf('get%s', ucfirst($attribute));
+            $param = sprintf(':%s', $attribute);
+            $values[$param] = $entity->{($getter)}();
+        }
+        return $values;
+    }
+
     public function __invoke(IModel $entity)
     {
         $conection = $this->getConection();    
+        $table = $entity->getTable();
+        $attributes = $entity->getAttributes();
+
         if( null === $entity->getId()){
             try{
             //Insert
-                $table = $entity->getTable();
-                $attributes = $entity->getAttributes();
+                
                 $fields = implode(',',$attributes);
                 $params = implode(',:',$attributes);
                 $insert = sprintf('INSERT into %s (%s) values(:%s)', $table, $fields, $params);
                 $statement = $conection->prepare($insert);
-
-                $values = [];
-                foreach($attributes as $attribute){
-                    $getter = sprintf('get%s',ucfirst($attribute));
-                    $param = sprintf(':%s',$attribute);
-                    $values[$param] = $entity->{($getter)}();
-                }                
-                $statement->execute($values);
+                $statement->execute($this->getValues($attributes, $entity));                
                 $entity->setId($conection->lastInsertId());
                 return $entity->getId();
             }catch(Exception $ex){
@@ -50,9 +55,28 @@ class SaveEntity{
             }            
         }else{
             //Update
+            $fields = [];
+            foreach($attributes as $attribute){
+                $fields[] = sprintf('%s = :%1$s', $attribute);
+            }
+
+            $filedStr = implode(",\n", $fields);
+
+            $sqlUpdate = <<<SQL
+                UPDATE %s
+                SET
+                    %s
+                WHERE id = :id
+SQL;
+
+            $update = sprintf($sqlUpdate, $table, $filedStr, $entity->getId());
+            $statement = $conection->prepare($update);
+            $statement->execute($this->getValues($attributes, $entity));
+            return $entity->getId();
+
         }
         
-
+        /*
         if(null === $this->id){
             try{    
                 $insert = 'Insert into preferences(name, shortname) values(:name, :shortname)';        
@@ -84,7 +108,7 @@ class SaveEntity{
             return false;
         }
 
-        
+        */
     }
 
 }
