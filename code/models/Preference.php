@@ -149,8 +149,6 @@ class Preference{
             return $this->getId();
         }catch(Exception $ex){
             return false;
-        }
-
-        
+        }        
     }
 }
