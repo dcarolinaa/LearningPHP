@@ -1,7 +1,7 @@
 <?php
 namespace App\models;
 
-class Country implements IModel{
+class Country extends Model implements IModel{
     private $id;
     private $name;
     private $code;

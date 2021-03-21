@@ -4,34 +4,27 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use App\models\Country;
 use App\services\SaveEntity;
-use App\Config;
+use App\services\DeleteEntity;
+use App\repositories\CountriesRepository;
+use App\services\GetDBConnection;
 use PDO;
 
 final class CountryTest extends TestCase{
     private $saveEntity;
-
-    private static function getConection(){
-        $conection = new PDO(
-            sprintf(
-                'mysql:host=%s:%s;dbname=%s',
-                Config::DB_HOST,
-                Config::DB_PORT,
-                Config::DB_NAME,
-                
-            ), Config::DB_USER,
-            Config::DB_PASSWORD
-        );
-
-        return $conection;
-    }
+    private $countriesRepository;
+    private $deleteEntity;
+    private $getDBConnection;
 
     public function setUp(): void{
         //parent::setUp(); //invoca métodos de la clase que se herede
         $this->saveEntity = new SaveEntity();
+        $this->countriesRepository = new CountriesRepository();
+        $this->deleteEntity = new DeleteEntity();
+        $this->getDBConnection = new GetDBConnection();
     }
 
     public function testSAveACountry(){  
-        var_dump('primero');      
+        //var_dump('primero');      
         $name = utf8_decode('México');
         $code = 'MX';
     
@@ -46,17 +39,7 @@ final class CountryTest extends TestCase{
         $this->assertSame($code, $country->getCode());
         $this->assertNotNull($country->getId());
         
-
-        $sql = 'SELECT * FROM countries where id = :id';
-        $statement = $this->getConection()->prepare($sql);
-        $statement->execute([
-            ":id" => $country->getId()
-        ]);
-
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->assertSame($name, $result['name']);
-        $this->assertSame($code, $result['code']);
-        $this->assertSame($country->getId(), $result['id']);
+        $this->assertSameDBCountry($country);
 
         return $country;        
     }
@@ -65,24 +48,46 @@ final class CountryTest extends TestCase{
      * @depends testSAveACountry
      */
     public function testUpdateCountry($country){
-        $name = utf8_decode("MÉXICO");
-        $code = "MEX";
-        $country->setName($name);
-        $country->setCode($code);
+        $country->setName(utf8_decode("MÉXICO"));
+        $country->setCode("MEX");
         
         $this->saveEntity->__invoke($country);
         
-        $sql = 'SELECT * FROM countries where id = :id';
-        $statement = $this->getConection()->prepare($sql);
-        $statement->execute([
-            ":id" => $country->getId()
-        ]);
-
-        $result = $statement->fetch(PDO::FETCH_ASSOC);
-        $this->assertSame($country->getName(), $result['name']);
-        $this->assertSame($country->getCode(), $result['code']);
-        $this->assertSame($country->getId(), $result['id']);
-
-        var_dump('segunda', $country->getId());
+        $this->assertSameDBCountry($country);
+        //var_dump('segunda', $country->getId());
+        return $country;
     }
+
+    /**
+     * @depends testUpdateCountry
+     */
+    public function testDeleteCountry($country){
+        $dbCountry = $this->countriesRepository->getById($country->getId());
+        $this->assertNotNull($dbCountry);        
+        
+        $this->deleteEntity->__invoke($country);
+
+        $dbCountry = $this->countriesRepository->getById($country->getId());
+        $this->assertNull($dbCountry);   
+    }
+
+    public function testGetCountries(){
+        $countiries = $this->countriesRepository->getAll();
+        $sql = sprintf('SELECT count(id) as total from %s',Country::getTable());
+        $conection = $this->getDBConnection->__invoke();
+
+        $statement = $conection->prepare($sql);
+        $statement->execute();
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $this->assertSame((int)$result['total'], count($countiries));
+
+    }
+
+    private function assertSameDBCountry($country){
+        $dbCountry = $this->countriesRepository->getById($country->getId());
+        $this->assertSame($country->getName(), $dbCountry->getName());
+        $this->assertSame($country->getCode(), $dbCountry->getCode());
+        $this->assertSame($country->getId(), $dbCountry->getId());
+    }
+
 }

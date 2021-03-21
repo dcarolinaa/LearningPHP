@@ -53,21 +53,7 @@ class Preference{
 
         return $conection;
     }
-
-    public function fill($data){
-        if(isset($data['id'])){
-            $this->setId($data['id']);
-        }        
-        $this->setShortName($data['shortname']);
-        $this->setName($data['name']);
-    }
-
-    public static function build($data){
-        $preference = new Preference();  
-        $preference->fill($data);
-        return $preference;
-    }
-
+    
     public static function getById($id){
         $conection = self::getConection();
         $sql = "select * from preferences where id = :id";
