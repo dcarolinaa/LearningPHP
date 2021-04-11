@@ -1,0 +1,54 @@
+<form method="POST" action="<?= $action ?>">
+    <div class="mb-3 row">
+        <label for="first_name" class="col-sm-2 col-form-label"> First Name: </label>
+        <div class="col-sm-10">
+            <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name">    
+        </div>        
+    </div>
+
+    <div class="mb-3 row">
+        <label for="last_name" class="col-sm-2 col-form-label"> Last Name: </label>
+        <div class="col-sm-10">
+            <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="birthdate" class="col-sm-2 col-form-label"> Birth date: </label>
+        <div class="col-sm-10">
+            <input type="date" id="birthdate" name="birthdate" class="form-control" placeholder="Birth Date">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="email" class="col-sm-2 col-form-label"> E-mail: </label>
+        <div class="col-sm-10">
+            <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="username" class="col-sm-2 col-form-label"> Username: </label>
+        <div class="col-sm-10">
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <label for="password" class="col-sm-2 col-form-label"> Password: </label>
+        <div class="col-sm-10">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+        </div>
+    </div>
+
+    <div class="mb-3 row">
+        <input type="submit" value="Sign-up" id="" class="btn btn-primary">
+    </div>
+
+    <!-- first_name varchar(100),
+            last_name varchar(100),
+            birthdate date,
+            email varchar(150),
+            username varchar(50),
+            password varchar(10), -->
+</form>

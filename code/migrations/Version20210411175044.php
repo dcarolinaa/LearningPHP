@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210328013900 extends AbstractMigration
+final class Version20210411175044 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -19,24 +19,25 @@ final class Version20210328013900 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
+        // this up() migration is auto-generated, please modify it to your needs
         $sql = <<<SQL
-            CREATE TABLE roles(
-                id int AUTO_INCREMENT,                
-                name varchar(30), 
-                PRIMARY KEY(id)                           
-            )
+            ALTER TABLE users
+            ADD COLUMN email_hash varchar(60) NULL AFTER  email_validated;
         SQL;
-
         $this->addSql($sql);
-
     }
 
     public function down(Schema $schema) : void
     {
-        $sql = "drop table roles";
+        // this down() migration is auto-generated, please modify it to your needs
+        $sql = <<<SQL
+            ALTER TABLE users
+            DROP COLUMN email_hash
+        SQL;
+
         $this->addSql($sql);
     }
-    
+
     public function isTransactional(): bool
     {
         return false;

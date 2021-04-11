@@ -1,6 +1,7 @@
 <?php
 
 namespace App; //lo primero en el archivo
+session_start();
 
 include './vendor/autoload.php';
 

@@ -27,10 +27,10 @@ final class Version20210328011822 extends AbstractMigration
             birthdate date,
             email varchar(150),
             username varchar(50),
-            password varchar(10),
+            password varchar(100),
             create_date datetime,
-            role int,
-            email_validated bit(1)
+            role_id int,
+            email_validated tinyint(1),
             PRIMARY KEY(id)                           
         )
         SQL;
