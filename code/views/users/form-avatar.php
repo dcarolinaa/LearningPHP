@@ -1,6 +1,6 @@
 <div class="text-center">
     <img alt="Charles Hall" 
-        src="<?= sprintf('upload/users/%s/avatar.jpg', $_SESSION['user_id']) ?>" 
+        src="<?= $userAvatar ?>" 
         class="rounded-circle img-responsive mt-2" 
         width="128" 
         height="128"

@@ -3,25 +3,29 @@ namespace App\controllers;
 
 use App\models\User;
 use App\repositories\UsersRepository;
+use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\SaveEntity;
 use DateTime;
 
 class Users extends Controller{ //Clase
 
-    public function myprofile(){
-        $this->view('users/my-profile', $_SESSION);
+    protected $publicMethods = ['signIn','login','signUp','store','validateEmail'];
+    
+    public function myprofile(){                 
+            $this->view('users/my-profile', []);                
     }
 
-    public function settings(){
-        $getURL = new GetURL();
+    public function settings(){        
+        $getAvatar = new GetAvatar();
         $this->view('users/settings',[
-            'saveAvatarAction' => $getURL('saveAvatar', $this)
+            'saveAvatarAction' => $this->getURL('saveAvatar', $this),
+            'userAvatar' => $getAvatar($_SESSION['user_id'])
         ]);
     }
 
     public function saveAvatar(){
-        $getURL = new GetURL();
+        $getAvatar = new GetAvatar();    
         $tmpFile = $_FILES['avatar']['tmp_name']; 
         $info = pathinfo($_FILES['avatar']['name']);
 
@@ -31,16 +35,19 @@ class Users extends Controller{ //Clase
         }
 
         $name = sprintf('%s/%s.%s', $path, 'avatar', $info['extension']);
-        move_uploaded_file($tmpFile, $name);
 
-        $this->redirectTo($getURL('settings', $this));
-        
+        $currentAvatar = $getAvatar( $_SESSION['user_id']);
+        if($currentAvatar !== GetAvatar::DEFAULT_AVATAR){
+            unlink($currentAvatar);//ELIMINAR ARCHIVO
+        }
+
+        move_uploaded_file($tmpFile, $name);
+        $this->redirectTo($this->getURL('settings', $this));
     }
 
-    public function logout(){
-        $getURL = new GetURL();
+    public function logout(){        
         session_destroy();
-        $this->redirectTo($getURL('signIn', $this));
+        $this->redirectTo($this->getURL('signIn', $this));
     }
 
     public function login(){
@@ -49,55 +56,38 @@ class Users extends Controller{ //Clase
         $password = $_POST['password'];
         
         $user = $userRepository->getByEmailOrUserName($username);
-
-        // var_dump( md5($password));
-        // var_dump($user->getPassword() );
-        // die();
         if($user->getPassword() ===  md5($password)){
-            // die("todo chido");
-
-            // var_dump($_SESSION);
-            // die();
-
-            $getURL = new GetURL();
-            $myprofile = $getURL('myprofile', $this);
-
             $_SESSION['loged'] = true;
             $_SESSION['username'] = $user->getUserName();
             $_SESSION['user_id'] = $user->getId();
-
+            $myprofile = $this->getURL('myprofile', $this);
             $this->redirectTo($myprofile);
-
-
-        }else{
-            die("noup... ");
         }
-        
-       var_dump($user);        
+            
+        die("noup... ");        
+        var_dump($user);        
     }
 
-    public function signIn(){
-        $getURL = new GetURL();
+    public function signIn(){        
         $this->setTemplate('public');
         $this->view('users/login',[
-            'action' => $getURL('login', $this)
+            'action' => $this->getURL('login', $this),
+            'signUpUrl' => $this->getURL('signUp',$this)
         ]);
     }
 
-    public function signUp(){ //Método
-        $getURL = new GetURL();       
+    public function signUp(){
+        $this->setTemplate('public');        
         $this->view('users/sign-up',[
-            'action' => $getURL('store', $this)
+            'action' => $this->getURL('store', $this)
         ]);
     }
 
-    public function validateEmail(){
-        $userRepository = new UsersRepository();
-        // var_dump($_GET);
+    public function validateEmail(){                
         $saveEntity = new SaveEntity();
         $email = $_GET['email'];
         $hash = $_GET['hash'];
-        
+        $userRepository = new UsersRepository();
         $user = $userRepository->getByEmail($email);
         
         if( $user->getEmail_validated() || $user->getEmail_hash() !== $hash)
@@ -136,14 +126,7 @@ class Users extends Controller{ //Clase
         $message = sprintf('Hola, bienvenido a RomiToGo, activa tu cuenta con el siguiente link: <a href="%1$s">%1$s</a>', $link);
         $header = 'From: romi@romitogo.com'. "\r\n";;
         $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        mail($user->getEmail(), 'WELCOME', $message, $header);             
+        mail($user->getEmail(), 'WELCOME', $message, $header);
+        $this->redirectTo($this->getURL('signIn', $this));
     }
-
-    // public function edit(){
-    //     include 'views/users/edit.php';
-    // }
-
-    // public function create(){
-    //     include 'views/users/create.php';
-    // }
 }

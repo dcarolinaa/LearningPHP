@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\services\GetAvatar;
 use App\services\GetURL;
 
 class Controller{
@@ -11,21 +12,39 @@ class Controller{
 
     private $template = 'template';
 
+    protected $publicMethods = [];
+    protected $getURL;
+
+    public function __construct(){
+        $this->validateSession();
+        $this->getURL = new GetURL();
+    }
+
+    private function validateSession(){
+        if(empty($_SESSION) && in_array($_GET['method'], $this->publicMethods) == false){
+            $this->redirectTo($this->getURL('signIn',$this));
+        }
+    }
+
     public function setTemplate($template){
         $this->template = $template;
     }
 
     protected function getTemplateData(){
-        $getUrl = new getURL();
-        return[
-            'username' => $_SESSION['username'] ?? '',
-            'userAvatar' => sprintf('upload/users/%s/avatar.png', $_SESSION['user_id']),
-            'userMenu' => [
-                'profile' => $getUrl('myprofile', 'Users'),
-                'settings' => $getUrl('settings','Users'),
-                'logout' => $getUrl('logout','Users')
-            ]
-        ];
+        $getAvatar = new GetAvatar();
+        if(empty($_SESSION) === false){
+            return[
+                'username' => $_SESSION['username'] ?? '',
+                'userAvatar' => $getAvatar($_SESSION['user_id']),
+                'userMenu' => [
+                    'profile' => $this->getUrl('myprofile', 'Users'),
+                    'settings' => $this->getUrl('settings','Users'),
+                    'logout' => $this->getUrl('logout','Users')
+                ]
+            ];
+        }
+
+        return [];
     }
 
     public function setTitle($title){
@@ -61,13 +80,8 @@ class Controller{
         include "views/{$this->template}.php";
     }
 
-    public function getURL($method, $controller = null, $data = []){
-        $getUrl = new GetURL();
-        if(null === $controller){
-            $controller = $this;
-        }
-
-        return $getUrl($method, $controller, $data);        
+    public function getURL($method, $controller = null, $data = [], $relative = true){
+        return $this->getURL->__invoke($method, $controller, $data, $relative);
     }
 
     public function redirectTo($URL){

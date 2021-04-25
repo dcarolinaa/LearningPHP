@@ -12,7 +12,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>AdminKit Demo - Bootstrap 5 Admin Template</title>
+	<title>RomiToGo Demo</title>
 
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -22,18 +22,8 @@
 	<div class="wrapper">
 		<div class="main">
 			<main class="content">
-                <div class="col-4 offset-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h5 class="card-title">Login</h5>
-                        </div>
-                        <div class="card-body">
-                            <?= $content ?>
-                        </div>
-                    </div>
-                </div>
+                <?= $content ?>
 			</main>
-
 			<footer class="footer">
 				<div class="container-fluid">
 					<div class="row text-muted">
