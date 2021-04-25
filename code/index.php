@@ -44,7 +44,4 @@ $objController = $reflectionClass->newInstance();
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 $reflectionMethod->invoke($objController);
 
-$content = $objController->getContent();
-$title = $objController->getTitle();
-
-include 'views/template.php';
+$objController->renderTemplate();

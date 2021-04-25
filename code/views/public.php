@@ -20,15 +20,18 @@
 
 <body>
 	<div class="wrapper">
-		<?php include("sidebar.php") ?>
-
 		<div class="main">
-            <?php include 'nav-top.php' ?>
-
-			<main class="content">                
-				<div class="container-fluid p-0">
-                    <?= $content ?>
-				</div>
+			<main class="content">
+                <div class="col-4 offset-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Login</h5>
+                        </div>
+                        <div class="card-body">
+                            <?= $content ?>
+                        </div>
+                    </div>
+                </div>
 			</main>
 
 			<footer class="footer">

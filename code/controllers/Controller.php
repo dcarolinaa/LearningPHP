@@ -9,6 +9,25 @@ class Controller{
 
     private $content = "";
 
+    private $template = 'template';
+
+    public function setTemplate($template){
+        $this->template = $template;
+    }
+
+    protected function getTemplateData(){
+        $getUrl = new getURL();
+        return[
+            'username' => $_SESSION['username'] ?? '',
+            'userAvatar' => sprintf('upload/users/%s/avatar.png', $_SESSION['user_id']),
+            'userMenu' => [
+                'profile' => $getUrl('myprofile', 'Users'),
+                'settings' => $getUrl('settings','Users'),
+                'logout' => $getUrl('logout','Users')
+            ]
+        ];
+    }
+
     public function setTitle($title){
         $this->title = $title;
     }
@@ -33,6 +52,13 @@ class Controller{
         $out = ob_get_clean();
         $this->setContent($out);
 
+    }
+
+    public function renderTemplate(){
+        $content = $this->getContent();
+        $title = $this->getTitle();
+        extract($this->getTemplateData());
+        include "views/{$this->template}.php";
     }
 
     public function getURL($method, $controller = null, $data = []){

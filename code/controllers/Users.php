@@ -13,6 +13,36 @@ class Users extends Controller{ //Clase
         $this->view('users/my-profile', $_SESSION);
     }
 
+    public function settings(){
+        $getURL = new GetURL();
+        $this->view('users/settings',[
+            'saveAvatarAction' => $getURL('saveAvatar', $this)
+        ]);
+    }
+
+    public function saveAvatar(){
+        $getURL = new GetURL();
+        $tmpFile = $_FILES['avatar']['tmp_name']; 
+        $info = pathinfo($_FILES['avatar']['name']);
+
+        $path = sprintf('upload/users/%s', $_SESSION['user_id']);
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
+
+        $name = sprintf('%s/%s.%s', $path, 'avatar', $info['extension']);
+        move_uploaded_file($tmpFile, $name);
+
+        $this->redirectTo($getURL('settings', $this));
+        
+    }
+
+    public function logout(){
+        $getURL = new GetURL();
+        session_destroy();
+        $this->redirectTo($getURL('signIn', $this));
+    }
+
     public function login(){
         $userRepository = new UsersRepository();
         $username = $_POST['username'];
@@ -30,7 +60,7 @@ class Users extends Controller{ //Clase
             // die();
 
             $getURL = new GetURL();
-            $myprofile = $getURL('myprofile', []);
+            $myprofile = $getURL('myprofile', $this);
 
             $_SESSION['loged'] = true;
             $_SESSION['username'] = $user->getUserName();
@@ -48,6 +78,7 @@ class Users extends Controller{ //Clase
 
     public function signIn(){
         $getURL = new GetURL();
+        $this->setTemplate('public');
         $this->view('users/login',[
             'action' => $getURL('login', $this)
         ]);

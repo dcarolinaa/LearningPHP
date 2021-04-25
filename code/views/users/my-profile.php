@@ -1,1 +1,1 @@
-<h1><?= $username ?></h1>
+<h1> Profile </h1>
