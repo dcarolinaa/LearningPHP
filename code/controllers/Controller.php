@@ -15,14 +15,14 @@ class Controller{
     protected $publicMethods = [];
     protected $getURL;
 
-    public function __construct(){
-        $this->validateSession();
+    public function __construct($method){        
         $this->getURL = new GetURL();
+        $this->validateSession($method);
     }
 
-    private function validateSession(){
-        if(empty($_SESSION) && in_array($_GET['method'], $this->publicMethods) == false){
-            $this->redirectTo($this->getURL('signIn',$this));
+    private function validateSession($method){
+        if(!isset($_SESSION['user_id']) && in_array($method, $this->publicMethods) == false){
+            $this->redirectTo($this->getURL('signIn','Users'));
         }
     }
 
@@ -32,7 +32,7 @@ class Controller{
 
     protected function getTemplateData(){
         $getAvatar = new GetAvatar();
-        if(empty($_SESSION) === false){
+        if(isset($_SESSION['user_id'])){
             return[
                 'username' => $_SESSION['username'] ?? '',
                 'userAvatar' => $getAvatar($_SESSION['user_id']),
@@ -63,12 +63,15 @@ class Controller{
         $this->content = $content;
     }    
 
-    public function view($view, $data){
+    public function view($view, $data, $return = false){
         extract($data);//array asociativo se obtienen las variables
         ob_start();
             $view = sprintf('views/%s.php', $view);
             include $view;
         $out = ob_get_clean();
+        if($return){
+            return $out;
+        }
         $this->setContent($out);
 
     }
@@ -84,9 +87,14 @@ class Controller{
         return $this->getURL->__invoke($method, $controller, $data, $relative);
     }
 
+    public function goBack(){
+        $this->redirectTo($_SERVER['HTTP_REFERER']);        
+    }
+
     public function redirectTo($URL){
         header(
             sprintf('Location:%s',$URL)
         );
+        die;
     }
 }

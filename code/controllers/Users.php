@@ -3,10 +3,13 @@ namespace App\controllers;
 
 use App\models\User;
 use App\repositories\UsersRepository;
+use App\services\ErrorHelper;
+use App\services\FlashVars;
 use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\SaveEntity;
 use DateTime;
+use Doctrine\DBAL\Types\VarDateTimeType;
 
 class Users extends Controller{ //Clase
 
@@ -17,15 +20,32 @@ class Users extends Controller{ //Clase
     }
 
     public function settings(){        
+        $errorHelper = new ErrorHelper($_SESSION);
         $getAvatar = new GetAvatar();
         $this->view('users/settings',[
             'saveAvatarAction' => $this->getURL('saveAvatar', $this),
-            'userAvatar' => $getAvatar($_SESSION['user_id'])
+            'userAvatar' => $getAvatar($_SESSION['user_id']),
+            'errors' => $errorHelper->getAll()            
         ]);
     }
 
     public function saveAvatar(){
-        $getAvatar = new GetAvatar();    
+        $errorHelper = new ErrorHelper($_SESSION);
+
+        $getAvatar = new GetAvatar();
+        
+        if($_FILES['avatar']["error"] == UPLOAD_ERR_INI_SIZE){
+            $errorHelper->set('avatar','size','La imagen es muy grande');            
+        }
+        
+        if($_FILES['avatar']["error"] != UPLOAD_ERR_OK){
+            $errorHelper->set('avatar','generic', 'Ocurrio un error');            
+        }
+
+        if($errorHelper->hasErrors()){
+            $this->goBack();
+        }
+        
         $tmpFile = $_FILES['avatar']['tmp_name']; 
         $info = pathinfo($_FILES['avatar']['name']);
 
@@ -77,9 +97,15 @@ class Users extends Controller{ //Clase
     }
 
     public function signUp(){
-        $this->setTemplate('public');        
+        $this->setTemplate('public');
+        $errorHelper = new ErrorHelper($_SESSION);
+        $user = new User();
+        $user->fill($_POST);
+
         $this->view('users/sign-up',[
-            'action' => $this->getURL('store', $this)
+            'action' => $this->getURL('store', $this),
+            'errors' => $errorHelper->getAll(),
+            'user' => $user
         ]);
     }
 
@@ -101,6 +127,24 @@ class Users extends Controller{ //Clase
     }
 
     public function store(){
+        $errorHelper = new ErrorHelper($_SESSION);
+        $attributes = ['first_name','last_name','birthdate','email','username','password'];
+
+        foreach($attributes as $att){
+            if(trim($_POST[$att]) == ''){
+                $errorHelper->set($att, '_empty','Campo obligatorio.');
+            }
+        }
+
+        if(!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $_POST['email'])){
+            $errorHelper->set('email', '_email_format','No es un email valido.');
+        }
+
+        if($errorHelper->hasErrors()){
+           $this->signUp();
+           return;
+        }
+
         // var_dump($_POST);
         $getULR = new GetURL();
         $user = new \App\models\User;

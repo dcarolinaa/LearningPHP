@@ -39,7 +39,7 @@ if(!class_exists($controllerClass) || !method_exists($controllerClass, $method))
 }
 
 $reflectionClass = new ReflectionClass($controllerClass);
-$objController = $reflectionClass->newInstance();
+$objController = $reflectionClass->newInstance($method);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 $reflectionMethod->invoke($objController);

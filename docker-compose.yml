@@ -15,6 +15,7 @@ services:
       - ./docker/config/ssh/id_rsa:/root/.ssh/id_rsa:ro
       - ./docker/config/ssh/id_rsa.pub:/root/.ssh/id_rsa.pub:ro      
       - ./docker/config/php/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini:ro
+      - ./docker/config/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./docker/data/logs/:/var/logs/
       - ./docker/data/ssh/known_hosts:/root/.ssh/known_hosts
       - ./:/root/repository
