@@ -10,6 +10,9 @@ use App\services\GetURL;
 use App\services\SaveEntity;
 use DateTime;
 use Doctrine\DBAL\Types\VarDateTimeType;
+use Imagine\Gd\Imagine;
+use Imagine\Image\Box;
+
 
 class Users extends Controller{ //Clase
 
@@ -60,8 +63,16 @@ class Users extends Controller{ //Clase
         if($currentAvatar !== GetAvatar::DEFAULT_AVATAR){
             unlink($currentAvatar);//ELIMINAR ARCHIVO
         }
-
+        
         move_uploaded_file($tmpFile, $name);
+
+        $imagine = new \Imagine\Gd\Imagine();
+        $image = $imagine->open($name);
+        $image->resize($image->getSize()->widen(100));
+
+        $name100x100 = sprintf('%s/%s.%s', $path, 'avatar_100x100', $info['extension']);        
+        $image->save($name100x100);
+
         $this->redirectTo($this->getURL('settings', $this));
     }
 
