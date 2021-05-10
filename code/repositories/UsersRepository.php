@@ -6,13 +6,12 @@ use App\services\GetDBConnection;
 use App\models\User;
 use PDO;
 
-class UsersRepository{
-    private $getDBConnection;
-
-    public function __construct(){
-        $this->getDBConnection = new GetDBConnection();
+class UsersRepository extends Repository{
+    
+    protected function getClassName():string{
+        return User::class;
     }
-
+    
     public function getByEmail($email){
         $sql = 'SELECT * FROM users where email = :email';
         $connection = $this->getDBConnection->__invoke();

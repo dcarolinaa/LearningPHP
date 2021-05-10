@@ -21,6 +21,7 @@ class User extends Model implements IModel{
     private $role_id;
     private $email_validated;
     private $email_hash;
+    private $update_at;
 
     public static function getTable(){
         return 'users';
@@ -132,7 +133,17 @@ class User extends Model implements IModel{
             'create_date',
             'role_id',
             'email_validated',
-            'email_hash'
+            'email_hash',
+            'updated_at'
         ];
-    }   
+    }
+    
+    public function setUpdated_at($updateAt){
+        $this->update_at = $updateAt;
+        return $this;
+    }
+
+    public function getUpdated_at(){
+        return $this->update_at;
+    }
 }

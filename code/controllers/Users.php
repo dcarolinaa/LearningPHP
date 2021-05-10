@@ -7,7 +7,9 @@ use App\services\ErrorHelper;
 use App\services\FlashVars;
 use App\services\GetAvatar;
 use App\services\GetURL;
+use App\services\GetUrlAvatar;
 use App\services\SaveEntity;
+use DateInterval;
 use DateTime;
 use Doctrine\DBAL\Types\VarDateTimeType;
 use Imagine\Gd\Imagine;
@@ -24,18 +26,56 @@ class Users extends Controller{ //Clase
 
     public function settings(){        
         $errorHelper = new ErrorHelper($_SESSION);
-        $getAvatar = new GetAvatar();
+        $userRepository = new UsersRepository();
+        $user = $userRepository->getById($_SESSION['user_id']);
+        $getUrlAvatar = new GetUrlAvatar();
         $this->view('users/settings',[
             'saveAvatarAction' => $this->getURL('saveAvatar', $this),
-            'userAvatar' => $getAvatar($_SESSION['user_id']),
+            'userAvatar' => $getUrlAvatar($user),
             'errors' => $errorHelper->getAll()            
         ]);
     }
 
-    public function saveAvatar(){
-        $errorHelper = new ErrorHelper($_SESSION);
+    public function avatar(){
+        header('Pragma: public');
+        $days = 86400 * 30;
+        header('Cache-Control: max-age='.$days);
+
+        $dateTime = new DateTime();
+        $dateTime->add(new DateInterval('P3M'));
+        header('Expires: '. $dateTime->format('D, d M Y H:i:s \G\M\T'));
+
+        $path = sprintf('upload/cache/users/%s/avatars', $_GET['id']);
+        
+        $filename = sprintf('%s/avatar_%s.jpg', $path, $_GET['width']);
+
+        
+        if(file_exists($filename)){
+            header('Content-Type: image/jpeg');
+            die(file_get_contents($filename));
+        }
 
         $getAvatar = new GetAvatar();
+        $avatar = $getAvatar( $_GET['id']);
+        $imagine = new Imagine();
+        $image = $imagine->open($avatar);
+        $image->resize($image->getsize()->widen($_GET['width']));
+        
+        if(!file_exists($path)){
+            mkdir($path, 0777, true);
+        }
+
+        $image->save($filename, ['jpeg_quality' => 70]);
+        $image->show('jpg', ['jpeg_quality' => 70]);
+        die;
+    }
+
+    public function saveAvatar(){
+        $userId = $_SESSION['user_id'];
+        $errorHelper = new ErrorHelper($_SESSION);
+        $getAvatar = new GetAvatar();
+        $saveEntity = new SaveEntity();
+        $userRepository = new UsersRepository();        
         
         if($_FILES['avatar']["error"] == UPLOAD_ERR_INI_SIZE){
             $errorHelper->set('avatar','size','La imagen es muy grande');            
@@ -52,18 +92,26 @@ class Users extends Controller{ //Clase
         $tmpFile = $_FILES['avatar']['tmp_name']; 
         $info = pathinfo($_FILES['avatar']['name']);
 
-        $path = sprintf('upload/users/%s', $_SESSION['user_id']);
+        $path = sprintf('upload/users/%s', $userId);
         if(!file_exists($path)){
             mkdir($path, 0777, true);
         }
 
         $name = sprintf('%s/%s.%s', $path, 'avatar', $info['extension']);
 
-        $currentAvatar = $getAvatar( $_SESSION['user_id']);
+        $currentAvatar = $getAvatar( $userId);
         if($currentAvatar !== GetAvatar::DEFAULT_AVATAR){
             unlink($currentAvatar);//ELIMINAR ARCHIVO
         }
         
+        $pathCache = sprintf('upload/cache/users/%s/avatars', $userId);
+        $files = glob($pathCache . '/*');
+        foreach($files as $tumbnail){
+            if(is_file($tumbnail)){
+                unlink($tumbnail);
+            }
+        };
+
         move_uploaded_file($tmpFile, $name);
 
         $imagine = new \Imagine\Gd\Imagine();
@@ -72,6 +120,11 @@ class Users extends Controller{ //Clase
 
         $name100x100 = sprintf('%s/%s.%s', $path, 'avatar_100x100', $info['extension']);        
         $image->save($name100x100);
+
+        $user = $userRepository->getById($userId);
+        $user->setUpdated_at((new DateTime())->format('Y-m-d H:i:s'));
+
+        $saveEntity($user);
 
         $this->redirectTo($this->getURL('settings', $this));
     }

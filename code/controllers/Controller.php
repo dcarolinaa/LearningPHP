@@ -2,8 +2,10 @@
 
 namespace App\controllers;
 
+use App\repositories\UsersRepository;
 use App\services\GetAvatar;
 use App\services\GetURL;
+use App\services\GetUrlAvatar;
 
 class Controller{
     private $title = "";
@@ -31,11 +33,14 @@ class Controller{
     }
 
     protected function getTemplateData(){
-        $getAvatar = new GetAvatar();
+        $getUrlAvatar = new GetUrlAvatar();
+        $userRepository = new UsersRepository();
+        $user = $userRepository->getById($_SESSION['user_id']);
+        
         if(isset($_SESSION['user_id'])){
             return[
                 'username' => $_SESSION['username'] ?? '',
-                'userAvatar' => $getAvatar($_SESSION['user_id']),
+                'userAvatar' => $getUrlAvatar($user, 40),
                 'userMenu' => [
                     'profile' => $this->getUrl('myprofile', 'Users'),
                     'settings' => $this->getUrl('settings','Users'),
