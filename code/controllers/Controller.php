@@ -35,9 +35,9 @@ class Controller{
     protected function getTemplateData(){
         $getUrlAvatar = new GetUrlAvatar();
         $userRepository = new UsersRepository();
-        $user = $userRepository->getById($_SESSION['user_id']);
-        
+                
         if(isset($_SESSION['user_id'])){
+            $user = $userRepository->getById($_SESSION['user_id']);
             return[
                 'username' => $_SESSION['username'] ?? '',
                 'userAvatar' => $getUrlAvatar($user, 40),

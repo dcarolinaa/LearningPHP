@@ -26,6 +26,9 @@ use ReflectionClass;
 $defaultController = 'Preferences';
 $defaultMethod = 'index';
 
+$container = new Container();
+
+include "services.php";
 
 $controller = isset($_GET['controller']) ? $_GET['controller'] : $defaultController;
 $method = isset($_GET['method']) ? $_GET['method'] : $defaultMethod;
@@ -42,6 +45,14 @@ $reflectionClass = new ReflectionClass($controllerClass);
 $objController = $reflectionClass->newInstance($method);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
-$reflectionMethod->invoke($objController);
+
+$parameters = $reflectionMethod->getParameters();
+$params = [];
+foreach($parameters as $parameter){
+    $classNameParameter = $parameter->getType()->getName();
+    $params[] = $container->get($classNameParameter);
+}
+
+$reflectionMethod->invokeArgs($objController, $params);
 
 $objController->renderTemplate();

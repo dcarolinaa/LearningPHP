@@ -9,7 +9,7 @@ use ReflectionMethod;
 
 abstract class Repository{
 
-    private $getDBConnection;
+    protected $getDBConnection;
 
     protected abstract function getClassName():string;
 

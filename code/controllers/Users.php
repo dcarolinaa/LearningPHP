@@ -3,17 +3,15 @@ namespace App\controllers;
 
 use App\models\User;
 use App\repositories\UsersRepository;
+use App\services\CreateUser;
 use App\services\ErrorHelper;
-use App\services\FlashVars;
 use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
 use App\services\SaveEntity;
 use DateInterval;
 use DateTime;
-use Doctrine\DBAL\Types\VarDateTimeType;
 use Imagine\Gd\Imagine;
-use Imagine\Image\Box;
 
 
 class Users extends Controller{ //Clase
@@ -70,13 +68,14 @@ class Users extends Controller{ //Clase
         die;
     }
 
-    public function saveAvatar(){
+    public function saveAvatar(
+            ErrorHelper $errorHelper, 
+            GetAvatar $getAvatar,
+            SaveEntity $saveEntity,
+            UsersRepository $userRepository
+        ){
         $userId = $_SESSION['user_id'];
-        $errorHelper = new ErrorHelper($_SESSION);
-        $getAvatar = new GetAvatar();
-        $saveEntity = new SaveEntity();
-        $userRepository = new UsersRepository();        
-        
+                        
         if($_FILES['avatar']["error"] == UPLOAD_ERR_INI_SIZE){
             $errorHelper->set('avatar','size','La imagen es muy grande');            
         }
@@ -190,7 +189,7 @@ class Users extends Controller{ //Clase
         die("valido");
     }
 
-    public function store(){
+    public function store(CreateUser $createUser){
         $errorHelper = new ErrorHelper($_SESSION);
         $attributes = ['first_name','last_name','birthdate','email','username','password'];
 
@@ -209,32 +208,10 @@ class Users extends Controller{ //Clase
            return;
         }
 
-        // var_dump($_POST);
+        $user = $createUser($_POST);
+        
         $getULR = new GetURL();
-        $user = new \App\models\User;
-        $user->fill($_POST);
-
-        $saveEntity = new SaveEntity();
         
-        $user->setCreate_date(
-            (new DateTime())->format('Y-m-d H:i:s')
-        );
-        $user->setRole_id(User::ROLE_USER);
-        $user->setPassword($_POST['password'], true);
-        $hash = hash('sha224', uniqid());
-        $user->setEmail_hash($hash);
-        
-        $saveEntity($user);
-        
-        $link = $getULR('validateEmail', $this, [
-            'hash' => $hash,
-            'email' => $user->getEmail()
-        ], false);
-        
-        $message = sprintf('Hola, bienvenido a RomiToGo, activa tu cuenta con el siguiente link: <a href="%1$s">%1$s</a>', $link);
-        $header = 'From: romi@romitogo.com'. "\r\n";;
-        $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        mail($user->getEmail(), 'WELCOME', $message, $header);
         $this->redirectTo($this->getURL('signIn', $this));
     }
 }
