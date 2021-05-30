@@ -2,6 +2,7 @@
 
 namespace App;
 
+use phpDocumentor\Reflection\Types\This;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -9,8 +10,18 @@ class Container{
     private $callbacks = [];
     private $services = [];
 
-    public function add($key, $callback){
-        $this->callbacks[$key] = $callback;      
+    public function add($key, $callback = null)
+    {
+        if($callback !== null){
+            $this->callbacks[$key] = $callback;
+        }else {
+            $this->callbacks[$key] = function() use ($key){
+                //Use para poder utilizar la variable recibida en la función de arriba...
+                return $this->build($key);
+            };
+        }
+
+        return $this;        
     }
 
     public function get($key){
