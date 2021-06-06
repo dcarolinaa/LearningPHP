@@ -18,7 +18,6 @@ class User extends Model implements IModel{
     private $username;
     private $password;
     private $create_date;
-    private $role_id;
     private $email_validated;
     private $email_hash;
     private $update_at;
@@ -93,15 +92,6 @@ class User extends Model implements IModel{
     public function getCreate_date(){
         return $this->create_date;
     }
-
-    public function setRole_id($role_id){
-        $this->role_id = $role_id;
-        return $this;
-    }
-
-    public function getRole_id(){
-        return $this->role_id;
-    }
     
     public function setEmail_validated($validated){
         $this->email_validated = $validated;
@@ -130,8 +120,7 @@ class User extends Model implements IModel{
             'email',
             'username',
             'password',
-            'create_date',
-            'role_id',
+            'create_date',            
             'email_validated',
             'email_hash',
             'updated_at'

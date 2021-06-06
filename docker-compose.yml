@@ -18,6 +18,7 @@ services:
       - ./docker/config/php/php.ini:/usr/local/etc/php/php.ini:ro
       - ./docker/data/logs/:/var/logs/
       - ./docker/data/ssh/known_hosts:/root/.ssh/known_hosts
+      - ./docker/config/apache/apache2.conf:/etc/apache2/apache2.conf
       - ./:/root/repository
       - ./code:/var/www/html
 
