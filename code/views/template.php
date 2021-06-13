@@ -12,9 +12,18 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>AdminKit Demo - Bootstrap 5 Admin Template</title>
-
+	<title>RomiToGo</title>
 	<link href="css/app.css" rel="stylesheet">
+
+	<?php if($_SESSION['isAdmin']) :?>
+		<link href="/css/app-admin.css" rel="stylesheet">
+	<?php endif ?>
+
+	<?php if($_SESSION['isSuperAdmin']) :?>
+		<link href="/css/app-super-admin.css" rel="stylesheet">
+	<?php endif ?>
+
+
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 

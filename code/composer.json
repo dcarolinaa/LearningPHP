@@ -2,7 +2,7 @@
     "autoload": {
         "psr-4": {
             "App\\" : "./",
-            "Tests\\Selenium\\": "./tests/selenium"
+            "Tests\\": "./tests/"
         }
     },
     "require-dev": {       

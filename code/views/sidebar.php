@@ -5,6 +5,28 @@
         </a>
 
         <ul class="sidebar-nav">
+            <?php if($_SESSION['isAdmin']) : ?>
+                <li class="sidebar-header">
+                    Socios
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="pages-profile.html">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Restaurants </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="pages-profile.html">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Platillos </span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="pages-profile.html">
+                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Menu </span>
+                    </a>
+                </li>
+
+            <?php endif ?>
+
             <li class="sidebar-header">
                 Pages
             </li>

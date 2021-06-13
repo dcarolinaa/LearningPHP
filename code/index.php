@@ -43,6 +43,7 @@ if(!class_exists($controllerClass) || !method_exists($controllerClass, $method))
 
 $reflectionClass = new ReflectionClass($controllerClass);
 $objController = $reflectionClass->newInstance($method);
+$objController->setContainer($container);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 

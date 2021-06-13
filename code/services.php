@@ -9,6 +9,8 @@ use App\services\ISendEmailSignUp;
 use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
+use App\services\GetUrlAvatar;
+use App\services\UserHasProfile;
 
 $container->add(ErrorHelper::class, function($container) {
     $service = new ErrorHelper($_SESSION);
@@ -24,7 +26,9 @@ $container->add(ISendEmailSignUp::class, function($container){
 
 $container->add(CreateUser::class)
     ->add(GetAvatar::class)
+    ->add(GetUrlAvatar::class)
     ->add(SaveEntity::class)
     ->add(UsersRepository::class)
     ->add(GetURL::class)
-    ->add(AddProfileToUser::class);
+    ->add(AddProfileToUser::class)
+    ->add(UserHasProfile::class);

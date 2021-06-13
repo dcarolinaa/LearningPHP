@@ -9,6 +9,7 @@ use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
 use App\services\SaveEntity;
+use App\services\UserHasProfile;
 use DateInterval;
 use DateTime;
 use Imagine\Gd\Imagine;
@@ -133,20 +134,23 @@ class Users extends Controller{ //Clase
         $this->redirectTo($this->getURL('signIn', $this));
     }
 
-    public function login(){
+    public function login(UserHasProfile $userHasProfile){
         $userRepository = new UsersRepository();
         $username = $_POST['username'];
         $password = $_POST['password'];
         
         $user = $userRepository->getByEmailOrUserName($username);
         if($user->getPassword() ===  md5($password)){
+            $userId = $user->getId();
             $_SESSION['loged'] = true;
             $_SESSION['username'] = $user->getUserName();
             $_SESSION['user_id'] = $user->getId();
+            $_SESSION['isAdmin'] = $userHasProfile(User::ROLE_ADMIN, $userId);
+            $_SESSION['isSuperAdmin'] = $userHasProfile(User::ROLE_SUPERADMIN, $userId);
             $myprofile = $this->getURL('myprofile', $this);
             $this->redirectTo($myprofile);
         }
-            
+
         die("noup... ");        
         var_dump($user);        
     }

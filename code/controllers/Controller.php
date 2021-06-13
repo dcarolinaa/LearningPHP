@@ -2,10 +2,12 @@
 
 namespace App\controllers;
 
+use App\models\User;
 use App\repositories\UsersRepository;
 use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
+use App\services\UserHasProfile;
 
 class Controller{
     private $title = "";
@@ -16,10 +18,20 @@ class Controller{
 
     protected $publicMethods = [];
     protected $getURL;
+    protected $container;
 
     public function __construct($method){        
         $this->getURL = new GetURL();
         $this->validateSession($method);
+    }
+
+    public function setContainer($container){
+        $this->container = $container;
+        return $this;
+    }
+
+    public function getContainer(){
+        return $this->container;
     }
 
     private function validateSession($method){
@@ -33,10 +45,11 @@ class Controller{
     }
 
     protected function getTemplateData(){
-        $getUrlAvatar = new GetUrlAvatar();
-        $userRepository = new UsersRepository();
-                
-        if(isset($_SESSION['user_id'])){
+        $container = $this->getContainer();
+        $getUrlAvatar = $container->get(GetUrlAvatar::class);
+        $userRepository = $container->get(UsersRepository::class);
+        
+        if(isset($_SESSION['user_id'])){            
             $user = $userRepository->getById($_SESSION['user_id']);
             return[
                 'username' => $_SESSION['username'] ?? '',

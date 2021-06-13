@@ -8,8 +8,8 @@ class SendEmailSignUpOFF implements ISendEmailSignUp{
         
     }
 
-    public function __invoke()
+    public function __invoke($user, $hash)
     {
-        
+                        
     }
 }

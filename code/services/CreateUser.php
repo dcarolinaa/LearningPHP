@@ -36,5 +36,6 @@ class CreateUser{
         $this->saveEntity->__invoke($user);
         $this->sendEmailSignUp->__invoke($user, $hash);
         $this->addProfileUser->__invoke($user, User::ROLE_USER);
+        return $user;
     }
 }
