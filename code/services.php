@@ -9,6 +9,7 @@ use App\services\ISendEmailSignUp;
 use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
+use App\services\CreateCompany;
 use App\services\GetUrlAvatar;
 use App\services\UserHasProfile;
 
@@ -31,4 +32,5 @@ $container->add(CreateUser::class)
     ->add(UsersRepository::class)
     ->add(GetURL::class)
     ->add(AddProfileToUser::class)
-    ->add(UserHasProfile::class);
+    ->add(UserHasProfile::class)
+    ->add(CreateCompany::class);
