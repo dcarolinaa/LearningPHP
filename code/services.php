@@ -1,5 +1,6 @@
 <?php
 
+use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\services\CreateUser;
 use App\services\ErrorHelper;
@@ -9,6 +10,7 @@ use App\services\ISendEmailSignUp;
 use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
+use App\services\CreateBranch;
 use App\services\CreateCompany;
 use App\services\GetUrlAvatar;
 use App\services\UserHasProfile;
@@ -33,4 +35,6 @@ $container->add(CreateUser::class)
     ->add(GetURL::class)
     ->add(AddProfileToUser::class)
     ->add(UserHasProfile::class)
-    ->add(CreateCompany::class);
+    ->add(CreateCompany::class)
+    ->add(CreateBranch::class)
+    ->add(CompaniesRepository::class);

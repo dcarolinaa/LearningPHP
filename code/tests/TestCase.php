@@ -8,7 +8,10 @@ use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 class TestCase extends PHPUnitTestCase{
     private $container;
 
-    const ADMIN_COMPANY_1 = 'admin@romitogo.com';
+    const ADMIN_COMPANY_1 = 'admin@sushigo.com';
+    const ADMIN_COMPANY_1_ID = 2;
+    const COMPANY_1_ID = 1;
+    const COMPANY_1_BRANCH_1 = 1;
     
     public function __construct()
     {

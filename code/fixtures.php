@@ -3,12 +3,14 @@
 include './vendor/autoload.php';
 
 use App\Container;
+use App\fixtures\Branches;
 use App\fixtures\Companies;
 use App\fixtures\Users;
 
 $fixtures = [
-//    Users::class,    
-    Companies::class
+    Users::class,    
+    Companies::class,
+    Branches::class
 ];
 
 $container = new Container();
