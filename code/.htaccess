@@ -1,2 +1,11 @@
 RewriteEngine on
 
+RewriteRule ^mis-negocios$ index.php?controller=Companies&method=index [L]
+
+RewriteRule ^mis-negocios/nuevo index.php?controller=Companies&method=create [L]
+RewriteRule ^mis-negocios/editar/([0-9]+) index.php?controller=Companies&method=edit&id=$1 [L]
+RewriteRule ^mis-negocios/confirm-delete/([0-9]+) index.php?controller=Companies&method=confirm&id=$1 [L]
+RewriteRule ^mis-negocios/delete/([0-9]+) index.php?controller=Companies&method=delete&id=$1 [L]
+RewriteRule ^mis-negocios/store index.php?controller=Companies&method=store [L]
+RewriteRule ^mis-negocios/update index.php?controller=Companies&method=update [L]
+RewriteRule ^mis-negocios/([0-9]+) index.php?controller=Companies&method=show&id=$1 [L]

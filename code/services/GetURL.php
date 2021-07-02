@@ -21,7 +21,7 @@ class GetURL{
 
         $query = http_build_query($data);
         if(true === $relative){
-            return sprintf('?%s', http_build_query($data));
+            return sprintf('/?%s', http_build_query($data));
         }
 
         return sprintf('%s?%s', Config::BASE_URL, http_build_query($data));

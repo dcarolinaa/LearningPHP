@@ -1,0 +1,1 @@
+<h1>Negocio <?php echo $company?></h1>

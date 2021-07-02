@@ -13,7 +13,7 @@
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
 	<title>RomiToGo</title>
-	<link href="css/app.css" rel="stylesheet">
+	<link href="/css/app.css" rel="stylesheet">
 
 	<?php if($_SESSION['isAdmin']) :?>
 		<link href="/css/app-admin.css" rel="stylesheet">
@@ -70,7 +70,7 @@
 		</div>
 	</div>
 
-	<script src="js/app.js"></script>
+	<script src="/js/app.js"></script>
 
 </body>
 

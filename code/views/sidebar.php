@@ -10,8 +10,8 @@
                     Socios
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="pages-profile.html">
-                        <i class="align-middle" data-feather="user"></i> <span class="align-middle">Restaurants </span>
+                    <a class="sidebar-link" href="/mis-negocios">
+                        <i class="home" data-feather="user"></i> <span class="align-middle">Negocios</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
