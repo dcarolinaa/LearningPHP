@@ -2,7 +2,9 @@
 <div class="card">    
     <div class="card-body">
         <?php echo $this->view('companies/_form', [
-            'action' => '/mis-negocios/update'
+            'action' => '/mis-negocios/update',
+            'callAction' => 'Guardar',
+            'company' => $company
         ], true);?> 
     </div>
 </div>

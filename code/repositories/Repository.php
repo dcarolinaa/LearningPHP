@@ -27,6 +27,18 @@ abstract class Repository{
         return $result !== false ? $buil->invokeArgs(null, [$result]) : null;
     }
 
+    public function getAll() {
+        $sql = sprintf('SELECT * FROM %s ', $this->getTable());             
+        $connection = $this->getDBConnection->__invoke();
+        $statement = $connection->prepare($sql);     
+        $statement->execute();
+        $data = [];
+        while($result = $statement->fetch(PDO::FETCH_ASSOC)){
+            $data[] = $this->buildResult($result);
+        }
+        return $data;
+    }
+
     public function getById($id){
         $sql = sprintf('SELECT * FROM %s where id = :id', $this->getTable());
 

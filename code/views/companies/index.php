@@ -6,17 +6,17 @@
     <div class="card-body">
         <table class="table table-striped">            
             <tbody>
-                <?php for($i=0; $i<10; $i++): ?>
+                <?php foreach($companies as $company) :?>
                 <tr>
                     <td>
-                        <a href="/mis-negocios/<?php echo $i?>"><img src="img/shushi-go.png" height="35"> Negocio <?php echo $i?></a>
+                        <a href="/mis-negocios/<?php echo $company->getId()?>"><img src="img/shushi-go.png" height="35"> <?php echo $company->getName()?></a>
                     </td>
                     <td>
-                        <a href="/mis-negocios/confirm-delete/<?php echo $i?>" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
-                        <a href="/mis-negocios/editar/<?php echo $i?>" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
+                        <a href="/mis-negocios/confirm-delete/<?php echo $company->getId()?>" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                        <a href="/mis-negocios/editar/<?php echo $company->getId()?>" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
                     </td>
                 </tr>
-                <?php endfor; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

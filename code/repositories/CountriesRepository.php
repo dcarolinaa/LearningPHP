@@ -10,17 +10,7 @@ class CountriesRepository extends Repository{
         return Country::class;
     }
 
-    public function getAll(){
-        $sql = 'SELECT * FROM countries';
-        $connection = $this->getDBConnection->__invoke();
-        $statement = $connection->prepare($sql);
-        $statement->execute();
-        $data = [];
-        while($result = $statement->fetch(PDO::FETCH_ASSOC)){
-            $data[] = Country::build($result);
-        }
-        return $data;
-    }
+  
 
     public function getLast(){
         $sql = 'SELECT * from countries order by id desc LIMIT 1';
