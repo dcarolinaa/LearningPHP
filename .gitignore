@@ -2,3 +2,5 @@ docker/data
 docker/config/ssh
 docker/config/gitconfig
 .env
+code/upload/companies
+code/upload/cache

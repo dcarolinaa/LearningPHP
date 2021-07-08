@@ -3,7 +3,7 @@ namespace App\controllers;
 
 use App\models\Company;
 use App\repositories\CompaniesRepository;
-use App\services\CreateCompany;
+use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\SaveEntity;
 
@@ -50,25 +50,25 @@ class Companies extends Controller
         $this->redirectTo('/mis-negocios');
     }
 
-    public function store(CreateCompany $createCompany) {
-        $now = date('Y-m-d H:i:s');
-        $company = $createCompany([
+    public function store(SaveCompany $saveCompany) {
+        $saveCompany([
             'user_admin' => $_SESSION['user_id'],
             'name' => $_POST['name'],
-            'status' => Company::STATUS_ACTIVE,
-            'create_date' => $now,
-            'update_date' => $now,
-            'update_user' => $_SESSION['user_id']
+            'status' => Company::STATUS_ACTIVE,            
+            'update_user' => $_SESSION['user_id'],
+            'logo' => $_FILES['logo']['tmp_name']
         ]);
         $this->redirectTo('/mis-negocios');
     }
 
-    public function update(CompaniesRepository $companiesRepository, SaveEntity $saveEntity) {
-        $company = $companiesRepository->getById($_POST['id']);
-        $company->fill([
-            'name' => $_POST['name']
+    public function update(SaveCompany $saveCompany) {        
+        $saveCompany([          
+            'id' => $_POST['id'],
+            'name' => $_POST['name'],            
+            'update_user' => $_SESSION['user_id'],
+            'logo' => $_FILES['logo']['tmp_name']
         ]);
-        $saveEntity($company);
+ 
         $this->redirectTo('/mis-negocios');
     }
 

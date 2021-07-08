@@ -11,7 +11,7 @@ use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
 use App\services\CreateBranch;
-use App\services\CreateCompany;
+use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\GetUrlAvatar;
 use App\services\UserHasProfile;
@@ -36,7 +36,7 @@ $container->add(CreateUser::class)
     ->add(GetURL::class)
     ->add(AddProfileToUser::class)
     ->add(UserHasProfile::class)
-    ->add(CreateCompany::class)
+    ->add(SaveCompany::class)
     ->add(CreateBranch::class)
     ->add(CompaniesRepository::class)
     ->add(DeleteEntity::class);
