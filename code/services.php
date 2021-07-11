@@ -11,9 +11,11 @@ use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
 use App\services\CreateBranch;
+use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\GetUrlAvatar;
+use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 
 $container->add(ErrorHelper::class, function($container) {
@@ -39,4 +41,6 @@ $container->add(CreateUser::class)
     ->add(SaveCompany::class)
     ->add(CreateBranch::class)
     ->add(CompaniesRepository::class)
-    ->add(DeleteEntity::class);
+    ->add(DeleteEntity::class)
+    ->add(CreateWorkerRequest::class)
+    ->add(SendEmailWorkerRequest::class);
