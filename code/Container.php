@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use phpDocumentor\Reflection\Types\This;
 use ReflectionClass;
 use ReflectionMethod;
@@ -25,11 +26,15 @@ class Container{
     }
 
     public function get($key){
-        if(!key_exists($key, $this->services)){
+        if(!key_exists($key, $this->services) && key_exists($key, $this->callbacks)) {
             $this->services[$key] = $this->callbacks[$key]($this);
         }
 
-        return $this->services[$key];
+        if(isset($this->services[$key])) {
+            return $this->services[$key];
+        }
+
+        throw new Exception("Services don't found");        
     }
 
     public function callMethod($method, $object){
