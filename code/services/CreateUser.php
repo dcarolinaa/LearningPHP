@@ -25,7 +25,13 @@ class CreateUser{
     public function __invoke($data)
     {
         $user = new User;
-        $user->fill($data);
+        $user->fill( [
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'] ,
+            'birthdate' => $data['birthdate'],
+            'email' => $data['email'],
+            'username' => $data['username']
+        ]);
         $user->setCreate_date(
             (new DateTime())->format('Y-m-d H:i:s')
         );        
