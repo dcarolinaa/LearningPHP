@@ -13,6 +13,7 @@ use App\services\AddProfileToUser;
 use App\services\CreateBranch;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
+use App\services\FlashVars;
 use App\services\GetUrlAvatar;
 use App\services\UserHasProfile;
 
@@ -26,6 +27,10 @@ $container->add(ISendEmailSignUp::class, function($container){
         $container->get(GetURL::class)
     );
     return $service;
+});
+
+$container->add(FlashVars::class, function($container) {
+    return new FlashVars($_SESSION);
 });
 
 $container->add(CreateUser::class)

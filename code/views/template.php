@@ -36,6 +36,16 @@
 
 			<main class="content">                
 				<div class="container-fluid p-0">
+					<?php if($__notification):?>
+						<?php foreach($__notification as $notification) : ?>
+							<div class="alert alert-<?php echo $notification['type']?> alert-dismissible" role="alert">
+								<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+								<div class="alert-message">
+									<?php echo $notification['message']?>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					<?php endif?>
                     <?= $content ?>
 				</div>
 			</main>
