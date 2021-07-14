@@ -5,7 +5,6 @@ use App\models\Company;
 use App\repositories\CompaniesRepository;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
-use App\services\SaveEntity;
 
 class Companies extends Controller
 {
@@ -72,9 +71,10 @@ class Companies extends Controller
         $this->redirectTo('/mis-negocios');
     }
 
-    public function show() {
+    public function show(CompaniesRepository $companiesRepository) {
+        $company = $companiesRepository->getById($_GET['id']);
         $this->view('companies/show', [
-            'company' => $_GET['id']
+            'company' => $company
         ]);
     }
 }

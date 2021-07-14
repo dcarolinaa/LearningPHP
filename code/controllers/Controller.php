@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use App\models\User;
 use App\repositories\UsersRepository;
+use App\services\FlashVars;
 use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
@@ -94,10 +95,24 @@ class Controller{
 
     }
 
-    public function renderTemplate(){
+    public function flashNotification (string $message, string $type = 'success'): void {        
+        $flashVars = $this->getContainer()->get(FlashVars::class);
+        $notifications = $flashVars->get('__notification');
+        
+        if($notifications === null) {
+            $notifications = [];
+        }
+        
+        $notifications[] = compact('message', 'type');
+        $flashVars->set('__notification', $notifications);        
+    }
+
+    public function renderTemplate() {
         $content = $this->getContent();
         $title = $this->getTitle();
         extract($this->getTemplateData());
+        $flashVars = $this->getContainer()->get(FlashVars::class);
+        $__notification = $flashVars->get('__notification');
         include "views/{$this->template}.php";
     }
 

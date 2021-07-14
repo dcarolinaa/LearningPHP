@@ -20,6 +20,7 @@ include 'models/Preference.php';
 include 'Config.php';
 */
 
+use Exception;
 use ReflectionMethod;
 use ReflectionClass;
 
@@ -41,8 +42,25 @@ if(!class_exists($controllerClass) || !method_exists($controllerClass, $method))
     die;
 }
 
+$container->add('method', function() use ($method) {
+    return $method;
+});
+
 $reflectionClass = new ReflectionClass($controllerClass);
-$objController = $reflectionClass->newInstance($method);
+$controllerCostructor = $reflectionClass->getConstructor();
+$parameters = $controllerCostructor->getParameters();
+$params = [];
+foreach($parameters as $parameter){
+    try {
+        $name = $parameter->getName();
+        $params[] = $container->get($name);
+    } catch(Exception $ex) {
+        $classNameParameter = $parameter->getType()->getName();        
+        $params[] = $container->get($classNameParameter);
+    }
+}
+
+$objController = $reflectionClass->newInstanceArgs($params);
 $objController->setContainer($container);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
@@ -50,9 +68,15 @@ $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 $parameters = $reflectionMethod->getParameters();
 $params = [];
 foreach($parameters as $parameter){
-    $classNameParameter = $parameter->getType()->getName();
-    $params[] = $container->get($classNameParameter);
+    try {
+        $name = $parameter->getName();
+        $params[] = $container->get($name);
+    } catch(Exception $ex) {
+        $classNameParameter = $parameter->getType()->getName();        
+        $params[] = $container->get($classNameParameter);
+    }
 }
+
 
 $reflectionMethod->invokeArgs($objController, $params);
 

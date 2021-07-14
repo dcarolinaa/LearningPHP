@@ -1,11 +1,28 @@
 RewriteEngine on
 
+### Companies
 RewriteRule ^mis-negocios$ index.php?controller=Companies&method=index [L]
-
 RewriteRule ^mis-negocios/nuevo index.php?controller=Companies&method=create [L]
 RewriteRule ^mis-negocios/editar/([0-9]+) index.php?controller=Companies&method=edit&id=$1 [L]
 RewriteRule ^mis-negocios/confirm-delete/([0-9]+) index.php?controller=Companies&method=confirm&id=$1 [L]
 RewriteRule ^mis-negocios/delete/([0-9]+) index.php?controller=Companies&method=delete&id=$1 [L]
 RewriteRule ^mis-negocios/store index.php?controller=Companies&method=store [L]
 RewriteRule ^mis-negocios/update index.php?controller=Companies&method=update [L]
-RewriteRule ^mis-negocios/([0-9]+) index.php?controller=Companies&method=show&id=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)$ index.php?controller=Companies&method=show&id=$1 [L]
+
+### Branches
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/nuevo index.php?controller=Branches&method=create&id_company=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/store$ index.php?controller=Branches&method=store&id_company=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/confirm-delete$ index.php?controller=Branches&method=confirmDelete&id_company=$1&id_branch=$2 [L]
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/delete$ index.php?controller=Branches&method=delete&id_company=$1&id_branch=$2 [L]
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/edit index.php?controller=Branches&method=edit&id_company=$1&id_branch=$2 [L]
+RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/update index.php?controller=Branches&method=update&id_company=$1&id_branch=$2 [L]
+
+### Teams
+RewriteRule ^mis-negocios/([0-9]+)/equipo$ index.php?controller=Workers&method=index&id_company=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)/equipo/invitacion$ index.php?controller=Workers&method=workerRequest&id_company=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)/equipo/send-invitacion$ index.php?controller=Workers&method=sendWorkerRequest&id_company=$1 [L]
+RewriteRule ^mis-negocios/([0-9]+)/equipo/confirm-remove-adminitration/([0-9]+)$ index.php?controller=Workers&method=confirmRemoveAdministration&id_company=$1&id_worker=$2 [L]
+RewriteRule ^mis-negocios/([0-9]+)/equipo/worker/([0-9]+)/delete$ index.php?controller=Workers&method=removeAdministration&id_company=$1&id_worker=$2 [L]
+RewriteRule ^mis-negocios/([0-9]+)/equipo/confirm-remove/([0-9]+)$ index.php?controller=Workers&method=confirmRemove&id_company=$1&id_worker=$2 [L]
+RewriteRule ^aceptar-invitacion/([0-9]+)/(.+)$ index.php?controller=Workers&method=acceptWorkerRequest&id_company=$1&hash=$2 [L]

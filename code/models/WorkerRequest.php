@@ -10,6 +10,7 @@ class WorkerRequest extends Model implements IModel{
     private $create_date;
     private $create_user;
     private $request_hash;
+    private $accepted;
 
     public static function getAttributes()
     {
@@ -19,7 +20,8 @@ class WorkerRequest extends Model implements IModel{
             'email',
             'create_date',
             'create_user',
-            'request_hash'
+            'request_hash',
+            'accepted'
         ];
     }
 
@@ -73,6 +75,14 @@ class WorkerRequest extends Model implements IModel{
 
     public function getRequest_hash(){
         return $this->request_hash;
-    }    
+    }
+    
+    public function setAccepted($accepted){
+        $this->accepted = $accepted;
+    }
+
+    public function getAccepted(){
+        return $this->accepted;
+    }
 
 }

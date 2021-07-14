@@ -22,17 +22,19 @@ class CreateUser{
         $this->addProfileUser = $addProfileUser;
     }
 
-    public function __invoke($data)
+    /**
+     * @param array<string,string> $data
+     */
+    public function __invoke(array $data): User
     {
         $user = new User;
-        $user->fill(
-            [                
-                'first_name' => $data['first_name'],
-                'last_name' => $data['last_name'],
-                'birthdate' => $data['birthdate'],
-                'email' => $data['email'],
-                'username' => $data['username']
-            ]);
+        $user->fill([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'] ,
+            'birthdate' => $data['birthdate'],
+            'email' => $data['email'],
+            'username' => $data['username']
+        ]);
         $user->setCreate_date(
             (new DateTime())->format('Y-m-d H:i:s')
         );        
@@ -43,6 +45,7 @@ class CreateUser{
         $this->saveEntity->__invoke($user);
         $this->sendEmailSignUp->__invoke($user, $hash);
         $this->addProfileUser->__invoke($user, User::ROLE_USER);
+        
         return $user;
     }
 }

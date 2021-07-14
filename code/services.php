@@ -2,6 +2,8 @@
 
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
+use App\repositories\WorkerRequestsRepository;
+use App\services\AcceptWorkerRequest;
 use App\services\CreateUser;
 use App\services\ErrorHelper;
 use App\services\GetAvatar;
@@ -14,6 +16,7 @@ use App\services\CreateBranch;
 use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
+use App\services\FlashVars;
 use App\services\GetUrlAvatar;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
@@ -30,6 +33,16 @@ $container->add(ISendEmailSignUp::class, function($container){
     return $service;
 });
 
+$container->add(FlashVars::class, function($container) {
+    return new FlashVars($_SESSION);
+});
+
+// $container->add('baseUrl', function(){
+//     return 'http://localhost:8081/';
+// });
+
+define('BASE_URL','http://localhost:8081/');
+
 $container->add(CreateUser::class)
     ->add(GetAvatar::class)
     ->add(GetUrlAvatar::class)
@@ -43,4 +56,6 @@ $container->add(CreateUser::class)
     ->add(CompaniesRepository::class)
     ->add(DeleteEntity::class)
     ->add(CreateWorkerRequest::class)
-    ->add(SendEmailWorkerRequest::class);
+    ->add(SendEmailWorkerRequest::class)
+    ->add(AcceptWorkerRequest::class)
+    ->add(WorkerRequestsRepository::class);

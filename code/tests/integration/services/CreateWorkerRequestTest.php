@@ -3,22 +3,29 @@
 namespace Tests\integration\services;
 
 use App\services\CreateWorkerRequest;
+use App\services\DeleteEntity;
 use \Faker\Generator as Faker;
 use Tests\TestCase;
 
 class CreateWorkerRequestTest extends TestCase{
     
-    public function testCreateWorkerRequest(){
+    public function testCreateWorkerRequest(): void 
+    {
         $faker = $this->getContainer()->get(Faker::class);
         $email = $faker->email;
 
         $createWorkerRequestService = $this->getContainer()->get(CreateWorkerRequest::class);
+        $deleteEntityService = $this->getContainer()->get(DeleteEntity::class);
 
         $worker_request = $createWorkerRequestService([
-            'id_company' => 1,
+            'id_company' => TestCase::COMPANY_1_ID,
             'email' => $email,            
-            'create_user' => 1, 
+            'create_user' => TestCase::ADMIN_COMPANY_1_ID, 
         ]);
+
+        $this->assertNotNull($worker_request->getId());
+
+        $deleteEntityService($worker_request);
         
     }
 
