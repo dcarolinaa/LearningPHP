@@ -12,15 +12,17 @@ class Branches extends Controller
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 
-    public function create() {        
+    public function create(string $googleApiKey): void {
         $this->view('branches/create', [
-            'company' => $this->company
+            'company' => $this->company,
+            'googleApiKey' => $googleApiKey
         ]);
     }
 
-    public function edit() {        
+    public function edit(string $googleApiKey) {
         $this->view('branches/edit', [
             'company' => $this->company,
+            'googleApiKey' => $googleApiKey,
             'i' => $_GET['id_branch']
         ]);
     }

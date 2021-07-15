@@ -5,6 +5,7 @@
             'action' => sprintf('/mis-negocios/%s/sucursales/%s/update', $company->getId(), $i),
             'callAction' => 'Guardar',
             'company' => $company,
+            'googleApiKey' => $googleApiKey,
             'i' => $i
         ], true);?> 
     </div>

@@ -55,16 +55,39 @@ class Container{
         return $reflectionClass->newInstance();
     }
 
-    private function getParameters(ReflectionMethod $reflectionMethod){
+    public function getParameters(ReflectionMethod $reflectionMethod){
         $parameters = $reflectionMethod->getParameters();
         $params = [];
-
-        foreach($parameters as $parameter){
-            $classNameParameter = $parameter->getType()->getName();
-            $params[] = $this->get($classNameParameter);
+        foreach($parameters as $parameter) {
+            
+            try {
+                $name = $parameter->getName();
+                $params[] = $this->get($name);
+            } catch(Exception $ex) {
+                $classNameParameter = $parameter->getType()->getName();        
+                $params[] = $this->get($classNameParameter);
+            }
         }
 
         return $params;
+    }
+
+    public function addConfigurations(string $className): self
+    {
+        $reflectionClass = new \ReflectionClass($className);
+        $consts = $reflectionClass->getConstants();
+        foreach ($consts as $const => $value) {
+            $constCamel = lcfirst(
+                str_replace(
+                    ' ', 
+                    '', 
+                    ucwords(str_replace('_', ' ', strtolower($const)))
+                )
+            );
+            $this->add($constCamel, fn(): mixed => $value);
+        }
+        
+        return $this;
     }
 
 }

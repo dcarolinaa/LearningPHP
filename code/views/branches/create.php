@@ -4,7 +4,8 @@
         <?php echo $this->view('branches/_form', [
             'action' => sprintf('/mis-negocios/%s/sucursales/store', $company->getId()),
             'company' => $company,
-            'callAction' => 'Crear'
+            'callAction' => 'Crear',
+            'googleApiKey' => $googleApiKey
         ], true);?> 
     </div>
 </div>

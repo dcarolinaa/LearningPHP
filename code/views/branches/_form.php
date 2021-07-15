@@ -81,6 +81,6 @@
     }
 </script>
 <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGKcOJZpOSqm9Z1nMiGU1xzvvhm_25Vhg&callback=initMap&libraries=&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=<?php echo $googleApiKey?>&callback=initMap&libraries=&v=weekly"
     async
 ></script>

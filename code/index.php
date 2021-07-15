@@ -49,35 +49,16 @@ $container->add('method', function() use ($method) {
 $reflectionClass = new ReflectionClass($controllerClass);
 $controllerCostructor = $reflectionClass->getConstructor();
 $parameters = $controllerCostructor->getParameters();
-$params = [];
-foreach($parameters as $parameter){
-    try {
-        $name = $parameter->getName();
-        $params[] = $container->get($name);
-    } catch(Exception $ex) {
-        $classNameParameter = $parameter->getType()->getName();        
-        $params[] = $container->get($classNameParameter);
-    }
-}
 
+$params = $container->getParameters($controllerCostructor);
 $objController = $reflectionClass->newInstanceArgs($params);
 $objController->setContainer($container);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 
 $parameters = $reflectionMethod->getParameters();
-$params = [];
-foreach($parameters as $parameter){
-    try {
-        $name = $parameter->getName();
-        $params[] = $container->get($name);
-    } catch(Exception $ex) {
-        $classNameParameter = $parameter->getType()->getName();        
-        $params[] = $container->get($classNameParameter);
-    }
-}
 
-
+$params = $container->getParameters($reflectionMethod);
 $reflectionMethod->invokeArgs($objController, $params);
 
 $objController->renderTemplate();

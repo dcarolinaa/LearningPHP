@@ -1,5 +1,6 @@
 <?php
 
+use App\Config;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -37,11 +38,7 @@ $container->add(FlashVars::class, function($container) {
     return new FlashVars($_SESSION);
 });
 
-// $container->add('baseUrl', function(){
-//     return 'http://localhost:8081/';
-// });
-
-define('BASE_URL','http://localhost:8081/');
+$container->addConfigurations(Config::class);
 
 $container->add(CreateUser::class)
     ->add(GetAvatar::class)
