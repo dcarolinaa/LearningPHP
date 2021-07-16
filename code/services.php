@@ -14,11 +14,13 @@ use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
 use App\services\CreateBranch;
+use App\services\CreateWorker;
 use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\FlashVars;
 use App\services\GetUrlAvatar;
+use App\services\InitSession;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 
@@ -55,4 +57,6 @@ $container->add(CreateUser::class)
     ->add(CreateWorkerRequest::class)
     ->add(SendEmailWorkerRequest::class)
     ->add(AcceptWorkerRequest::class)
-    ->add(WorkerRequestsRepository::class);
+    ->add(WorkerRequestsRepository::class)
+    ->add(CreateWorker::class)
+    ->add(InitSession::class);

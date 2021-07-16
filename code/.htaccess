@@ -26,3 +26,4 @@ RewriteRule ^mis-negocios/([0-9]+)/equipo/confirm-remove-adminitration/([0-9]+)$
 RewriteRule ^mis-negocios/([0-9]+)/equipo/worker/([0-9]+)/delete$ index.php?controller=Workers&method=removeAdministration&id_company=$1&id_worker=$2 [L]
 RewriteRule ^mis-negocios/([0-9]+)/equipo/confirm-remove/([0-9]+)$ index.php?controller=Workers&method=confirmRemove&id_company=$1&id_worker=$2 [L]
 RewriteRule ^aceptar-invitacion/([0-9]+)/(.+)$ index.php?controller=Workers&method=acceptWorkerRequest&id_company=$1&hash=$2 [L]
+RewriteRule ^registro/(.+)$ index.php?controller=Users&method=signUp&hash=$1 [L]

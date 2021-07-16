@@ -4,6 +4,9 @@ namespace App\models;
 
 class WorkerRequest extends Model implements IModel{
 
+    const NOT_ACCEPTED = 0;
+    const ACCEPTED = 1;
+    
     protected $id;
     private $id_company;
     private $email;

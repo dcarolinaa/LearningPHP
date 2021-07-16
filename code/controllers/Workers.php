@@ -2,8 +2,12 @@
 namespace App\controllers;
 
 use App\repositories\CompaniesRepository;
+use App\repositories\UsersRepository;
+use App\repositories\WorkerRequestsRepository;
 use App\services\AcceptWorkerRequest;
 use App\services\CreateWorkerRequest;
+use App\services\InitSession;
+use Exception;
 
 class Workers extends Controller {
     
@@ -39,10 +43,24 @@ class Workers extends Controller {
         $this->redirectTo(sprintf('/mis-negocios/%s/equipo', $id));
     }
 
-    public function acceptWorkerRequest(AcceptWorkerRequest $acceptWorkerRequest){
-        $acceptWorkerRequest($_GET['hash']);
+    public function acceptWorkerRequest(
+        AcceptWorkerRequest $acceptWorkerRequest, 
+        WorkerRequestsRepository $workerRequestsRepository,
+        UsersRepository $usersRepository,
+        InitSession $initSession
+    ){
+        $hash = $_GET['hash'];
+        try
+        {
+            $acceptWorkerRequest($hash);            
+            $workerRequest = $workerRequestsRepository->getByHash($hash);
+            $user = $usersRepository->getByEmail($workerRequest->getEmail());
+            $initSession($user, $_SESSION);
+            $this->redirectTo('/');
 
-        die("C:");
+        }catch(Exception $ex){
+            $this->redirectTo(sprintf('/registro/%s', $hash));            
+        }
     }
 
     public function confirmRemoveAdministration() {
