@@ -1,8 +1,7 @@
 <?php
 namespace App\services;
 
-use PDO;
-use App\Config;
+use App\config\Config;
 use App\models\IModel;
 use Exception;
 

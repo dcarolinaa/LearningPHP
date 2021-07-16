@@ -3,7 +3,7 @@
 namespace App; //lo primero en el archivo
 session_start();
 
-include './vendor/autoload.php';
+include '../vendor/autoload.php';
 
 //Index es el punto de acceso y la siguiente funcion crea los includes "dinamicos"
 /*spl_autoload_register(function($className){
@@ -29,7 +29,7 @@ $defaultMethod = 'index';
 
 $container = new Container();
 
-include "services.php";
+include "../config/services/services.php";
 
 $controller = isset($_GET['controller']) ? $_GET['controller'] : $defaultController;
 $method = isset($_GET['method']) ? $_GET['method'] : $defaultMethod;

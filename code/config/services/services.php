@@ -1,6 +1,6 @@
 <?php
 
-use App\Config;
+use App\config\Config;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;

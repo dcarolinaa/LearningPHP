@@ -21,7 +21,7 @@ services:
       - ./docker/data/ssh/known_hosts:/root/.ssh/known_hosts
       - ./docker/config/apache/apache2.conf:/etc/apache2/apache2.conf
       - ./:/root/repository
-      - ./code:/var/www/html
+      - ./code:/var/www
 
   mysql:
     image: mysql:5.7

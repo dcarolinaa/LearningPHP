@@ -85,7 +85,7 @@ class Controller{
     public function view($view, $data, $return = false){
         extract($data);//array asociativo se obtienen las variables
         ob_start();
-            $view = sprintf('views/%s.php', $view);
+            $view = sprintf('../views/%s.php', $view);
             include $view;
         $out = ob_get_clean();
         if($return){
@@ -113,7 +113,7 @@ class Controller{
         extract($this->getTemplateData());
         $flashVars = $this->getContainer()->get(FlashVars::class);
         $__notification = $flashVars->get('__notification');
-        include "views/{$this->template}.php";
+        include "../views/{$this->template}.php";
     }
 
     public function getURL($method, $controller = null, $data = [], $relative = true){
