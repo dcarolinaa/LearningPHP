@@ -23,20 +23,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for($i=0; $i<10; $i++): ?>
+                    <?php foreach($workers as $worker): ?>
                     <tr>
                         <td>
-                            Empleado <?php echo $i?>
+                            <?php printf('%s %s', $worker['first_name'], $worker['last_name'] ) ?>
                         </td>
                         <td>432761598</td>                        
                         <td>@sushigo                         
-                            <a href="/mis-negocios/<?php echo $company->getId()?>/equipo/confirm-remove-adminitration/<?php echo $i?>" class="text-danger"><i class="align-middle me-2" data-feather="minus-circle"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getId()?>/equipo/confirm-remove-adminitration/<?php echo $worker['id']?>" class="text-danger"><i class="align-middle me-2" data-feather="minus-circle"></i></a>
                         </td>
                         <td>
-                            <a href="/mis-negocios/<?php echo $company->getId()?>/equipo/confirm-remove/<?php echo $i?>" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getId()?>/equipo/confirm-remove/<?php echo $worker['id']?>" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
                         </td>
                     </tr>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

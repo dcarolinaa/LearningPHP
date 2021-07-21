@@ -1,10 +1,10 @@
 <?php
 
 use App\config\Config;
-use App\models\User;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
+use App\repositories\WorkersRepository;
 use App\services\AcceptWorkerRequest;
 use App\services\CreateUser;
 use App\services\ErrorHelper;
@@ -65,4 +65,5 @@ $container->add(CreateUser::class)
     ->add(SendEmailWorkerRequest::class)
     ->add(AcceptWorkerRequest::class)
     ->add(WorkerRequestsRepository::class)
-    ->add(CreateWorker::class);
+    ->add(CreateWorker::class)
+    ->add(WorkersRepository::class);

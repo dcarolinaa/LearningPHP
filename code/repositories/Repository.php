@@ -4,7 +4,6 @@ namespace App\repositories;
 
 use App\services\GetDBConnection;
 use PDO;
-use ReflectionClass;
 use ReflectionMethod;
 
 abstract class Repository{
@@ -22,7 +21,7 @@ abstract class Repository{
         return $table = $getTable->invoke(null);
     }
 
-    private function buildResult($result){
+    protected function buildResult($result){
         $buil = new ReflectionMethod($this->getClassName(), 'build');
         return $result !== false ? $buil->invokeArgs(null, [$result]) : null;
     }

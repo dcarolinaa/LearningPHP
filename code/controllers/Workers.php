@@ -1,9 +1,11 @@
 <?php 
 namespace App\controllers;
 
+use App\models\Company;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
+use App\repositories\WorkersRepository;
 use App\services\AcceptWorkerRequest;
 use App\services\CreateWorkerRequest;
 use App\services\InitSession;
@@ -18,9 +20,10 @@ class Workers extends Controller {
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 
-    public function index() {
+    public function index(WorkersRepository $workersRepository) {
         $this->view('workers/index', [
-            'company' => $this->company
+            'company' => $this->company,
+            'workers' => $workersRepository->getAllByCompany($this->company->getId())
         ]);
     }
 
