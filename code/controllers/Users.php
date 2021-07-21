@@ -8,6 +8,7 @@ use App\services\ErrorHelper;
 use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
+use App\services\InitSession;
 use App\services\SaveEntity;
 use App\services\UserHasProfile;
 use DateInterval;
@@ -134,19 +135,14 @@ class Users extends Controller{ //Clase
         $this->redirectTo($this->getURL('signIn', $this));
     }
 
-    public function login(UserHasProfile $userHasProfile){
+    public function login(InitSession $initSession){
         $userRepository = new UsersRepository();
         $username = $_POST['username'];
         $password = $_POST['password'];
         
         $user = $userRepository->getByEmailOrUserName($username);
-        if($user->getPassword() ===  md5($password)){
-            $userId = $user->getId();
-            $_SESSION['loged'] = true;
-            $_SESSION['username'] = $user->getUserName();
-            $_SESSION['user_id'] = $user->getId();
-            $_SESSION['isAdmin'] = $userHasProfile(User::ROLE_ADMIN, $userId);
-            $_SESSION['isSuperAdmin'] = $userHasProfile(User::ROLE_SUPERADMIN, $userId);
+        if($user->getPassword() ===  md5($password)){            
+            $initSession($user);
             $myprofile = $this->getURL('myprofile', $this);
             $this->redirectTo($myprofile);
         }
@@ -176,7 +172,7 @@ class Users extends Controller{ //Clase
         ]);
     }
 
-    public function validateEmail(){                
+    public function validateEmail(InitSession $initSession){                
         $saveEntity = new SaveEntity();
         $email = $_GET['email'];
         $hash = $_GET['hash'];
@@ -187,10 +183,14 @@ class Users extends Controller{ //Clase
         {
             die("hash no valido");
         }
-
+        
         $user->setEmail_validated(User::EMAIL_VALIDATED);
         $saveEntity($user);
-        die("valido");
+        
+        $this->flashNotification('El email ha sido validado');        
+        $initSession->__invoke($user);
+
+        $this->redirectTo('/');
     }
 
     public function store(CreateUser $createUser){

@@ -7,20 +7,23 @@ use App\models\User;
 class InitSession{
 
     private $userHasProfile;
+    private $session;
 
-    public function __construct(UserHasProfile $userHasProfile)
+    public function __construct(UserHasProfile $userHasProfile, &$session)
     {
-        $this->userHasProfile = $userHasProfile;        
+        $this->userHasProfile = $userHasProfile;
+        $this->session = &$session;
     }
 
-    public function __invoke(User $user, &$session)
+    public function __invoke(User $user)
     {
+        $this->session = [];
         $userId = $user->getId();
-        $session['loged'] = true;
-        $session['username'] = $user->getUserName();
-        $session['user_id'] = $user->getId();
-        $session['isAdmin'] = $this->userHasProfile->__invoke(User::ROLE_ADMIN, $userId);
-        $session['isSuperAdmin'] = $this->userHasProfile->__invoke(User::ROLE_SUPERADMIN, $userId);                
+        $this->session['loged'] = true;
+        $this->session['username'] = $user->getUserName();
+        $this->session['user_id'] = $user->getId();
+        $this->session['isAdmin'] = $this->userHasProfile->__invoke(User::ROLE_ADMIN, $userId);
+        $this->session['isSuperAdmin'] = $this->userHasProfile->__invoke(User::ROLE_SUPERADMIN, $userId);
     }
 
 }

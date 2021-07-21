@@ -55,7 +55,7 @@ class Workers extends Controller {
             $acceptWorkerRequest($hash);            
             $workerRequest = $workerRequestsRepository->getByHash($hash);
             $user = $usersRepository->getByEmail($workerRequest->getEmail());
-            $initSession($user, $_SESSION);
+            $initSession($user);
             $this->redirectTo('/');
 
         }catch(Exception $ex){

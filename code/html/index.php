@@ -24,8 +24,8 @@ use Exception;
 use ReflectionMethod;
 use ReflectionClass;
 
-$defaultController = 'Preferences';
-$defaultMethod = 'index';
+$defaultController = 'Users';
+$defaultMethod = 'myprofile';
 
 $container = new Container();
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\config\Config;
+use App\models\User;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -40,6 +41,12 @@ $container->add(FlashVars::class, function($container) {
     return new FlashVars($_SESSION);
 });
 
+$container->add(InitSession::class, function($container){
+    $serviceUserHasProfile = $container->get(UserHasProfile::class);
+    $initSession = new InitSession($serviceUserHasProfile, $_SESSION);
+    return $initSession;
+});
+
 $container->addConfigurations(Config::class);
 
 $container->add(CreateUser::class)
@@ -58,5 +65,4 @@ $container->add(CreateUser::class)
     ->add(SendEmailWorkerRequest::class)
     ->add(AcceptWorkerRequest::class)
     ->add(WorkerRequestsRepository::class)
-    ->add(CreateWorker::class)
-    ->add(InitSession::class);
+    ->add(CreateWorker::class);

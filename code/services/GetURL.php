@@ -1,7 +1,7 @@
 <?php
 namespace App\services;
 
-use App\Config;
+use App\config\Config;
 
 class GetURL{
 

@@ -13,7 +13,7 @@ class SendEmailSignUp implements ISendEmailSignUp{
 
     public function __invoke($user, $hash)
     {
-        $link = $this->getURL->__invoke('validateEmail', $this, [
+        $link = $this->getURL->__invoke('validateEmail', 'Users', [
             'hash' => $hash,
             'email' => $user->getEmail()
         ], false);
