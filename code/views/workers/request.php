@@ -16,6 +16,13 @@
                         <label class="form-label">Email:</label>
                         <input class="form-control form-control-lg" value="" type="text" name="email" placeholder="Nombre">
                     </div>
+                    <div class="col-md-6 offset-md-3">
+                        <label class="form-label">Perfil:</label>
+                        <select class="form-control">
+                            <option value="">Administrador de sucursal</option>
+                            <option value="">Repartidor</option>
+                        </select>
+                    </div>
                     <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        
                         <button type="submit" class="btn btn-lg btn-primary me-2">Enviar</button>
                         <a href="/mis-negocios" class="btn btn-lg btn-secondary" >Cancelar</a>
