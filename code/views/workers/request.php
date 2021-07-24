@@ -18,9 +18,9 @@
                     </div>
                     <div class="col-md-6 offset-md-3">
                         <label class="form-label">Perfil:</label>
-                        <select class="form-control">
-                            <option value="">Administrador de sucursal</option>
-                            <option value="">Repartidor</option>
+                        <select class="form-control" name="rol">
+                            <option value="<?php echo $rolBranchAdmin ?>">Administrador de sucursal</option>
+                            <option value="<?php echo $rolDelivery ?>">Repartidor</option>
                         </select>
                     </div>
                     <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        

@@ -2,6 +2,7 @@
 namespace App\controllers;
 
 use App\models\Company;
+use App\models\User;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -29,7 +30,9 @@ class Workers extends Controller {
 
     public function workerRequest() {
         $this->view('workers/request', [
-            'company' => $this->company
+            'company' => $this->company,
+            'rolBranchAdmin' => User::ROLE_BRANCADMIN,
+            'rolDelivery' => User::ROLE_DELIVERY
         ]);
     }
 
@@ -40,7 +43,8 @@ class Workers extends Controller {
         $createWorkerRequest([
             'id_company' => $id,
             'email' => $email,
-            'create_user' => $_SESSION['user_id']
+            'create_user' => $_SESSION['user_id'],
+            'rol' => $_POST['rol']
             ]);
         $this->flashNotification(sprintf('Se envió la invitación a %s', $email), 'success');
         $this->redirectTo(sprintf('/mis-negocios/%s/equipo', $id));

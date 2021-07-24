@@ -10,7 +10,6 @@ use App\services\GetURL;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
 use App\services\SaveEntity;
-use App\services\UserHasProfile;
 use DateInterval;
 use DateTime;
 use Imagine\Gd\Imagine;
@@ -195,7 +194,7 @@ class Users extends Controller{ //Clase
 
     public function store(CreateUser $createUser){
         $errorHelper = new ErrorHelper($_SESSION);
-        $attributes = ['first_name','last_name','birthdate','email','username','password'];
+        $attributes = ['first_name','last_name','birthdate','email','phone_number','username','password'];
 
         foreach($attributes as $att){
             if(trim($_POST[$att]) == ''){

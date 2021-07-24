@@ -8,13 +8,17 @@ class User extends Model implements IModel{
     const ROLE_SUPERADMIN = 1;
     const ROLE_ADMIN = 2;
     const ROLE_USER = 3;
-    const EMAIL_VALIDATED = 1;
+    const ROLE_WORKER = 4;
+    const ROLE_BRANCADMIN = 5;
+    const ROLE_DELIVERY = 6;
+    const EMAIL_VALIDATED = 1;    
     
     protected $id;
     private $first_name;
     private $last_name;
     private $birthdate;
     private $email;
+    private $phone_number;
     private $username;
     private $password;
     private $create_date;
@@ -64,6 +68,14 @@ class User extends Model implements IModel{
 
     public function getEmail(){
         return $this->email;
+    }
+
+    public function setPhone_number($phone_number){
+        $this->phone_number = $phone_number;
+    }
+
+    public function getPhone_number(){
+        return $this->phone_number;
     }
 
     public function setUsername($username){
@@ -118,6 +130,7 @@ class User extends Model implements IModel{
             'last_name',
             'birthdate',
             'email',
+            'phone_number',
             'username',
             'password',
             'create_date',            

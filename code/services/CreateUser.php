@@ -33,6 +33,7 @@ class CreateUser{
             'last_name' => $data['last_name'] ,
             'birthdate' => $data['birthdate'],
             'email' => $data['email'],
+            'phone_number' => $data['phone_number'],
             'username' => $data['username']
         ]);
         $user->setCreate_date(

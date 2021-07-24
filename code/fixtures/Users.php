@@ -17,6 +17,7 @@ class Users{
                 'last_name' => '',
                 'birthdate' => $faker->date('Y-m-d'),
                 'email' => 'admin@romitogo.com',
+                'phone_number' => $faker->randomNumber(6),
                 'username' => 'romitogo',
                 'password' => 'password'
         ]);
@@ -29,6 +30,7 @@ class Users{
                 'last_name' => '',
                 'birthdate' => $faker->date('Y-m-d'),
                 'email' => 'admin@sushigo.com',
+                'phone_number' => $faker->randomNumber(6),
                 'username' => 'sushigo',
                 'password' => 'password'
         ]);
@@ -41,6 +43,7 @@ class Users{
                     'last_name' => $faker->lastName,
                     'birthdate' => $faker->date('Y-m-d'),
                     'email' => $faker->email,
+                    'phone_number' => $faker->randomNumber(6),
                     'username' => $faker->userName,
                     'password' => 'password'
             ];

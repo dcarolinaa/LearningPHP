@@ -28,7 +28,9 @@
                         <td>
                             <?php printf('%s %s', $worker['first_name'], $worker['last_name'] ) ?>
                         </td>
-                        <td>432761598</td>                        
+                        <td>
+                            <?php printf('%s', $worker['phone_number']) ?>
+                        </td>
                         <td>@sushigo                         
                             <a href="/mis-negocios/<?php echo $company->getId()?>/equipo/confirm-remove-adminitration/<?php echo $worker['id']?>" class="text-danger"><i class="align-middle me-2" data-feather="minus-circle"></i></a>
                         </td>

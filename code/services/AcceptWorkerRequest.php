@@ -33,6 +33,7 @@ class AcceptWorkerRequest{
     {
         $workerRequest = $this->workerRequestRepository->getByHash($hash);
         $workerRequest->setAccepted(true);
+        $rol = $workerRequest->getRol();
 
         $this->saveEntity->__invoke($workerRequest);
 
@@ -45,7 +46,8 @@ class AcceptWorkerRequest{
 
         return $this->createWorker->__invoke([
             'id_company' => $workerRequest->getId_Company(),
-            'id_user' => $user->getId()
+            'user' => $user,
+            'rol' => $rol
         ]);
 
     }

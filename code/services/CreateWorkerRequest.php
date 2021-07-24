@@ -22,7 +22,8 @@ class CreateWorkerRequest{
             'id_company' => $data['id_company'],
             'email' => $data['email'],            
             'create_user' => $data['create_user'],
-            'accepted' => WorkerRequest::NOT_ACCEPTED
+            'accepted' => WorkerRequest::NOT_ACCEPTED,
+            'rol' => $data['rol']
         ]);
         $workerRequest->setCreate_date(
             (new DateTime())->format('Y-m-d H:i:s')
