@@ -2,33 +2,24 @@
 
 namespace Tests\functional;
 
-use PHPUnit\Framework\TestCase;
 use App\services\GetURL;
 use GuzzleHttp\Client;
 use DateTime;
+use Tests\TestCase as TestsTestCase;
 
-class UserTest extends TestCase{
+class UserTest extends TestsTestCase{
 
     private $getURL;
     private $client;
 
     public function setUp() : void{    
-        $this->getURL = new GetURL;
+        $this->getURL = $this->getContainer()->get(GetURL::class);
         $this->client = new Client();
     }
 
-    // public function testPage(){
-    //     //http://localhost:8081/?controller=Users&method=signUp
-    // }
-
-    public function testCreateSuperAdmin(){
-        //die('kesatapasanda');
-        //'first_name','last_name','birthdate','email','username','password'        
-        $url = $this->getURL->__invoke('store', 'Users', [], false);  
+    public function testCreateSuperAdmin() {
+        $url = $this->getURL->__invoke('store', 'Users', [], false);
         
-        // var_dump($url);
-        // die();
-
         $response = $this->client->request('POST', $url, [
             'form_params' => [
                 'first_name' => 'Admin',
@@ -36,14 +27,12 @@ class UserTest extends TestCase{
                 'birthdate' => (new DateTime())->format('Y-m-d H:i:s'),
                 'email' => 'admin@admin.com',
                 'username' => 'Admin',
-                'password' => 'Admin123'
+                'password' => 'Admin123',
+                'phone_number' => '123'
             ],
             'allow_redirects' => false
         ]);
-
         $this->assertSame(302, $response->getStatusCode());	
     }
-
-    //Evaluar el servicio ... 
 
 }

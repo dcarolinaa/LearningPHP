@@ -52,7 +52,6 @@ $parameters = $controllerCostructor->getParameters();
 
 $params = $container->getParameters($controllerCostructor);
 $objController = $reflectionClass->newInstanceArgs($params);
-$objController->setContainer($container);
 
 $reflectionMethod = new ReflectionMethod($controllerClass, $method);
 

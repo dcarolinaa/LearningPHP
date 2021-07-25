@@ -1,6 +1,7 @@
 <?php 
 namespace App\controllers;
 
+use App\Container;
 use App\models\Company;
 use App\models\User;
 use App\repositories\CompaniesRepository;
@@ -16,8 +17,8 @@ class Workers extends Controller {
     
     private $company;
 
-    public function __construct(string $method, CompaniesRepository $companiesRepository) {
-        parent::__construct($method, $companiesRepository);
+    public function __construct(string $method, Container $container, CompaniesRepository $companiesRepository) {
+        parent::__construct($method, $container);
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 

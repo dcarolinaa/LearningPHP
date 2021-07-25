@@ -1,14 +1,15 @@
 <?php
 namespace App\controllers;
 
+use App\Container;
 use App\repositories\CompaniesRepository;
 
 class Branches extends Controller
 {
     private $company;
 
-    public function __construct($method, CompaniesRepository $companiesRepository) {
-        parent::__construct($method);
+    public function __construct($method,Container $container, CompaniesRepository $companiesRepository) {
+        parent::__construct($method, $container);
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\controllers;
 
+use App\Container;
 use App\models\User;
 use App\repositories\UsersRepository;
 use App\services\FlashVars;
@@ -18,11 +19,10 @@ class Controller{
     private $template = 'template';
 
     protected $publicMethods = [];
-    protected $getURL;
     protected $container;
 
-    public function __construct($method){        
-        $this->getURL = new GetURL();
+    public function __construct($method, Container $container) {
+        $this->setContainer($container);
         $this->validateSession($method);
     }
 
@@ -37,6 +37,8 @@ class Controller{
 
     private function validateSession($method){
         if(!isset($_SESSION['user_id']) && in_array($method, $this->publicMethods) == false){
+            //$getURL = $this->getContainer()->get(GetURL::class);
+            
             $this->redirectTo($this->getURL('signIn','Users'));
         }
     }
@@ -117,7 +119,8 @@ class Controller{
     }
 
     public function getURL($method, $controller = null, $data = [], $relative = true){
-        return $this->getURL->__invoke($method, $controller, $data, $relative);
+        $getURL = $this->getContainer()->get(GetURL::class);
+        return $getURL->__invoke($method, $controller, $data, $relative);
     }
 
     public function goBack(){

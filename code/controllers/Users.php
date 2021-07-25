@@ -14,8 +14,7 @@ use DateInterval;
 use DateTime;
 use Imagine\Gd\Imagine;
 
-
-class Users extends Controller{ //Clase
+class Users extends Controller {
 
     protected $publicMethods = ['signIn','login','signUp','store','validateEmail'];
     
@@ -23,11 +22,9 @@ class Users extends Controller{ //Clase
             $this->view('users/my-profile', []);                
     }
 
-    public function settings(){        
-        $errorHelper = new ErrorHelper($_SESSION);
-        $userRepository = new UsersRepository();
+    public function settings(GetUrlAvatar $getUrlAvatar, UsersRepository $userRepository) {
+        $errorHelper = new ErrorHelper($_SESSION);        
         $user = $userRepository->getById($_SESSION['user_id']);
-        $getUrlAvatar = new GetUrlAvatar();
         $this->view('users/settings',[
             'saveAvatarAction' => $this->getURL('saveAvatar', $this),
             'userAvatar' => $getUrlAvatar($user),
@@ -212,8 +209,6 @@ class Users extends Controller{ //Clase
         }
 
         $user = $createUser($_POST);
-        
-        $getULR = new GetURL();
         
         $this->redirectTo($this->getURL('signIn', $this));
     }

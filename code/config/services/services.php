@@ -1,6 +1,7 @@
 <?php
 
 use App\config\Config;
+use App\Container;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -66,4 +67,8 @@ $container->add(CreateUser::class)
     ->add(AcceptWorkerRequest::class)
     ->add(WorkerRequestsRepository::class)
     ->add(CreateWorker::class)
-    ->add(WorkersRepository::class);
+    ->add(WorkersRepository::class)
+    ->add(Container::class, function($container) {
+        return $container;
+    })    
+;

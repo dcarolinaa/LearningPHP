@@ -5,6 +5,10 @@ use App\config\Config;
 
 class GetURL{
 
+    private $baseUrl;
+    public function __construct(string $baseUrl) {
+        $this->baseUrl = $baseUrl;
+    }
     public function __invoke($method, $controller, $data = [], $relative = true)
     {
         if(true === is_object($controller)){
@@ -24,6 +28,6 @@ class GetURL{
             return sprintf('/?%s', http_build_query($data));
         }
 
-        return sprintf('%s?%s', Config::BASE_URL, http_build_query($data));
+        return sprintf('%s?%s', $this->baseUrl, http_build_query($data));
     }
 }

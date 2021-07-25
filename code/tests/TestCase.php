@@ -18,12 +18,16 @@ class TestCase extends PHPUnitTestCase{
         parent::__construct();
         $container = new Container();
 
-        include __DIR__."/../services.php";
-        include __DIR__."/../services.test.php";
+        include __DIR__."/../config/services/services.php";
+        include __DIR__."/../config/services/services.test.php";
         $this->container = $container;
     }
 
     protected function getContainer(){
         return $this->container;
+    }
+
+    protected function getBaseUrl() {
+        return $this->getContainer()->get('baseUrl');
     }
 }
