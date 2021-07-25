@@ -19,7 +19,7 @@ class Users extends Controller {
     protected $publicMethods = ['signIn','login','signUp','store','validateEmail'];
     
     public function myprofile(){                 
-            $this->view('users/my-profile', []);                
+        $this->view('users/my-profile', []);
     }
 
     public function settings(GetUrlAvatar $getUrlAvatar, UsersRepository $userRepository) {

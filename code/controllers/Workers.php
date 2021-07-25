@@ -16,7 +16,6 @@ use Exception;
 class Workers extends Controller {
     
     private $company;
-
     protected $validProfiles = [User::ROLE_ADMIN];
 
     public function __construct(string $method, Container $container, CompaniesRepository $companiesRepository) {

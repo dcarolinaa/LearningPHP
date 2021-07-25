@@ -33,11 +33,32 @@ class Controller{
         return $this->container;
     }
 
+    private function error404() {
+        header("HTTP/1.1 404 Not Found");
+        die;
+    }
+
     private function validateSession($method){
         if(!isset($_SESSION['user_id']) && in_array($method, $this->publicMethods) == false){
-            //$getURL = $this->getContainer()->get(GetURL::class);
-            
             $this->redirectTo($this->getURL('signIn','Users'));
+        }
+
+        
+        $valid = true;
+        if(!empty($this->validProfiles))
+        {
+            $valid = false;
+            foreach($_SESSION['roles'] as $rol){
+                $valid = in_array($rol, $this->validProfiles);
+                if($valid) {
+                    break;
+                }                
+            }
+        }
+
+        if(!$valid) {
+            header("HTTP/1.1 404 Not Found");
+            die;
         }
 
     }

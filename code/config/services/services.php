@@ -45,7 +45,8 @@ $container->add(FlashVars::class, function($container) {
 
 $container->add(InitSession::class, function($container){
     $serviceUserHasProfile = $container->get(UserHasProfile::class);
-    $initSession = new InitSession($serviceUserHasProfile, $_SESSION);
+    $serviceUsersRepository = $container->get(UsersRepository::class);
+    $initSession = new InitSession($serviceUserHasProfile, $_SESSION, $serviceUsersRepository);
     return $initSession;
 });
 

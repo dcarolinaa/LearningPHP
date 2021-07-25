@@ -50,27 +50,22 @@ class UsersRepository extends Repository{
         return $result !== false ?  User::build($result) : null;
     }
 
-    // public function getAll(){
-    //     $sql = 'SELECT * FROM countries';
-    //     $connection = $this->getDBConnection->__invoke();
-    //     $statement = $connection->prepare($sql);
-    //     $statement->execute();
-    //     $data = [];
-    //     while($result = $statement->fetch(PDO::FETCH_ASSOC)){
-    //         $data[] = Country::build($result);
-    //     }
-    //     return $data;
-    // }
+    public function getUserProfiles($id){
+        $sql = 'SELECT id_rol FROM user_roles where id_user = :id_user';
+        $connection = $this->getDBConnection->__invoke();
 
-    // public function getLast(){
-    //     $sql = 'SELECT * from countries order by id desc LIMIT 1';
-    //     $connection = $this->getDBConnection->__invoke();
-    //     $statement = $connection->prepare($sql);
-    //     $statement->execute();
-    //     $result = $statement->fetch(PDO::FETCH_ASSOC);
+        $statement = $connection->prepare($sql);
+        $statement->execute([
+            ":id_user" => $id
+        ]);
 
-    //     //return Country::build($result);
-    //     return $result !== false ?  Country::build($result) : null;
-    // }
+        $result = [];
+        while($row = $statement->fetch(PDO::FETCH_ASSOC))
+        {
+            $result[] = (int)$row['id_rol'];            
+        }
+
+        return $result;
+    }
 
 }
