@@ -2,8 +2,8 @@
 namespace App\controllers;
 
 use App\Container;
-use App\models\Company;
 use App\models\User;
+use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -17,6 +17,8 @@ class Workers extends Controller {
     
     private $company;
 
+    protected $validProfiles = [User::ROLE_ADMIN];
+
     public function __construct(string $method, Container $container, CompaniesRepository $companiesRepository) {
         parent::__construct($method, $container);
         $this->company = $companiesRepository->getById($_GET['id_company']);
@@ -29,11 +31,12 @@ class Workers extends Controller {
         ]);
     }
 
-    public function workerRequest() {
+    public function workerRequest(BranchesRepository $branchesRepository) {
         $this->view('workers/request', [
             'company' => $this->company,
-            'rolBranchAdmin' => User::ROLE_BRANCADMIN,
-            'rolDelivery' => User::ROLE_DELIVERY
+            'rolBranchAdmin' => User::ROLE_BRANCHADMIN,
+            'rolDelivery' => User::ROLE_DELIVERY,
+            'branchesList' => $branchesRepository->getAllByCompany($this->company->getId())
         ]);
     }
 
@@ -45,7 +48,8 @@ class Workers extends Controller {
             'id_company' => $id,
             'email' => $email,
             'create_user' => $_SESSION['user_id'],
-            'rol' => $_POST['rol']
+            'rol' => $_POST['rol'],
+            'branch' => $_POST['branch']
             ]);
         $this->flashNotification(sprintf('Se envió la invitación a %s', $email), 'success');
         $this->redirectTo(sprintf('/mis-negocios/%s/equipo', $id));
@@ -67,6 +71,7 @@ class Workers extends Controller {
             $this->redirectTo('/');
 
         }catch(Exception $ex){
+            die($ex);
             $this->redirectTo(sprintf('/registro/%s', $hash));            
         }
     }

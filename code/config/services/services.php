@@ -2,6 +2,7 @@
 
 use App\config\Config;
 use App\Container;
+use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -68,7 +69,8 @@ $container->add(CreateUser::class)
     ->add(WorkerRequestsRepository::class)
     ->add(CreateWorker::class)
     ->add(WorkersRepository::class)
+    ->add(BranchesRepository::class)
     ->add(Container::class, function($container) {
         return $container;
-    })    
-;
+    });
+    

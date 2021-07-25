@@ -1,11 +1,12 @@
 <?php
 namespace App\config;
 
-class ConfigSelenium{
+class ConfigTest{
     const DB_HOST = 'mysql';
     const DB_USER = 'root';
     const DB_PASSWORD = 'toor';
     const DB_PORT = '3306';
     const DB_NAME = 'karydb';
-    const BASE_URL = 'http://wwww:8082/';
+    const BASE_URL = 'http://www/';
+    const SELENIUM_HUB = 'http://selenium-hub:4444';
 }

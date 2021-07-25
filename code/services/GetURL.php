@@ -1,8 +1,6 @@
 <?php
 namespace App\services;
 
-use App\config\Config;
-
 class GetURL{
 
     private $baseUrl;

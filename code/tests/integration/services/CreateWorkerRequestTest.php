@@ -22,7 +22,8 @@ class CreateWorkerRequestTest extends TestCase{
             'id_company' => TestCase::COMPANY_1_ID,
             'email' => $email,            
             'create_user' => TestCase::ADMIN_COMPANY_1_ID, 
-            'rol' => User::ROLE_BRANCADMIN
+            'rol' => User::ROLE_BRANCHADMIN,
+            'branch' => TestCase::COMPANY_1_BRANCH_1
         ]);
 
         $this->assertNotNull($worker_request->getId());

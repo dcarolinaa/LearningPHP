@@ -9,7 +9,7 @@ class User extends Model implements IModel{
     const ROLE_ADMIN = 2;
     const ROLE_USER = 3;
     const ROLE_WORKER = 4;
-    const ROLE_BRANCADMIN = 5;
+    const ROLE_BRANCHADMIN = 5;
     const ROLE_DELIVERY = 6;
     const EMAIL_VALIDATED = 1;    
     

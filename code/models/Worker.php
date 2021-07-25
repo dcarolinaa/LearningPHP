@@ -5,6 +5,8 @@ namespace App\models;
 class Worker extends Model implements IModel{
     protected $id;
     private $id_company;
+    private $branch;
+    private $rol;
     private $id_user;
     private $create_date;
 
@@ -12,6 +14,8 @@ class Worker extends Model implements IModel{
         return [
             'id',
             'id_company',
+            'branch',
+            'rol',
             'id_user',
             'create_date'
         ];
@@ -35,6 +39,22 @@ class Worker extends Model implements IModel{
 
     public function getId_company(){
         return $this->id_company;
+    }
+
+    public function setBranch($branch){
+        $this->branch = $branch;
+    }
+
+    public function getBranch(){
+        return $this->branch;
+    }
+
+    public function setRol($rol){
+        $this->rol = $rol;
+    }
+
+    public function getRol(){
+        return $this->rol;
     }
 
     public function setId_user($id_user){

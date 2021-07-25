@@ -3,13 +3,10 @@
 namespace App\controllers;
 
 use App\Container;
-use App\models\User;
 use App\repositories\UsersRepository;
 use App\services\FlashVars;
-use App\services\GetAvatar;
 use App\services\GetURL;
 use App\services\GetUrlAvatar;
-use App\services\UserHasProfile;
 
 class Controller{
     private $title = "";
@@ -19,6 +16,7 @@ class Controller{
     private $template = 'template';
 
     protected $publicMethods = [];
+    protected $validProfiles = [];
     protected $container;
 
     public function __construct($method, Container $container) {
@@ -41,6 +39,7 @@ class Controller{
             
             $this->redirectTo($this->getURL('signIn','Users'));
         }
+
     }
 
     public function setTemplate($template){

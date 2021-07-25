@@ -25,6 +25,8 @@ class CreateWorker{
 
         $worker->fill([
             'id_company' => $data['id_company'],
+            'branch' =>$data['branch'],
+            'rol' => $data['rol'],
             'id_user' => $id
         ]);
         $worker->setCreate_date(date('Y-m-d H:i:s'));

@@ -25,6 +25,17 @@
                             <option value="<?php echo $rolDelivery ?>">Repartidor</option>
                         </select>
                     </div>
+
+                    <div class="col-md-6 offset-md-3">
+                        <label class="form-label">Sucursal:</label>
+                        <select class="form-control" name="branch">
+                            <?php foreach($branchesList as $branch): ?>
+
+                            <option value="<?php echo $branch['id'] ?>"><?php echo $branch['name'] ?></option>                            
+
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        
                         <button type="submit" class="btn btn-lg btn-primary me-2">Enviar</button>
                         <a href="/mis-negocios" class="btn btn-lg btn-secondary" >Cancelar</a>

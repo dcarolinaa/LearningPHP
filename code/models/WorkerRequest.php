@@ -15,6 +15,7 @@ class WorkerRequest extends Model implements IModel{
     private $request_hash;
     private $accepted;
     private $rol;
+    private $branch;
 
     public static function getAttributes()
     {
@@ -26,7 +27,8 @@ class WorkerRequest extends Model implements IModel{
             'create_user',
             'request_hash',
             'accepted',
-            'rol'
+            'rol',
+            'branch'
         ];
     }
 
@@ -96,6 +98,14 @@ class WorkerRequest extends Model implements IModel{
 
     public function getRol(){
         return $this->rol;
+    }
+
+    public function setBranch($branch){
+        $this->branch = $branch;
+    }
+
+    public function getBranch(){
+        return $this->branch;
     }
 
 }
