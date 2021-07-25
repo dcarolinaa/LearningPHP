@@ -1,4 +1,7 @@
-<h1 class="h3 mb-3"><b><?php echo $company->getName()?></b> / Editar Sucursal <?php echo $i?> </h1>
+<h1 class="h3 mb-3">
+    <a href="/mis-negocios/<?php echo $company->getId()?>"><b><?php echo $company->getName()?></b></a>
+    / Editar Sucursal <?php echo $i?> 
+</h1>
 <div class="card">    
     <div class="card-body">
         <?php echo $this->view('branches/_form', [

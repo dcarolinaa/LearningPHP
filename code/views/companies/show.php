@@ -1,4 +1,4 @@
-<h1><img src="/img/shushi-go.png" height="35"> <?php echo $company->getName()?></h1>
+<h1><img src="/img/shushi-go.jpg" height="35" class="me-1"><?php echo $company->getName()?></h1>
 
 <div class="row mb-2 mb-xl-3">
     <div class="col-auto d-none d-sm-block">
@@ -6,7 +6,11 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <a href="/mis-negocios/<?php echo $company->getId()?>/sucursales/nuevo" id="btn-new">Nueva Sucursal</a>
+
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId()?>/sucursales/nuevo" id="btn-new">Nueva Sucursal</a></li>
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId()?>/equipo">Administrar Equipo</a></li>            
+        </ol>
         </div>
         <div class="card-body">
             <table class="table table-striped">            
