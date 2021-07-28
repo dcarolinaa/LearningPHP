@@ -4,8 +4,8 @@ namespace App\services;
 class ErrorHelper{
     private $store;
 
-    public function __construct(& $store){ //Pase por referencia "&"
-        $this->store = & $store; //Asignación por referencia
+    public function __construct(& $store){
+        $this->store = & $store;
         if(!isset($this->store['_errors'])){
             $this->store['_errors'] = [];   
         }

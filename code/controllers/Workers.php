@@ -10,6 +10,7 @@ use App\repositories\WorkerRequestsRepository;
 use App\repositories\WorkersRepository;
 use App\services\AcceptWorkerRequest;
 use App\services\CreateWorkerRequest;
+use App\services\ErrorHelper;
 use App\services\InitSession;
 use Exception;
 
@@ -30,18 +31,39 @@ class Workers extends Controller {
         ]);
     }
 
-    public function workerRequest(BranchesRepository $branchesRepository) {
+    public function workerRequest(BranchesRepository $branchesRepository, ErrorHelper $errorHelper) {
         $this->view('workers/request', [
             'company' => $this->company,
             'rolBranchAdmin' => User::ROLE_BRANCHADMIN,
             'rolDelivery' => User::ROLE_DELIVERY,
-            'branchesList' => $branchesRepository->getAllByCompany($this->company->getId())
+            'branchesList' => $branchesRepository->getAllByCompany($this->company->getId()),
+            'email' => $_POST['email'] ?? '',
+            'errors' => $errorHelper->getAll()
         ]);
     }
 
-    public function sendWorkerRequest(CreateWorkerRequest $createWorkerRequest) {
+    public function sendWorkerRequest(
+        CreateWorkerRequest $createWorkerRequest, 
+        WorkerRequestsRepository $workerRequestsRepository, 
+        ErrorHelper $errorHelper,
+        BranchesRepository $branchesRepository
+    ) {
         $email = $_POST['email'];
         $id = $this->company->getId();
+
+        if ($workerRequestsRepository->findByEmailCompany($email, $id))
+        {                        
+            $errorHelper->set('email','used','¡Este monito ya trabaja contigo!');
+        }
+
+        if(!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $_POST['email'])){
+            $errorHelper->set('email', '_email_format','No es un email valido.');
+        }
+
+        if($errorHelper->hasErrors()){
+            $this->workerRequest($branchesRepository, $errorHelper);
+            return;
+        }
 
         $createWorkerRequest([
             'id_company' => $id,

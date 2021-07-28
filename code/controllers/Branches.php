@@ -51,7 +51,4 @@ class Branches extends Controller
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 
-    public function show() {
-        $this->view('sucursales/show', []);
-    }
 }

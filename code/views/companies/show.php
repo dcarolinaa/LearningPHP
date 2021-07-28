@@ -28,21 +28,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for($i=0; $i<10; $i++): ?>
+                    <?php foreach($branches as $branch): ?>
                     <tr>
                         <td>
-                              <a href="/sucursales/<?php echo $i?>">Branch <?php echo $i?></a>
+                              <a href="/sucursales/<?php echo $branch['id']?>"><?php echo $branch['name']?></a>
                         </td>
-                        <td>432761598</td>
-                        <td>lkajsdf lkjasdf lkjdas</td>
-                        <td>@sushigo</td>
+                        <td><?php echo $branch['telephone'] ?></td>
+                        <td><?php echo $branch['address'] ?></td>
+                        <td><?php echo $branch['username'] ?></td>
                         <td>
-                            <a href="/mis-negocios/<?php echo $company->getId();?>/sucursales/<?php echo $i?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
-                            <a href="/mis-negocios/<?php echo $company->getId()?>/sucursales/<?php echo $i?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getId();?>/sucursales/<?php echo $branch['id']?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getId()?>/sucursales/<?php echo $branch['id']?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
                      
                         </td>
                     </tr>
-                    <?php endfor; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>

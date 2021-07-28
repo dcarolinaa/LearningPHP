@@ -2,6 +2,7 @@
 namespace App\controllers;
 
 use App\models\Company;
+use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
@@ -71,10 +72,11 @@ class Companies extends Controller
         $this->redirectTo('/mis-negocios');
     }
 
-    public function show(CompaniesRepository $companiesRepository) {
+    public function show(CompaniesRepository $companiesRepository, BranchesRepository $branchesRepository) {
         $company = $companiesRepository->getById($_GET['id']);
         $this->view('companies/show', [
-            'company' => $company
+            'company' => $company,
+            'branches' => $branchesRepository->getListByCompany($company->getId())
         ]);
     }
 }

@@ -16,7 +16,8 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <label class="form-label">Email:</label>
-                        <input class="form-control form-control-lg" value="" type="text" name="email" placeholder="Nombre">
+                        <input class="form-control form-control-lg" value="<?php echo $email ?>" type="text" name="email" placeholder="Nombre">
+                        <?= $this->view('errors', ['attribute' => 'email', 'errors' => $errors],true) ?>
                     </div>
                     <div class="col-md-6 offset-md-3">
                         <label class="form-label">Perfil:</label>
