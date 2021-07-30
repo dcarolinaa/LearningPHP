@@ -27,6 +27,20 @@ class BranchesRepository extends Repository{
 
     }
 
+    public function getBranchById($id){
+        $sql = 'SELECT * FROM branches WHERE id = :id';
+        $connection = $this->getDBConnection->__invoke();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute([
+            ':id' => $id
+        ]);
+        
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result !== false ? Branch::build($result) : null ;
+    }
+
     public function getListByCompany($companyId){
         $sql = <<<SQL
         SELECT

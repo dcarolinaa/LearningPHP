@@ -18,6 +18,7 @@ class Workers extends Controller {
     
     private $company;
     protected $validProfiles = [User::ROLE_ADMIN];
+    protected $publicMethods = ['acceptWorkerRequest'];
 
     public function __construct(string $method, Container $container, CompaniesRepository $companiesRepository) {
         parent::__construct($method, $container);
@@ -82,7 +83,7 @@ class Workers extends Controller {
         UsersRepository $usersRepository,
         InitSession $initSession
     ){
-        $hash = $_GET['hash'];
+        $hash = $_GET['hash'];        
         try
         {
             $acceptWorkerRequest($hash);            

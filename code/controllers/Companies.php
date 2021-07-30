@@ -2,6 +2,7 @@
 namespace App\controllers;
 
 use App\models\Company;
+use App\models\User;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\services\SaveCompany;
@@ -9,6 +10,8 @@ use App\services\DeleteEntity;
 
 class Companies extends Controller
 {
+    protected $validProfiles = [User::ROLE_ADMIN];
+    
     public function index(CompaniesRepository $companiesRepository) {        
         $companies = $companiesRepository->getAll();
         $this->view('companies/index', [

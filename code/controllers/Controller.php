@@ -39,13 +39,15 @@ class Controller{
     }
 
     private function validateSession($method){
-        if(!isset($_SESSION['user_id']) && in_array($method, $this->publicMethods) == false){
+        $sessionStarted = isset($_SESSION['user_id']);
+
+        if(!$sessionStarted && in_array($method, $this->publicMethods) == false){            
             $this->redirectTo($this->getURL('signIn','Users'));
         }
 
         
         $valid = true;
-        if(!empty($this->validProfiles))
+        if($sessionStarted && !empty($this->validProfiles))
         {
             $valid = false;
             foreach($_SESSION['roles'] as $rol){
@@ -57,8 +59,7 @@ class Controller{
         }
 
         if(!$valid) {
-            header("HTTP/1.1 404 Not Found");
-            die;
+            $this->error404();
         }
 
     }

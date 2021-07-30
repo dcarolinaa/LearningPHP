@@ -2,11 +2,15 @@
 namespace App\controllers;
 
 use App\Container;
+use App\models\User;
+use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
+use App\services\DeleteEntity;
 
 class Branches extends Controller
 {
     private $company;
+    protected $validProfiles = [User::ROLE_ADMIN];
 
     public function __construct($method,Container $container, CompaniesRepository $companiesRepository) {
         parent::__construct($method, $container);
@@ -28,18 +32,24 @@ class Branches extends Controller
         ]);
     }
 
-    public function confirmDelete() {
+    public function confirmDelete(BranchesRepository $branchesRepository) {
+        $id = $_GET['id_branch'];
+        $branch = $branchesRepository->getBranchById($id);
+
         $this->view('components/confirm', [
             'title' => 'Eliminar Negocio',
-            'text' => sprintf('Deseas eliminar el brancha "%s"', 'name'),
+            'text' => sprintf('Deseas eliminar el brancha "%s"', $branch->getName()),
             'okText' => 'Eliminar',
             'okCss' => 'danger',
-            'urlOk' => sprintf('/mis-negocios/%s/sucursales/%s/delete', $_GET['id_company'],$_GET['id_branch']),
+            'urlOk' => sprintf('/mis-negocios/%s/sucursales/%s/delete', $_GET['id_company'], $branch->getId()),
             'urlCancel' => sprintf('/mis-negocios/%s', $_GET['id_company'])
         ]);
     }
 
-    public function delete() {        
+    public function delete(BranchesRepository $branchesRepository, DeleteEntity $deleteEntity) {
+        $branch = $branchesRepository->getBranchById($_GET['id_branch']);
+        $deleteEntity($branch);
+
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 

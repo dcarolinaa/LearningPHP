@@ -11,6 +11,8 @@ class Branch extends Model implements IModel{
     private $telephone;
     private $cellphone;
     private $email;
+    private $lat;
+    private $lng;
 
     public static function getAttributes(){
         return [
@@ -20,7 +22,9 @@ class Branch extends Model implements IModel{
             'address',
             'telephone',
             'cellphone',
-            'email'
+            'email',
+            'lat',
+            'lng'
         ];
     }
 
@@ -82,6 +86,22 @@ class Branch extends Model implements IModel{
 
     public function getEmail(){
         return $this->email;
+    }
+
+    public function setLat($lat){
+        $this->lat = $lat;
+    }
+
+    public function getLat(){
+        return $this->lat;
+    }
+
+    public function setLng($lng){
+        $this->lng = $lng;
+    }
+
+    public function getLng(){
+        return $this->lng;
     }
     
 }
