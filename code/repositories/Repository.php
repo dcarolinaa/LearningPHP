@@ -52,4 +52,19 @@ abstract class Repository{
         
         return $this->buildResult($result);
     }
+
+    public function getBySlug($slug){
+        $sql =  sprintf('SELECT * FROM %s where slug = :slug', $this->getTable());
+        $connection = $this->getDBConnection->__invoke();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute([
+            ":slug" => $slug
+        ]);
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $this->buildResult($result);
+    }
+
 }

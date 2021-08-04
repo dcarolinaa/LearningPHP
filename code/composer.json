@@ -15,7 +15,8 @@
         "doctrine/migrations": "^3.1",
         "guzzlehttp/guzzle": "^7.2",
         "imagine/imagine": "^1.2",
-        "twilio/sdk": "^6.24"
+        "twilio/sdk": "^6.24",
+        "ausi/slug-generator": "^1.1"
        
     }
 }

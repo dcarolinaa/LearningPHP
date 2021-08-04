@@ -10,7 +10,7 @@
             "request": "launch",
             "port": 9003,
             "pathMappings": {
-                "/var/www/html/": "${workspaceFolder}/code/html/"
+                "/var/www/": "${workspaceFolder}/code/"
             },
             "xdebugSettings": {
                 "max_data": 65535,

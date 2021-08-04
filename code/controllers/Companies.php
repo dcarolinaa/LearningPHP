@@ -56,7 +56,7 @@ class Companies extends Controller
     public function store(SaveCompany $saveCompany) {
         $saveCompany([
             'user_admin' => $_SESSION['user_id'],
-            'name' => $_POST['name'],
+            'name' => $_POST['name'],            
             'status' => Company::STATUS_ACTIVE,            
             'update_user' => $_SESSION['user_id'],
             'logo' => $_FILES['logo']['tmp_name']
@@ -76,7 +76,7 @@ class Companies extends Controller
     }
 
     public function show(CompaniesRepository $companiesRepository, BranchesRepository $branchesRepository) {
-        $company = $companiesRepository->getById($_GET['id']);
+        $company = $companiesRepository->getBySlug($_GET['slug']);
         $this->view('companies/show', [
             'company' => $company,
             'branches' => $branchesRepository->getListByCompany($company->getId())

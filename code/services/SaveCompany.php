@@ -10,10 +10,16 @@ class SaveCompany {
 
     private $saveEntity;
     private $companiesRepository;
+    private $generateSlug;
 
-    public function __construct(SaveEntity $saveEntity, CompaniesRepository $companiesRepository) {
+    public function __construct(
+        SaveEntity $saveEntity, 
+        CompaniesRepository $companiesRepository,
+        GenerateSlug $generateSlug
+    ) {
         $this->saveEntity = $saveEntity;
         $this->companiesRepository = $companiesRepository;
+        $this->generateSlug = $generateSlug;
     }
 
     public function __invoke($data) {  
@@ -40,6 +46,7 @@ class SaveCompany {
     private function getCompany(&$data){
         $now = date('Y-m-d H:i:s');
         $data['update_date'] = $now;
+        $data['slug'] = $this->generateSlug->__invoke($data['name']);
 
         if(isset($data['id'])) {
             $company = $this->companiesRepository->getById($data['id']);

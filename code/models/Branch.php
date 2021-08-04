@@ -7,6 +7,7 @@ class Branch extends Model implements IModel{
     protected $id;
     private $id_company;
     private $name;
+    private $slug;
     private $address;
     private $telephone;
     private $cellphone;
@@ -19,6 +20,7 @@ class Branch extends Model implements IModel{
             'id',
             'id_company',
             'name',
+            'slug',
             'address',
             'telephone',
             'cellphone',
@@ -54,6 +56,14 @@ class Branch extends Model implements IModel{
 
     public function getName(){
         return $this->name;
+    }
+
+    public function setSlug($slug){
+        $this->slug = $slug;
+    }
+
+    public function getSlug(){
+        return $this->slug;
     }
 
     public function setAddress($address){

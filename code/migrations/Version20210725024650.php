@@ -64,4 +64,9 @@ SQL;
 SQL;
         $this->addSql($sql);
     }
+
+    public function isTransactional(): bool
+    {
+        return false;
+    }
 }

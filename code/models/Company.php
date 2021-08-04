@@ -9,6 +9,7 @@ class Company extends Model implements IModel{
     protected $id;
     private $user_admin;
     private $name;
+    private $slug;
     private $status;
     private $create_date;
     private $update_user;    
@@ -22,6 +23,7 @@ class Company extends Model implements IModel{
             'id',
             'user_admin',
             'name',
+            'slug',
             'status',
             'create_date',            
             'update_date',
@@ -51,6 +53,14 @@ class Company extends Model implements IModel{
 
     public function getName() {
         return $this->name;
+    }
+
+    public function setSlug($slug){
+        $this->slug = $slug;
+    }
+
+    public function getSlug(){
+        return $this->slug;
     }
 
     public function setStatus($status) {

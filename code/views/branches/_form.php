@@ -22,36 +22,24 @@
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Teléfono:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="name" placeholder="Teléfono">
+            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="telephone" placeholder="Teléfono">
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Celular:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="name" placeholder="Celular">
+            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="cellphone" placeholder="Celular">
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Email:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="name" placeholder="Email">
+            <input class="form-control form-control-lg" value="<?php echo $company->getName()?>" type="text" name="email" placeholder="Email">
         </div>
         <div class="col-md-6 offset-md-3">
             <div id="map"></div>
             <label class="form-label">Direccion:</label>
-            <input class="form-control form-control-lg" value="" type="text" name="name" placeholder="Direccion">
-        </div>
-        <div class="col-md-6 offset-md-3">
-            <label class="form-label">Administrador:</label>
-            <select class="form-control form-control-lg">
-                <option>User 1</option>
-                <option>User 1</option>
-                <option>User 1</option>
-            </select>
-
-        </div>
-        <div class="col-md-6 offset-md-3 text-end">
-            <a href="/mis-negocios/<?php echo $company->getId();?>/equipo">Administrar Equipo</a>
+            <input class="form-control form-control-lg" value="" type="text" name="address" placeholder="Direccion">
         </div>
         <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        
             <button type="submit" class="btn btn-lg btn-primary me-2"><?php echo $callAction?></button>
-            <a href="/mis-negocios/<?php echo $company->getId()?>" class="btn btn-lg btn-secondary" >Cancelar</a>
+            <a href="/mis-negocios/<?php echo $company->getSlug()?>" class="btn btn-lg btn-secondary" >Cancelar</a>
         </div>
     </div>
 </form>

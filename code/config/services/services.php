@@ -22,6 +22,7 @@ use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\FlashVars;
+use App\services\GenerateSlug;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
 use App\services\SendEmailWorkerRequest;
@@ -73,5 +74,6 @@ $container->add(CreateUser::class)
     ->add(BranchesRepository::class)
     ->add(Container::class, function($container) {
         return $container;
-    });
+    })
+    ->add(GenerateSlug::class);
     

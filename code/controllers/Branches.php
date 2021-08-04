@@ -2,10 +2,13 @@
 namespace App\controllers;
 
 use App\Container;
+use App\models\Branch;
 use App\models\User;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\services\DeleteEntity;
+use App\services\GenerateSlug;
+use App\services\SaveEntity;
 
 class Branches extends Controller
 {
@@ -53,7 +56,23 @@ class Branches extends Controller
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 
-    public function store() {        
+    public function store(
+        SaveEntity $saveEntity, 
+        GenerateSlug $generateSlug
+    ) {
+        $branch = new Branch;
+        $branch->setName($_POST['name']);
+        $branch->setId_company($_GET['id_company']);
+        $branch->setAddress($_POST['address']);
+        $branch->setTelephone($_POST['telephone']);
+        $branch->setCellphone($_POST['cellphone']);
+        $branch->setEmail($_POST['email']);
+        $branch->setLat($_POST['lat']);
+        $branch->setLng($_POST['lng']);
+        $branch->setSlug($generateSlug($_POST['name']));
+
+        $saveEntity->__invoke($branch);
+
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 

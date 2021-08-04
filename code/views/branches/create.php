@@ -1,4 +1,4 @@
-<a href="/mis-negocios/<?php echo $company->getId()?>">
+<a href="/mis-negocios/<?php echo $company->getSlug()?>">
     <h1><img src="/img/shushi-go.jpg" height="35" class="me-1"><?php echo $company->getName()?></h1>
 </a>
 
