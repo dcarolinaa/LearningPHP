@@ -5,7 +5,8 @@ namespace App\services;
 use App\services\GetDBConnection;
 use App\models\IModel;
 
-class DeleteEntity{
+class DeleteEntity
+{
     private $getConnection;
 
     public function __construct()

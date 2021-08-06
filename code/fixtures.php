@@ -18,7 +18,7 @@ include "config/services/services.php";
 include "config/services/services-dev.php";
 include "config/services/services-fixtures.php";
 
-foreach($fixtures as $fixtureClass) {
+foreach ($fixtures as $fixtureClass) {
     $fixture = $container->build($fixtureClass);
     $container->callMethod('build', $fixture);
 }

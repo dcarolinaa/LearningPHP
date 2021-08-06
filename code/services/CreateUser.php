@@ -6,17 +6,18 @@ use App\models\User;
 use DateTime;
 use App\services\AddProfileToUser;
 
-class CreateUser{
+class CreateUser
+{
 
     private $saveEntity;
     private $sendEmailSignUp;
     private $addProfileUser;
 
     public function __construct(
-        SaveEntity $saveEntity, 
+        SaveEntity $saveEntity,
         ISendEmailSignUp $sendEmailSignUp,
         AddProfileToUser $addProfileUser
-    ){
+    ) {
         $this->saveEntity = $saveEntity;
         $this->sendEmailSignUp = $sendEmailSignUp;
         $this->addProfileUser = $addProfileUser;
@@ -38,15 +39,15 @@ class CreateUser{
         ]);
         $user->setCreate_date(
             (new DateTime())->format('Y-m-d H:i:s')
-        );        
+        );
         $user->setPassword($data['password'], true);
         $hash = hash('sha224', uniqid());
         $user->setEmail_hash($hash);
-        
+
         $this->saveEntity->__invoke($user);
         $this->sendEmailSignUp->__invoke($user, $hash);
         $this->addProfileUser->__invoke($user, User::ROLE_USER);
-        
+
         return $user;
     }
 }

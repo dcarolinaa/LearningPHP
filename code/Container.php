@@ -7,47 +7,51 @@ use phpDocumentor\Reflection\Types\This;
 use ReflectionClass;
 use ReflectionMethod;
 
-class Container{
+class Container
+{
     private $callbacks = [];
     private $services = [];
 
     public function add($key, $callback = null)
     {
-        if($callback !== null){
+        if ($callback !== null) {
             $this->callbacks[$key] = $callback;
-        }else {
-            $this->callbacks[$key] = function() use ($key){
+        } else {
+            $this->callbacks[$key] = function () use ($key) {
                 //Use para poder utilizar la variable recibida en la función de arriba...
                 return $this->build($key);
             };
         }
 
-        return $this;        
+        return $this;
     }
 
-    public function get($key){
-        if(!key_exists($key, $this->services) && key_exists($key, $this->callbacks)) {
+    public function get($key)
+    {
+        if (!key_exists($key, $this->services) && key_exists($key, $this->callbacks)) {
             $this->services[$key] = $this->callbacks[$key]($this);
         }
 
-        if(isset($this->services[$key])) {
+        if (isset($this->services[$key])) {
             return $this->services[$key];
         }
 
         throw new Exception("Services don't found");
     }
 
-    public function callMethod($method, $object){
+    public function callMethod($method, $object)
+    {
         $reflectionMethod = new ReflectionMethod(get_class($object), $method);
         $params = $this->getParameters($reflectionMethod);
 
         return $reflectionMethod->invokeArgs($object, $params);
     }
 
-    public function build($className){
+    public function build($className)
+    {
         $reflectionClass = new ReflectionClass($className);
         $reflectionMethod = $reflectionClass->getConstructor();
-        if($reflectionMethod){
+        if ($reflectionMethod) {
             $params = $this->getParameters($reflectionMethod);
             return $reflectionClass->newInstanceArgs($params);
         }
@@ -55,16 +59,16 @@ class Container{
         return $reflectionClass->newInstance();
     }
 
-    public function getParameters(ReflectionMethod $reflectionMethod){
+    public function getParameters(ReflectionMethod $reflectionMethod)
+    {
         $parameters = $reflectionMethod->getParameters();
         $params = [];
-        foreach($parameters as $parameter) {
-            
+        foreach ($parameters as $parameter) {
             try {
                 $name = $parameter->getName();
                 $params[] = $this->get($name);
-            } catch(Exception $ex) {
-                $classNameParameter = $parameter->getType()->getName();        
+            } catch (Exception $ex) {
+                $classNameParameter = $parameter->getType()->getName();
                 $params[] = $this->get($classNameParameter);
             }
         }
@@ -79,15 +83,14 @@ class Container{
         foreach ($consts as $const => $value) {
             $constCamel = lcfirst(
                 str_replace(
-                    ' ', 
-                    '', 
+                    ' ',
+                    '',
                     ucwords(str_replace('_', ' ', strtolower($const)))
                 )
             );
             $this->add($constCamel, fn(): mixed => $value);
         }
-        
+
         return $this;
     }
-
 }

@@ -4,7 +4,8 @@ namespace App\services;
 
 use App\models\Worker;
 
-class CreateWorker{
+class CreateWorker
+{
 
     private $saveEntity;
     private $addProfileToUser;
@@ -25,7 +26,7 @@ class CreateWorker{
 
         $worker->fill([
             'id_company' => $data['id_company'],
-            'branch' =>$data['branch'],
+            'branch' => $data['branch'],
             'rol' => $data['rol'],
             'id_user' => $id
         ]);

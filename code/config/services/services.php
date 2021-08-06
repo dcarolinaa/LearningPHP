@@ -28,23 +28,23 @@ use App\services\InitSession;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 
-$container->add(ErrorHelper::class, function($container) {
+$container->add(ErrorHelper::class, function ($container) {
     $service = new ErrorHelper($_SESSION);
     return $service;
 });
 
-$container->add(ISendEmailSignUp::class, function($container){
+$container->add(ISendEmailSignUp::class, function ($container) {
     $service = new SendEmailSignUp(
         $container->get(GetURL::class)
     );
     return $service;
 });
 
-$container->add(FlashVars::class, function($container) {
+$container->add(FlashVars::class, function ($container) {
     return new FlashVars($_SESSION);
 });
 
-$container->add(InitSession::class, function($container){
+$container->add(InitSession::class, function ($container) {
     $serviceUserHasProfile = $container->get(UserHasProfile::class);
     $serviceUsersRepository = $container->get(UsersRepository::class);
     $initSession = new InitSession($serviceUserHasProfile, $_SESSION, $serviceUsersRepository);
@@ -72,8 +72,7 @@ $container->add(CreateUser::class)
     ->add(CreateWorker::class)
     ->add(WorkersRepository::class)
     ->add(BranchesRepository::class)
-    ->add(Container::class, function($container) {
+    ->add(Container::class, function ($container) {
         return $container;
     })
     ->add(GenerateSlug::class);
-    

@@ -2,7 +2,8 @@
 
 namespace App\models;
 
-class Branch extends Model implements IModel{
+class Branch extends Model implements IModel
+{
 
     protected $id;
     private $id_company;
@@ -15,7 +16,8 @@ class Branch extends Model implements IModel{
     private $lat;
     private $lng;
 
-    public static function getAttributes(){
+    public static function getAttributes()
+    {
         return [
             'id',
             'id_company',
@@ -30,88 +32,109 @@ class Branch extends Model implements IModel{
         ];
     }
 
-    public static function getTable(){
+    public static function getTable()
+    {
         return 'branches';
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
-    
-    public function getId(){
+
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId_company($id_company){
+    public function setId_company($id_company)
+    {
         $this->id_company = $id_company;
     }
 
-    public function getId_company(){
+    public function getId_company()
+    {
         return $this->id_company;
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function setSlug($slug){
+    public function setSlug($slug)
+    {
         $this->slug = $slug;
     }
 
-    public function getSlug(){
+    public function getSlug()
+    {
         return $this->slug;
     }
 
-    public function setAddress($address){
+    public function setAddress($address)
+    {
         $this->address = $address;
     }
 
-    public function getAddress(){
+    public function getAddress()
+    {
         return $this->address;
     }
 
-    public function setTelephone($telephone){
+    public function setTelephone($telephone)
+    {
         $this->telephone = $telephone;
     }
 
-    public function getTelephone(){
+    public function getTelephone()
+    {
         return $this->telephone;
     }
 
-    public function setCellphone($cellphone){
+    public function setCellphone($cellphone)
+    {
         $this->cellphone = $cellphone;
     }
 
-    public function getCellphone(){
+    public function getCellphone()
+    {
         return $this->cellphone;
     }
 
-    public function setEmail($email){
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setLat($lat){
+    public function setLat($lat)
+    {
         $this->lat = $lat;
     }
 
-    public function getLat(){
+    public function getLat()
+    {
         return $this->lat;
     }
 
-    public function setLng($lng){
+    public function setLng($lng)
+    {
         $this->lng = $lng;
     }
 
-    public function getLng(){
+    public function getLng()
+    {
         return $this->lng;
     }
-    
+
 }

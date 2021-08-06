@@ -36,7 +36,7 @@ final class Version20210328013900 extends AbstractMigration
         $sql = "drop table roles";
         $this->addSql($sql);
     }
-    
+
     public function isTransactional(): bool
     {
         return false;

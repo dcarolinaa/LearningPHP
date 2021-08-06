@@ -4,15 +4,16 @@ namespace App\models;
 use Doctrine\DBAL\Driver\SQLSrv\LastInsertId;
 use phpDocumentor\Reflection\PseudoTypes\True_;
 
-class User extends Model implements IModel{
+class User extends Model implements IModel
+{
     const ROLE_SUPERADMIN = 1;
     const ROLE_ADMIN = 2;
     const ROLE_USER = 3;
     const ROLE_WORKER = 4;
     const ROLE_BRANCHADMIN = 5;
     const ROLE_DELIVERY = 6;
-    const EMAIL_VALIDATED = 1;    
-    
+    const EMAIL_VALIDATED = 1;
+
     protected $id;
     private $first_name;
     private $last_name;
@@ -26,104 +27,127 @@ class User extends Model implements IModel{
     private $email_hash;
     private $update_at;
 
-    public static function getTable(){
+    public static function getTable()
+    {
         return 'users';
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setFirst_name($first_name){
+    public function setFirst_name($first_name)
+    {
         $this->first_name = $first_name;
         return $this;//Regresa el mismo objeto y permite encadenamiento de métodos
     }
 
-    public function getFirst_name(){
+    public function getFirst_name()
+    {
         return $this->first_name;
     }
 
-    public function setLast_name($last_name){
+    public function setLast_name($last_name)
+    {
         $this->last_name = $last_name;
         return $this;
     }
 
-    public function getLast_name(){
-        return $this->last_name;        
+    public function getLast_name()
+    {
+        return $this->last_name;
     }
 
-    public function setBirthdate($birthdate){
+    public function setBirthdate($birthdate)
+    {
         $this->birthdate = $birthdate;
         return $this;
     }
 
-    public function getBirthdate(){
+    public function getBirthdate()
+    {
         return $this->birthdate;
     }
 
-    public function setEmail($email){
+    public function setEmail($email)
+    {
         $this->email = $email;
         return $this;
     }
 
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setPhone_number($phone_number){
+    public function setPhone_number($phone_number)
+    {
         $this->phone_number = $phone_number;
     }
 
-    public function getPhone_number(){
+    public function getPhone_number()
+    {
         return $this->phone_number;
     }
 
-    public function setUsername($username){
+    public function setUsername($username)
+    {
         $this->username = $username;
         return $this;
     }
 
-    public function getUsername(){
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setPassword($password, $hash = false){
+    public function setPassword($password, $hash = false)
+    {
         $this->password = $hash ? md5($password) : $password;
         return $this;
     }
 
-    public function getPassword(){
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setCreate_date($create_date){
+    public function setCreate_date($create_date)
+    {
         $this->create_date = $create_date;
         return $this;
     }
 
-    public function getCreate_date(){
+    public function getCreate_date()
+    {
         return $this->create_date;
     }
-    
-    public function setEmail_validated($validated){
+
+    public function setEmail_validated($validated)
+    {
         $this->email_validated = $validated;
         return $this;
     }
 
-    public function getEmail_validated(){
+    public function getEmail_validated()
+    {
         return $this->email_validated;
     }
 
-    public function setEmail_hash($email_hash){
+    public function setEmail_hash($email_hash)
+    {
         $this->email_hash = $email_hash;
         return $this;
     }
 
-    public function getEmail_hash(){
+    public function getEmail_hash()
+    {
         return $this->email_hash;
     }
 
-    public static function getAttributes(){
+    public static function getAttributes()
+    {
         return [
             'id',
             'first_name',
@@ -133,19 +157,21 @@ class User extends Model implements IModel{
             'phone_number',
             'username',
             'password',
-            'create_date',            
+            'create_date',
             'email_validated',
             'email_hash',
             'updated_at'
         ];
     }
-    
-    public function setUpdated_at($updateAt){
+
+    public function setUpdated_at($updateAt)
+    {
         $this->update_at = $updateAt;
         return $this;
     }
 
-    public function getUpdated_at(){
+    public function getUpdated_at()
+    {
         return $this->update_at;
     }
 }

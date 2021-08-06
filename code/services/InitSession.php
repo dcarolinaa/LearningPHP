@@ -5,7 +5,8 @@ namespace App\services;
 use App\models\User;
 use App\repositories\UsersRepository;
 
-class InitSession{
+class InitSession
+{
 
     private $userHasProfile;
     private $session;

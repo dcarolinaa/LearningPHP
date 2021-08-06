@@ -27,7 +27,7 @@ final class Version20210228004316 extends AbstractMigration
                 PRIMARY KEY (id)
             )
         SQL;
-        
+
         $this->addSql($sql);
     }
 

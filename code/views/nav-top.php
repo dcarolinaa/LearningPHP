@@ -140,7 +140,7 @@
                 <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
     <i class="align-middle" data-feather="settings"></i>
     </a>
-        <?php include 'nav-top-user-menu.php' ?>
+        <?php include 'nav-top-user-menu.php'; ?>
                 
             </li>
         </ul>

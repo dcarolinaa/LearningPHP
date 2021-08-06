@@ -7,27 +7,30 @@ use App\models\Branch;
 use App\models\User;
 use PDO;
 
-class BranchesRepository extends Repository{
+class BranchesRepository extends Repository
+{
 
     protected function getClassName(): string
     {
         return Branch::class;
     }
 
-    public function getAllByCompany($companyId){
+    public function getAllByCompany($companyId)
+    {
         $sql  = 'SELECT * FROM branches WHERE id_company = :id_company';
         $connection = $this->getDBConnection->__invoke();
 
         $statement = $connection->prepare($sql);
         $statement->execute([
-            ':id_company' => $companyId        
+            ':id_company' => $companyId
         ]);
-        
+
         return $statement->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
-    public function getBranchById($id){
+    public function getBranchById($id)
+    {
         $sql = 'SELECT * FROM branches WHERE id = :id';
         $connection = $this->getDBConnection->__invoke();
 
@@ -35,13 +38,14 @@ class BranchesRepository extends Repository{
         $statement->execute([
             ':id' => $id
         ]);
-        
+
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $result !== false ? Branch::build($result) : null ;
+        return $result !== false ? Branch::build($result) : null;
     }
 
-    public function getListByCompany($companyId){
+    public function getListByCompany($companyId)
+    {
         $sql = <<<SQL
         SELECT
             b.id,

@@ -8,7 +8,8 @@ use Facebook\WebDriver\Remote\RemoteWebElement;
 use Facebook\WebDriver\WebDriverBy;
 use Tests\TestCase;
 
-class SeleniumTestCase extends TestCase {
+class SeleniumTestCase extends TestCase
+{
 
     protected $webDriver;
 
@@ -45,7 +46,7 @@ class SeleniumTestCase extends TestCase {
 
     protected function tearDown(): void
     {
-        if(null !== $this->webDriver){
+        if (null !== $this->webDriver) {
             $this->webDriver->quit();
             $this->webDriver = null;
         }

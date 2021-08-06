@@ -65,7 +65,7 @@ Delete account
                                         </div>
                                         
                                         <div class="col-md-4">
-                                            <?php include 'form-avatar.php' ?>
+                                            <?php include 'form-avatar.php'; ?>
                                         </div>
                                     </div>
 

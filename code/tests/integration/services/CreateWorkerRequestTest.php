@@ -8,9 +8,10 @@ use App\services\DeleteEntity;
 use \Faker\Generator as Faker;
 use Tests\TestCase;
 
-class CreateWorkerRequestTest extends TestCase{
-    
-    public function testCreateWorkerRequest(): void 
+class CreateWorkerRequestTest extends TestCase
+{
+
+    public function testCreateWorkerRequest(): void
     {
         $faker = $this->getContainer()->get(Faker::class);
         $email = $faker->email;
@@ -20,8 +21,8 @@ class CreateWorkerRequestTest extends TestCase{
 
         $worker_request = $createWorkerRequestService([
             'id_company' => TestCase::COMPANY_1_ID,
-            'email' => $email,            
-            'create_user' => TestCase::ADMIN_COMPANY_1_ID, 
+            'email' => $email,
+            'create_user' => TestCase::ADMIN_COMPANY_1_ID,
             'rol' => User::ROLE_BRANCHADMIN,
             'branch' => TestCase::COMPANY_1_BRANCH_1
         ]);
@@ -29,7 +30,7 @@ class CreateWorkerRequestTest extends TestCase{
         $this->assertNotNull($worker_request->getId());
 
         $deleteEntityService($worker_request);
-        
+
     }
 
 }

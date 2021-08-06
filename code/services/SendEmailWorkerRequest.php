@@ -5,23 +5,25 @@ namespace App\services;
 use App\models\Worker;
 use App\models\WorkerRequest;
 
-class SendEmailWorkerRequest{
+class SendEmailWorkerRequest
+{
 
     private $baseUrl;
 
     public function __construct(string $baseUrl)
     {
-        $this->baseUrl = $baseUrl;        
+        $this->baseUrl = $baseUrl;
     }
 
     public function __invoke(WorkerRequest $workerRequest): void
-    {        
+    {
         $email = $workerRequest->getEmail();
         $url = sprintf('%s/aceptar-invitacion/%s/%s', $this->baseUrl, $workerRequest->getId_company(), $workerRequest->getRequest_hash());
         $message = sprintf('Invitación para unirse a RomiToGo... <a href="%s" > Aceptar Invitación </a> ', $url);
-        $header = 'From: romi@romitogo.com'. "\r\n";;
+        $header = 'From: romi@romitogo.com' . "\r\n";
+        ;
         $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        mail($email, 'WORKER REQUEST', $message, $header);   
+        mail($email, 'WORKER REQUEST', $message, $header);
     }
 
 }

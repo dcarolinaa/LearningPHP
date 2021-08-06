@@ -18,7 +18,7 @@ final class Version20210328011822 extends AbstractMigration
     }
 
     public function up(Schema $schema) : void
-    {        
+    {
         $sql = <<<SQL
         CREATE TABLE users(
             id int AUTO_INCREMENT,
@@ -46,5 +46,6 @@ final class Version20210328011822 extends AbstractMigration
 
     public function isTransactional(): bool
     {
-        return false;}
+        return false;
+    }
 }

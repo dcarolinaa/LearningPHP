@@ -2,6 +2,7 @@
 
 namespace App\services;
 
-interface ISendEmailSignUp{
+interface ISendEmailSignUp
+{
     public function __invoke($user, $hash);
 }

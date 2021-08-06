@@ -5,7 +5,7 @@
         </a>
 
         <ul class="sidebar-nav">
-            <?php if($_SESSION['isAdmin']) : ?>
+            <?php if ($_SESSION['isAdmin']) : ?>
                 <li class="sidebar-header">
                     Socios
                 </li>

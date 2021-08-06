@@ -18,7 +18,7 @@ final class Version20210711025113 extends AbstractMigration
     }
 
     public function up(Schema $schema) : void
-    {        
+    {
         $sql = <<<SQL
             CREATE TABLE workers(
                 id int NOT NULL AUTO_INCREMENT,

@@ -6,11 +6,11 @@ use \Faker\Factory as Fakerfactory;
 use \Faker\Generator as Faker;
 use App\services\SendEmailSignUpOFF;
 
-$container->add(Faker::class, function(){
+$container->add(Faker::class, function () {
     return FakerFactory::create();
 });
 
-$container->add(ISendEmailSignUp::class, function(){
+$container->add(ISendEmailSignUp::class, function () {
     return new SendEmailSignUpOFF();
 });
 

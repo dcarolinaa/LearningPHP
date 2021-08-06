@@ -4,19 +4,23 @@ namespace App\models;
 
 use PhpParser\Node\Stmt\Return_;
 
-class Model{
+class Model
+{
 
     protected $id;
 
-    public function setId($id){
-        if($id === ""){
+    public function setId($id)
+    {
+        if ($id === "") {
             $id = null;
         }
+
         $this->id = $id;
     }
-    
-    public function fill($data){
-        foreach($data as $key => $value){
+
+    public function fill($data)
+    {
+        foreach ($data as $key => $value) {
             $setter = sprintf('set%s', ucfirst($key));
             $this->{($setter)}($value);
         }
@@ -24,7 +28,8 @@ class Model{
         return $this;
     }
 
-    public static function build($data){
+    public static function build($data)
+    {
         $className = static::class;
         $refClass = new \ReflectionClass($className);
         $entity = $refClass->newInstance()->fill($data);

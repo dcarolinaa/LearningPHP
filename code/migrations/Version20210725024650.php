@@ -44,7 +44,6 @@ SQL;
 SQL;
         $this->addSql($sql);
 
-
     }
 
     public function down(Schema $schema) : void

@@ -42,13 +42,13 @@ final class Version20210804013408 extends AbstractMigration
 
         $sql = 'ALTER TABLE branches DROP INDEX index_slug';
         $this->addSql($sql);
-        
+
         $sql = 'ALTER table companies drop column slug';
         $this->addSql($sql);
 
         $sql = 'ALTER table branches drop column slug';
         $this->addSql($sql);
-        
+
     }
 
     public function isTransactional(): bool

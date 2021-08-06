@@ -2,7 +2,8 @@
 
 namespace App\services;
 
-class SendEmailSignUp implements ISendEmailSignUp{
+class SendEmailSignUp implements ISendEmailSignUp
+{
 
     private $getURL;
 
@@ -17,11 +18,12 @@ class SendEmailSignUp implements ISendEmailSignUp{
             'hash' => $hash,
             'email' => $user->getEmail()
         ], false);
-        
+
         $message = sprintf('Hola, bienvenido a RomiToGo, activa tu cuenta con el siguiente link: <a href="%1$s">%1$s</a>', $link);
-        $header = 'From: romi@romitogo.com'. "\r\n";;
+        $header = 'From: romi@romitogo.com' . "\r\n";
+        ;
         $header .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        mail($user->getEmail(), 'WELCOME', $message, $header);   
+        mail($user->getEmail(), 'WELCOME', $message, $header);
     }
 
 }

@@ -49,7 +49,7 @@ final class Version20210606040433 extends AbstractMigration
             );
         SQL;
         $this->addSql($sql);
-        
+
         $sql = <<<SQL
             CREATE TABLE menus(
                 id INT NOT NULL AUTO_INCREMENT,
@@ -101,12 +101,12 @@ final class Version20210606040433 extends AbstractMigration
             DROP TABLE menu_branches;
         SQL;
         $this->addSql($sql);
-        
+
         $sql = <<<SQL
             DROP TABLE branches;
         SQL;
         $this->addSql($sql);
-        
+
         $sql = <<<SQL
             DROP TABLE companies;
         SQL;
@@ -121,7 +121,7 @@ final class Version20210606040433 extends AbstractMigration
             DROP TABLE menus;
         SQL;
         $this->addSql($sql);
-        
+
         $sql = <<<SQL
             DROP TABLE dishes;
         SQL;

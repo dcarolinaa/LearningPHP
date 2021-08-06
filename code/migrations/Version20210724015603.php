@@ -12,7 +12,7 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210724015603 extends AbstractMigration
 {
-   
+
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -57,5 +57,5 @@ final class Version20210724015603 extends AbstractMigration
     {
         return false;
     }
-    
+
 }

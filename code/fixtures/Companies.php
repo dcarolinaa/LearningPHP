@@ -8,11 +8,12 @@ use App\services\SaveCompany;
 use Faker\Generator as Faker;
 use Tests\TestCase;
 
-class Companies {
+class Companies
+{
 
     public function build(
-        Faker $faker, 
-        UsersRepository $userRepository, 
+        Faker $faker,
+        UsersRepository $userRepository,
         SaveCompany $saveCompany
     ) {
         $admin = $userRepository->getByEmail(TestCase::ADMIN_COMPANY_1);
@@ -27,7 +28,7 @@ class Companies {
             'update_user' => $admin->getId()
         ]);
 
-        for($i=0; $i<4; $i++) {
+        for ($i = 0; $i < 4; $i++) {
             $companyName = $faker->company;
             $saveCompany([
                 'user_admin' => $admin->getId(),
@@ -39,6 +40,5 @@ class Companies {
             ]);
         }
 
-       
-    }   
+    }
 }

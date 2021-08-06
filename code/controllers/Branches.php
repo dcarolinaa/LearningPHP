@@ -2,32 +2,34 @@
 namespace App\controllers;
 
 use App\Container;
-use App\models\Branch;
 use App\models\User;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
+use App\services\CreateBranch;
 use App\services\DeleteEntity;
-use App\services\GenerateSlug;
-use App\services\SaveEntity;
+use App\services\ErrorHelper;
 
 class Branches extends Controller
 {
     private $company;
     protected $validProfiles = [User::ROLE_ADMIN];
 
-    public function __construct($method,Container $container, CompaniesRepository $companiesRepository) {
+    public function __construct($method, Container $container, CompaniesRepository $companiesRepository)
+    {
         parent::__construct($method, $container);
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 
-    public function create(string $googleApiKey): void {
+    public function create(string $googleApiKey): void
+    {
         $this->view('branches/create', [
             'company' => $this->company,
             'googleApiKey' => $googleApiKey
         ]);
     }
 
-    public function edit(string $googleApiKey) {
+    public function edit(string $googleApiKey)
+    {
         $this->view('branches/edit', [
             'company' => $this->company,
             'googleApiKey' => $googleApiKey,
@@ -35,7 +37,8 @@ class Branches extends Controller
         ]);
     }
 
-    public function confirmDelete(BranchesRepository $branchesRepository) {
+    public function confirmDelete(BranchesRepository $branchesRepository)
+    {
         $id = $_GET['id_branch'];
         $branch = $branchesRepository->getBranchById($id);
 
@@ -49,7 +52,8 @@ class Branches extends Controller
         ]);
     }
 
-    public function delete(BranchesRepository $branchesRepository, DeleteEntity $deleteEntity) {
+    public function delete(BranchesRepository $branchesRepository, DeleteEntity $deleteEntity)
+    {
         $branch = $branchesRepository->getBranchById($_GET['id_branch']);
         $deleteEntity($branch);
 
@@ -57,26 +61,34 @@ class Branches extends Controller
     }
 
     public function store(
-        SaveEntity $saveEntity, 
-        GenerateSlug $generateSlug
+        CreateBranch $createBranch,
+        ErrorHelper $errorHelper,
+        string $googleApiKey
     ) {
-        $branch = new Branch;
-        $branch->setName($_POST['name']);
-        $branch->setId_company($_GET['id_company']);
-        $branch->setAddress($_POST['address']);
-        $branch->setTelephone($_POST['telephone']);
-        $branch->setCellphone($_POST['cellphone']);
-        $branch->setEmail($_POST['email']);
-        $branch->setLat($_POST['lat']);
-        $branch->setLng($_POST['lng']);
-        $branch->setSlug($generateSlug($_POST['name']));
+        $requiredAttributes = ['name', 'address', 'telephone', 'email'];
 
-        $saveEntity->__invoke($branch);
+        foreach ($requiredAttributes as $attribute) {
+            if (trim($_POST[$attribute]) == '') {
+                $errorHelper->set($attribute, '_empty', 'Campo obligatorio');
+            }
+        }
+
+        if (!preg_match("/^([a-z0-9\+_\-]+)(\.[a-z0-9\+_\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $_POST['email'])) {
+            $errorHelper->set('email', '_email_format', 'No es un email valido.');
+        }
+
+        if ($errorHelper->hasErrors()) {
+            $this->create($googleApiKey);
+            return;
+        }
+
+        $branch = $createBranch($_POST);
 
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 
-    public function update() {        
+    public function update()
+    {
         $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
     }
 

@@ -5,7 +5,8 @@ namespace App\repositories;
 use App\models\WorkerRequest;
 use PDO;
 
-class WorkerRequestsRepository extends Repository{
+class WorkerRequestsRepository extends Repository
+{
 
     protected function getClassName(): string
     {
@@ -24,10 +25,11 @@ class WorkerRequestsRepository extends Repository{
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $result !== false ? WorkerRequest::build($result) : null ;
+        return $result !== false ? WorkerRequest::build($result) : null;
     }
 
-    public function findByEmailCompany($email, $idCompany){
+    public function findByEmailCompany($email, $idCompany)
+    {
         $sql = <<<SQL
             SELECT email FROM worker_request 
             WHERE email = :email AND id_company = :id_company
@@ -35,7 +37,7 @@ class WorkerRequestsRepository extends Repository{
 SQL;
 
         $connection = $this->getDBConnection->__invoke();
-        
+
         $statement = $connection->prepare($sql);
         $statement->execute([
             ':email' => $email,
@@ -45,7 +47,7 @@ SQL;
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $result !== false ? true : $result ;
+        return $result !== false ? true : $result;
     }
-    
+
 }

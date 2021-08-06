@@ -7,19 +7,22 @@ use GuzzleHttp\Client;
 use DateTime;
 use Tests\TestCase as TestsTestCase;
 
-class UserTest extends TestsTestCase{
+class UserTest extends TestsTestCase
+{
 
     private $getURL;
     private $client;
 
-    public function setUp() : void{    
+    public function setUp() : void
+    {
         $this->getURL = $this->getContainer()->get(GetURL::class);
         $this->client = new Client();
     }
 
-    public function testCreateSuperAdmin() {
+    public function testCreateSuperAdmin()
+    {
         $url = $this->getURL->__invoke('store', 'Users', [], false);
-        
+
         $response = $this->client->request('POST', $url, [
             'form_params' => [
                 'first_name' => 'Admin',
@@ -32,7 +35,7 @@ class UserTest extends TestsTestCase{
             ],
             'allow_redirects' => false
         ]);
-        $this->assertSame(302, $response->getStatusCode());	
+        $this->assertSame(302, $response->getStatusCode());
     }
 
 }

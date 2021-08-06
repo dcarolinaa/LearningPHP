@@ -6,39 +6,46 @@ use App\services\GetDBConnection;
 use PDO;
 use ReflectionMethod;
 
-abstract class Repository{
+abstract class Repository
+{
 
     protected $getDBConnection;
 
-    protected abstract function getClassName():string;
+    abstract protected function getClassName():string;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->getDBConnection = new GetDBConnection();
     }
 
-    private function getTable(){
+    private function getTable()
+    {
         $getTable = new ReflectionMethod($this->getClassName(), 'getTable');
         return $table = $getTable->invoke(null);
     }
 
-    protected function buildResult($result){
+    protected function buildResult($result)
+    {
         $buil = new ReflectionMethod($this->getClassName(), 'build');
         return $result !== false ? $buil->invokeArgs(null, [$result]) : null;
     }
 
-    public function getAll() {
-        $sql = sprintf('SELECT * FROM %s ', $this->getTable());             
+    public function getAll()
+    {
+        $sql = sprintf('SELECT * FROM %s ', $this->getTable());
         $connection = $this->getDBConnection->__invoke();
-        $statement = $connection->prepare($sql);     
+        $statement = $connection->prepare($sql);
         $statement->execute();
         $data = [];
-        while($result = $statement->fetch(PDO::FETCH_ASSOC)){
+        while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
             $data[] = $this->buildResult($result);
         }
+
         return $data;
     }
 
-    public function getById($id){
+    public function getById($id)
+    {
         $sql = sprintf('SELECT * FROM %s where id = :id', $this->getTable());
 
         $connection = $this->getDBConnection->__invoke();
@@ -49,12 +56,13 @@ abstract class Repository{
         ]);
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        
+
         return $this->buildResult($result);
     }
 
-    public function getBySlug($slug){
-        $sql =  sprintf('SELECT * FROM %s where slug = :slug', $this->getTable());
+    public function getBySlug($slug)
+    {
+        $sql = sprintf('SELECT * FROM %s where slug = :slug', $this->getTable());
         $connection = $this->getDBConnection->__invoke();
 
         $statement = $connection->prepare($sql);

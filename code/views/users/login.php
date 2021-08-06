@@ -4,7 +4,7 @@
             <h5 class="card-title">Login</h5>
         </div>
         <div class="card-body">
-            <form method="POST" action="<?= $action ?>">
+            <form method="POST" action="<?php echo $action; ?>">
                 <div class="mb-3 row">
                     <label for="username" class="col-sm-2 col-form-label"> Username/Email: </label>
                     <div class="col-sm-10">
@@ -28,7 +28,7 @@
                     <input type="submit" value="Sign-In" id="" class="btn btn-primary">
                 </div>
                 <div class="row">
-                    <a href="<?= $signUpUrl ?>"> Sign Up </a>
+                    <a href="<?php echo $signUpUrl; ?>"> Sign Up </a>
                 </div>
             </form>
         </div>

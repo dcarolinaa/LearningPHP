@@ -5,13 +5,16 @@ namespace App\repositories;
 use App\models\Company;
 use PDO;
 
-class CompaniesRepository extends Repository {
+class CompaniesRepository extends Repository
+{
 
-    protected function getClassName():string{
+    protected function getClassName():string
+    {
         return Company::class;
     }
 
-    public function getByCompanyName($name){
+    public function getByCompanyName($name)
+    {
         $sql = 'SELECT * FROM companies where name = :name';
         $connection = $this->getDBConnection->__invoke();
 
@@ -22,7 +25,7 @@ class CompaniesRepository extends Repository {
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $result !== false ?  Company::build($result) : null;
+        return $result !== false ? Company::build($result) : null;
     }
 
 }

@@ -9,8 +9,9 @@ use App\models\Worker;
 use Exception;
 
 
-class AcceptWorkerRequest{
-    
+class AcceptWorkerRequest
+{
+
     private $workerRequestRepository;
     private $saveEntity;
     private $usersRepository;
@@ -21,8 +22,7 @@ class AcceptWorkerRequest{
         SaveEntity $saveEntity,
         UsersRepository $usersRepository,
         CreateWorker $createWorker
-        )
-    {
+    ) {
         $this->workerRequestRepository = $workerRequestRepository;
         $this->saveEntity = $saveEntity;
         $this->usersRepository = $usersRepository;
@@ -41,7 +41,7 @@ class AcceptWorkerRequest{
         $email  = $workerRequest->getEmail();
         $user = $this->usersRepository->getByEmail($email);
 
-        if($user === null){
+        if ($user === null) {
             throw new Exception('User not found.');
         }
 

@@ -5,22 +5,24 @@ namespace App\services;
 use App\models\WorkerRequest;
 use DateTime;
 
-class CreateWorkerRequest{
+class CreateWorkerRequest
+{
 
     private $saveEntity;
     private $sendEmailWorkerRequest;
 
-    public function __construct(SaveEntity $saveEntity, SendEmailWorkerRequest $sendEmailWorkerRequest) 
+    public function __construct(SaveEntity $saveEntity, SendEmailWorkerRequest $sendEmailWorkerRequest)
     {
         $this->saveEntity = $saveEntity;
         $this->sendEmailWorkerRequest = $sendEmailWorkerRequest;
     }
 
-    public function __invoke($data) {
+    public function __invoke($data)
+    {
         $workerRequest = new WorkerRequest();
-        $workerRequest->fill([        
+        $workerRequest->fill([
             'id_company' => $data['id_company'],
-            'email' => $data['email'],            
+            'email' => $data['email'],
             'create_user' => $data['create_user'],
             'accepted' => WorkerRequest::NOT_ACCEPTED,
             'rol' => $data['rol'],
@@ -32,9 +34,9 @@ class CreateWorkerRequest{
         $hash = hash('sha224', uniqid());
         $workerRequest->setRequest_hash($hash);
         $this->saveEntity->__invoke($workerRequest);
-        
+
         $this->sendEmailWorkerRequest->__invoke($workerRequest);
-        return $workerRequest;        
+        return $workerRequest;
     }
 
 }

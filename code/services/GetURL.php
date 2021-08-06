@@ -1,18 +1,21 @@
 <?php
 namespace App\services;
 
-class GetURL{
+class GetURL
+{
 
     private $baseUrl;
-    public function __construct(string $baseUrl) {
+    public function __construct(string $baseUrl)
+    {
         $this->baseUrl = $baseUrl;
     }
     public function __invoke($method, $controller, $data = [], $relative = true)
     {
-        if(true === is_object($controller)){
-            $arrControllerParts = explode('\\',get_class($controller));
-            $controller = $arrControllerParts[count($arrControllerParts)-1];
+        if (true === is_object($controller)) {
+            $arrControllerParts = explode('\\', get_class($controller));
+            $controller = $arrControllerParts[count($arrControllerParts) - 1];
         }
+
         $data = array_merge(
             [
                 'controller' => $controller,
@@ -22,7 +25,7 @@ class GetURL{
         );
 
         $query = http_build_query($data);
-        if(true === $relative){
+        if (true === $relative) {
             return sprintf('/?%s', http_build_query($data));
         }
 

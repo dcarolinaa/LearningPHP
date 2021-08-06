@@ -10,7 +10,7 @@ class GenerateSlug
     {
         $slugGenerator = new SlugGenerator();
         return $slugGenerator->generate($cadena);
-        
+
     }
 
 }

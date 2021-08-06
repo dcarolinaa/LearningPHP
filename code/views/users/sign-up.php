@@ -1,11 +1,11 @@
-<form method="POST" action="<?= $action ?>">
+<form method="POST" action="<?php echo $action; ?>">
     <div class="mb-3 row">
         <label for="first_name" class="col-sm-2 col-form-label"> First Name: </label>
         <div class="col-sm-10 position-relative">
             <input type="text" id="first_name" name="first_name" class="form-control" 
                 placeholder="First Name" value="<?php echo $user->getFirst_name(); ?>"
             >
-            <?= $this->view('errors', ['attribute' => 'first_name', 'errors' => $errors],true) ?>
+            <?php echo $this->view('errors', ['attribute' => 'first_name', 'errors' => $errors], true); ?>
         </div>        
     </div>
 
@@ -24,7 +24,7 @@
             <input type="date" id="birthdate" name="birthdate" class="form-control" 
                 placeholder="Birth Date" value="<?php echo $user->getBirthdate(); ?>"
             >
-            <?= $this->view('errors', ['attribute' => 'birthdate', 'errors' => $errors],true) ?>
+            <?php echo $this->view('errors', ['attribute' => 'birthdate', 'errors' => $errors], true); ?>
         </div>
     </div>
 
@@ -34,7 +34,7 @@
             <input type="text" id="email" name="email" class="form-control" 
                 placeholder="E-mail" value="<?php echo $user->getEmail(); ?>"
             >
-            <?= $this->view('errors', ['attribute' => 'email', 'errors' => $errors],true) ?>
+            <?php echo $this->view('errors', ['attribute' => 'email', 'errors' => $errors], true); ?>
         </div>        
     </div>
 
@@ -54,7 +54,7 @@
             <input type="text" id="username" name="username" class="form-control" 
                 placeholder="Username" value="<?php echo $user->getUsername(); ?>"
             >
-            <?= $this->view('errors', ['attribute' => 'username', 'errors' => $errors],true) ?>
+            <?php echo $this->view('errors', ['attribute' => 'username', 'errors' => $errors], true); ?>
         </div>        
     </div>
 
@@ -62,7 +62,7 @@
         <label for="password" class="col-sm-2 col-form-label"> Password: </label>
         <div class="col-sm-10">
             <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-            <?= $this->view('errors', ['attribute' => 'password', 'errors' => $errors],true) ?>
+            <?php echo $this->view('errors', ['attribute' => 'password', 'errors' => $errors], true); ?>
         </div>
     </div>
 

@@ -1,13 +1,14 @@
 <?php
 namespace Tests\Selenium;
 
-class HelloTest extends SeleniumTestCase {
+class HelloTest extends SeleniumTestCase
+{
 
-    public function testHello(): void 
+    public function testHello(): void
     {
-        $webDriver = $this->getWebDriver();        
+        $webDriver = $this->getWebDriver();
         $url = $this->getBaseUrl();
-        $webDriver->get($url);        
+        $webDriver->get($url);
         $element = $this->getElementByCss('h5.card-title');
         $expectedTitle = 'Login';
         $this->assertSame($expectedTitle, $element->getText());

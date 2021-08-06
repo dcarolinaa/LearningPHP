@@ -7,10 +7,12 @@ use \Faker\Generator as Faker;
 use Tests\TestCase;
 
 
-class CreateUserTest extends TestCase{
+class CreateUserTest extends TestCase
+{
 
-    public function testCreateUser(){
-        $faker = $this->getContainer()->get(Faker::class);        
+    public function testCreateUser()
+    {
+        $faker = $this->getContainer()->get(Faker::class);
         $birthdate = $faker->dateTimeBetween('-30 days', '+30 days');
 
         $createUserService = $this->getContainer()->get(CreateUser::class);
@@ -22,7 +24,7 @@ class CreateUserTest extends TestCase{
             'first_name' => 'Admin2',
             'last_name' => 'SuperAdmin2',
             'birthdate' => $birthdate->format('Y-m-d'),
-            'email' =>  $email,
+            'email' => $email,
             'username' => 'Admin2',
             'password' => 'Admin123'
         ]);

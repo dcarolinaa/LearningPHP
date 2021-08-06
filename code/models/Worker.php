@@ -2,7 +2,8 @@
 
 namespace App\models;
 
-class Worker extends Model implements IModel{
+class Worker extends Model implements IModel
+{
     protected $id;
     private $id_company;
     private $branch;
@@ -10,7 +11,8 @@ class Worker extends Model implements IModel{
     private $id_user;
     private $create_date;
 
-    public static function getAttributes(){
+    public static function getAttributes()
+    {
         return [
             'id',
             'id_company',
@@ -21,55 +23,68 @@ class Worker extends Model implements IModel{
         ];
     }
 
-    public static function getTable(){
+    public static function getTable()
+    {
         return 'workers';
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId_company($id_company){
+    public function setId_company($id_company)
+    {
         $this->id_company = $id_company;
     }
 
-    public function getId_company(){
+    public function getId_company()
+    {
         return $this->id_company;
     }
 
-    public function setBranch($branch){
+    public function setBranch($branch)
+    {
         $this->branch = $branch;
     }
 
-    public function getBranch(){
+    public function getBranch()
+    {
         return $this->branch;
     }
 
-    public function setRol($rol){
+    public function setRol($rol)
+    {
         $this->rol = $rol;
     }
 
-    public function getRol(){
+    public function getRol()
+    {
         return $this->rol;
     }
 
-    public function setId_user($id_user){
+    public function setId_user($id_user)
+    {
         $this->id_user = $id_user;
     }
 
-    public function getId_user(){
+    public function getId_user()
+    {
         return $this->id_user;
     }
 
-    public function setCreate_date($create_date){
+    public function setCreate_date($create_date)
+    {
         $this->create_date = $create_date;
     }
 
-    public function getCreate_date(){
+    public function getCreate_date()
+    {
         return $this->create_date;
     }
 }

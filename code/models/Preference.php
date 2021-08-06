@@ -6,55 +6,65 @@ use Exception;
 use App\Config;
 use PDO;
 
-class Preference{
+class Preference
+{
     private $shortName;
     private $name;
     private $id;
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    private function setId($id){
+    private function setId($id)
+    {
         //&& is_int($data['id'])
-        if(is_numeric($id)){
+        if (is_numeric($id)) {
             $this->id = $id;
         }
-        //throw new Exception('Id should be a numeric');        
+
+        //throw new Exception('Id should be a numeric');
     }
 
-    public function setShortName($shortName){
+    public function setShortName($shortName)
+    {
         $this->shortName = $shortName;
     }
 
-    public function getShortName(){
+    public function getShortName()
+    {
         return $this->shortName;
     }
 
-    public function setName($name){
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
-    private static function getConection(){
+    private static function getConection()
+    {
         $conection = new \PDO(
             sprintf(
                 'mysql:host=%s:%s;dbname=%s',
                 Config::DB_HOST,
                 Config::DB_PORT,
                 Config::DB_NAME,
-                
+
             ), Config::DB_USER,
             Config::DB_PASSWORD
         );
 
         return $conection;
     }
-    
-    public static function getById($id){
+
+    public static function getById($id)
+    {
         $conection = self::getConection();
         $sql = "select * from preferences where id = :id";
         $resultStatement = $conection->prepare($sql);
@@ -67,8 +77,9 @@ class Preference{
         return $preference;
     }
 
-    public function delete(){
-        try{        
+    public function delete()
+    {
+        try {
             $conection = self::getConection();
             $sql = "Delete from preferences where id = :id";
             $deleteStatement = $conection->prepare($sql);
@@ -77,12 +88,12 @@ class Preference{
             ]);
 
             return true;
-        }catch(Exception $ex){
-           throw $ex;
+        } catch (Exception $ex) {
+            throw $ex;
         }
     }
 
-    
+
     /*
     //En ORM se utliza regresando objetos
     public static function getAll(){
@@ -93,37 +104,39 @@ class Preference{
     }
     */
 
-    public static function getAll(){
+    public static function getAll()
+    {
         $conection = self::getConection();
         $sql = "select * from preferences";
         $statement = $conection->query($sql);
         $arrPreferences = [];
-        while($result = $statement->fetch()){            
+        while ($result = $statement->fetch()) {
             $arrPreferences[] = self::build($result);
         }
+
         return $arrPreferences;
     }
 
-    public function save(){
-        $conection = $this->getConection();        
-        if(null === $this->id){
-            try{    
-                $insert = 'Insert into preferences(name, shortname) values(:name, :shortname)';        
+    public function save()
+    {
+        $conection = $this->getConection();
+        if (null === $this->id) {
+            try {
+                $insert = 'Insert into preferences(name, shortname) values(:name, :shortname)';
                 $insertStatement = $conection->prepare($insert);
                 $insertStatement->execute([
                     ':name' => $this->getName(),
                     ':shortname' => $this->getShortName()
                 ]);
-                
+
                 $this->setId($conection->lastInsertId());
                 return $this->getId();
-
-            }catch(Exception $ex){
+            } catch (Exception $ex) {
                 throw $ex;
             }
         }
-       
-        try{
+
+        try {
             $sql = 'UPDATE preferences SET short_name = :shortname, name = :name where id = :id';
             $statement = $conection->prepare($sql);
             $statement->execute([
@@ -133,8 +146,8 @@ class Preference{
             ]);
             $this->setId($conection->lastInsertId());
             return $this->getId();
-        }catch(Exception $ex){
+        } catch (Exception $ex) {
             return false;
-        }        
+        }
     }
 }

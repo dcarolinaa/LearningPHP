@@ -37,12 +37,12 @@ $method = isset($_GET['method']) ? $_GET['method'] : $defaultMethod;
 
 $controllerClass = sprintf('App\\controllers\\%s', ucwords($controller));
 //var_dump($controllerClass);
-if(!class_exists($controllerClass) || !method_exists($controllerClass, $method)){
+if (!class_exists($controllerClass) || !method_exists($controllerClass, $method)) {
     header("HTTP/1.1 404 Not Found");
     die;
 }
 
-$container->add('method', function() use ($method) {
+$container->add('method', function () use ($method) {
     return $method;
 });
 
