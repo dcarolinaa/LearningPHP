@@ -25,6 +25,7 @@ use App\services\FlashVars;
 use App\services\GenerateSlug;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
+use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 
@@ -75,4 +76,5 @@ $container->add(CreateUser::class)
     ->add(Container::class, function ($container) {
         return $container;
     })
-    ->add(GenerateSlug::class);
+    ->add(GenerateSlug::class)
+    ->add(SaveBranch::class);

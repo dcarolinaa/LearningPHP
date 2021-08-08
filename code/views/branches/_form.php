@@ -1,3 +1,7 @@
+<?php 
+    $lat = $branch->getLat() ? $branch->getLat() : 20.872407599296846;
+    $lng = $branch->getLng() ? $branch->getLng() : -101.51664921720504;
+?>
 <style>
     #map {
         height: 300px;
@@ -12,30 +16,36 @@
     }
 </style>
 <form action="<?php echo $action; ?>" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="id" value="<?php echo $branch->getId(); ?>" />
     <input type="hidden" name="id_company" value="<?php echo $company->getId(); ?>" />
-    <input type="hidden" name="lat" id="lat">
-    <input type="hidden" name="lng" id="lng">
+    <input type="hidden" value="<?php echo $branch->getLat(); ?>" name="lat" id="lat">
+    <input type="hidden" value="<?php echo $branch->getLng(); ?>" name="lng" id="lng">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Nombre:</label>
-            <input class="form-control form-control-lg" value="" type="text" name="name" placeholder="Nombre">
+            <input class="form-control form-control-lg" value="<?php echo $branch->getName(); ?>" type="text" name="name" placeholder="Nombre">
+            <?php echo $this->view('errors', ['attribute' => 'name', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Teléfono:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName(); ?>" type="text" name="telephone" placeholder="Teléfono">
+            <input class="form-control form-control-lg" value="<?php echo $branch->getTelephone(); ?>" type="text" name="telephone" placeholder="Teléfono">
+            <?php echo $this->view('errors', ['attribute' => 'telephone', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Celular:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName(); ?>" type="text" name="cellphone" placeholder="Celular">
+            <input class="form-control form-control-lg" value="<?php echo $branch->getCellphone(); ?>" type="text" name="cellphone" placeholder="Celular">
+            <?php echo $this->view('errors', ['attribute' => 'cellphone', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Email:</label>
-            <input class="form-control form-control-lg" value="<?php echo $company->getName(); ?>" type="text" name="email" placeholder="Email">
+            <input class="form-control form-control-lg" value="<?php echo $branch->getEmail(); ?>" type="text" name="email" placeholder="Email">
+            <?php echo $this->view('errors', ['attribute' => 'email', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
             <div id="map"></div>
             <label class="form-label">Direccion:</label>
-            <input class="form-control form-control-lg" value="" type="text" name="address" placeholder="Direccion">
+            <input class="form-control form-control-lg"  value="<?php echo $branch->getAddress(); ?>" type="text" name="address" placeholder="Direccion">
+            <?php echo $this->view('errors', ['attribute' => 'address', 'errors' => $errors], true); ?>
         </div>
         <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        
             <button type="submit" class="btn btn-lg btn-primary me-2"><?php echo $callAction; ?></button>
@@ -48,7 +58,7 @@
 <script>
     function initMap() {
         
-        const myLatlng = { lat: 20.872407599296846, lng:  -101.51664921720504 };
+        const myLatlng = { lat: <?php echo $lat ?>, lng:  <?php echo $lng ?> };
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 16,
             center: myLatlng,

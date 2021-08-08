@@ -12,7 +12,9 @@
             'action' => sprintf('/mis-negocios/%s/sucursales/store', $company->getId()),
             'company' => $company,
             'callAction' => 'Crear',
-            'googleApiKey' => $googleApiKey
+            'googleApiKey' => $googleApiKey,
+            'branch' => $branch,
+            'errors' => $errors
         ], true);
         ?>
          

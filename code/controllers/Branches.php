@@ -2,12 +2,14 @@
 namespace App\controllers;
 
 use App\Container;
+use App\models\Branch;
 use App\models\User;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\services\CreateBranch;
 use App\services\DeleteEntity;
 use App\services\ErrorHelper;
+use App\services\SaveBranch;
 
 class Branches extends Controller
 {
@@ -20,50 +22,73 @@ class Branches extends Controller
         $this->company = $companiesRepository->getById($_GET['id_company']);
     }
 
-    public function create(string $googleApiKey): void
+    public function create(
+        string $googleApiKey,
+        ErrorHelper $errorHelper
+    ): void
     {
+        $branch = new Branch();
+        $branch->fill($_POST);        
+                
         $this->view('branches/create', [
             'company' => $this->company,
-            'googleApiKey' => $googleApiKey
+            'googleApiKey' => $googleApiKey,
+            'branch' => $branch,
+            'errors' => $errorHelper->getAll()
         ]);
     }
 
-    public function edit(string $googleApiKey)
+    public function edit(
+        string $googleApiKey,
+        ErrorHelper $errorHelper,
+        BranchesRepository $branchesRepository
+    )
     {
+        $branch = $branchesRepository->getById($_GET['id_branch']);
         $this->view('branches/edit', [
             'company' => $this->company,
             'googleApiKey' => $googleApiKey,
-            'i' => $_GET['id_branch']
+            'branch' => $branch,
+            'errors' => $errorHelper->getAll()
         ]);
     }
 
-    public function confirmDelete(BranchesRepository $branchesRepository)
+    public function confirmDelete(
+        BranchesRepository $branchesRepository,
+        CompaniesRepository $companiesRepository
+        )
     {
-        $id = $_GET['id_branch'];
-        $branch = $branchesRepository->getBranchById($id);
+        $branch = $branchesRepository->getBranchById($_GET['id_branch']);
+        $company = $companiesRepository->getById($_GET['id_company']);
 
         $this->view('components/confirm', [
             'title' => 'Eliminar Negocio',
-            'text' => sprintf('Deseas eliminar el brancha "%s"', $branch->getName()),
+            'text' => sprintf('Deseas eliminar el branch "%s"', $branch->getName()),
             'okText' => 'Eliminar',
             'okCss' => 'danger',
-            'urlOk' => sprintf('/mis-negocios/%s/sucursales/%s/delete', $_GET['id_company'], $branch->getId()),
-            'urlCancel' => sprintf('/mis-negocios/%s', $_GET['id_company'])
+            'urlOk' => sprintf('/mis-negocios/%s/sucursales/%s/delete', $company->getId(), $branch->getId()),
+            'urlCancel' => sprintf('/mis-negocios/%s', $company->getSlug())
         ]);
     }
 
-    public function delete(BranchesRepository $branchesRepository, DeleteEntity $deleteEntity)
+    public function delete(
+        BranchesRepository $branchesRepository, 
+        DeleteEntity $deleteEntity,
+        CompaniesRepository $companiesRepository
+    )
     {
+        $company = $companiesRepository->getById($_GET['id_company']);
         $branch = $branchesRepository->getBranchById($_GET['id_branch']);
         $deleteEntity($branch);
 
-        $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
+        $this->redirectTo(sprintf('/mis-negocios/%s', $company->getSlug()));
     }
 
     public function store(
         CreateBranch $createBranch,
         ErrorHelper $errorHelper,
-        string $googleApiKey
+        string $googleApiKey,
+        CompaniesRepository $companiesRepository
     ) {
         $requiredAttributes = ['name', 'address', 'telephone', 'email'];
 
@@ -78,18 +103,25 @@ class Branches extends Controller
         }
 
         if ($errorHelper->hasErrors()) {
-            $this->create($googleApiKey);
+            $this->create($googleApiKey, $errorHelper);
             return;
         }
 
         $branch = $createBranch($_POST);
+        $company = $companiesRepository->getById($_GET['id_company']);
 
-        $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
+        $this->redirectTo(sprintf('/mis-negocios/%s', $company->getSlug()));
     }
 
-    public function update()
+    public function update(
+        CompaniesRepository $companiesRepository,
+        SaveBranch $saveBranch
+    )
     {
-        $this->redirectTo(sprintf('/mis-negocios/%s', $_GET['id_company']));
+        $company = $companiesRepository->getById($_GET['id_company']);                
+        $saveBranch($_POST);
+
+        $this->redirectTo(sprintf('/mis-negocios/%s', $company->getSlug()));
     }
 
 }
