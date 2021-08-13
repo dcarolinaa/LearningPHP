@@ -1,5 +1,5 @@
 <?php
-namespace Tests\Selenium;
+namespace Tests\acceptation;
 
 class HelloTest extends SeleniumTestCase
 {

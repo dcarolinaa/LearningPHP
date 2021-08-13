@@ -36,7 +36,9 @@ final class CreateBranchTest extends TestCase
                 'address' => $faker->streetAddress,
                 'telephone' => $faker->randomNumber(6),
                 'cellphone' => $faker->randomNumber(6),
-                'email' => $faker->email
+                'email' => $faker->email,
+                'lat' => '20.872407599296846',
+                'lng' => '-101.51664921720504'
             ]
         );
 

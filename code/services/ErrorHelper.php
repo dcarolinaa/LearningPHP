@@ -24,9 +24,9 @@ class ErrorHelper
 
     public function get($key)
     {
-        if (isset($this->store[$key])) {
-            $value = $this->store[$key];
-            unset($this->store[$key]);
+        if (isset($this->store['_errors'][$key])) {
+            $value = $this->store['_errors'][$key];
+            unset($this->store['_errors'][$key]);
 
             return $value;
         }

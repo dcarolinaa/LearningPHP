@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Selenium;
+namespace Tests\acceptation;
 
 use Facebook\WebDriver\Remote\DesiredCapabilities;
 use Facebook\WebDriver\Remote\RemoteWebDriver;

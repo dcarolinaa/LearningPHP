@@ -4,3 +4,4 @@ docker/config/gitconfig
 .env
 code/upload/companies
 code/upload/cache
+.phpunit.cache
