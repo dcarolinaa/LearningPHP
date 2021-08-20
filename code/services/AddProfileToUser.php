@@ -1,32 +1,36 @@
 <?php
 namespace App\services;
 
-use App\models\User;
 use App\services\GetDBConnection;
+use App\models\User;
 use Exception;
 
 class AddProfileToUser
 {
     protected $getConnection;
 
-    public function __construct()
+    public function __construct(GetDBConnection $getConnection)
     {
-        $this->getConnection = new GetDBConnection();
+        $this->getConnection = $getConnection;
     }
 
-    public function __invoke(User $user, $rol)
+    public function __invoke(User $user, int $rol): bool
     {
         $conection = $this->getConnection->__invoke();
 
         try {
             $insert = 'Insert into user_roles(id_user, id_rol) values(:id_user, :id_rol)';
             $insertStatement = $conection->prepare($insert);
-            $insertStatement->execute([
+            $success = $insertStatement->execute([
                 ':id_user' => $user->getId(),
                 ':id_rol' => $rol
             ]);
 
-            return true;
+            if ($success) {
+                return true;
+            } else {
+                throw new \Exception("Error");
+            }
         } catch (Exception $ex) {
             throw $ex;
         }

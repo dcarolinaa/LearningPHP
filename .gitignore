@@ -5,3 +5,5 @@ docker/config/gitconfig
 code/upload/companies
 code/upload/cache
 .phpunit.cache
+/code/.phpcs-cache
+/.history/
