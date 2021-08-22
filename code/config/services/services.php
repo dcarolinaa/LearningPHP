@@ -23,6 +23,7 @@ use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\FlashVars;
 use App\services\GenerateSlug;
+use App\services\GetDBConnection;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
 use App\services\SaveBranch;
@@ -77,4 +78,5 @@ $container->add(CreateUser::class)
         return $container;
     })
     ->add(GenerateSlug::class)
-    ->add(SaveBranch::class);
+    ->add(SaveBranch::class)
+    ->add(GetDBConnection::class);

@@ -1,4 +1,4 @@
-<?php 
+<?php
     $lat = $branch->getLat() ? $branch->getLat() : 20.872407599296846;
     $lng = $branch->getLng() ? $branch->getLng() : -101.51664921720504;
 ?>
@@ -58,7 +58,7 @@
 <script>
     function initMap() {
         
-        const myLatlng = { lat: <?php echo $lat ?>, lng:  <?php echo $lng ?> };
+        const myLatlng = { lat: <?php echo $lat; ?>, lng:  <?php echo $lng; ?> };
         const map = new google.maps.Map(document.getElementById("map"), {
             zoom: 16,
             center: myLatlng,

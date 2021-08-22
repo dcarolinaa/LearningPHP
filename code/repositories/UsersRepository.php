@@ -73,4 +73,25 @@ class UsersRepository extends Repository
         return $result;
     }
 
+    public function getFirstUserWithoutWorkerRequest() : ?User
+    {
+        $sql = <<<SQL
+        select u.* 
+        from users u where not exists (select 1 from worker_request wr where wr.email = u.email)
+        and not EXISTS (select 1 from user_roles ur where ur.id_rol <> :rol_user and u.id = ur.id_user)
+        limit 1
+SQL;
+
+        $connection = $this->getDBConnection->__invoke();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute([
+            ':rol_user' => User::ROLE_USER
+        ]);
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $result != false ? User::build($result) : null;
+    }
+
 }

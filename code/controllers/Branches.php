@@ -25,11 +25,10 @@ class Branches extends Controller
     public function create(
         string $googleApiKey,
         ErrorHelper $errorHelper
-    ): void
-    {
+    ): void {
         $branch = new Branch();
-        $branch->fill($_POST);        
-                
+        $branch->fill($_POST);
+
         $this->view('branches/create', [
             'company' => $this->company,
             'googleApiKey' => $googleApiKey,
@@ -42,8 +41,7 @@ class Branches extends Controller
         string $googleApiKey,
         ErrorHelper $errorHelper,
         BranchesRepository $branchesRepository
-    )
-    {
+    ) {
         $branch = $branchesRepository->getById($_GET['id_branch']);
         $this->view('branches/edit', [
             'company' => $this->company,
@@ -56,8 +54,7 @@ class Branches extends Controller
     public function confirmDelete(
         BranchesRepository $branchesRepository,
         CompaniesRepository $companiesRepository
-        )
-    {
+    ) {
         $branch = $branchesRepository->getBranchById($_GET['id_branch']);
         $company = $companiesRepository->getById($_GET['id_company']);
 
@@ -72,11 +69,10 @@ class Branches extends Controller
     }
 
     public function delete(
-        BranchesRepository $branchesRepository, 
+        BranchesRepository $branchesRepository,
         DeleteEntity $deleteEntity,
         CompaniesRepository $companiesRepository
-    )
-    {
+    ) {
         $company = $companiesRepository->getById($_GET['id_company']);
         $branch = $branchesRepository->getBranchById($_GET['id_branch']);
         $deleteEntity($branch);
@@ -116,9 +112,8 @@ class Branches extends Controller
     public function update(
         CompaniesRepository $companiesRepository,
         SaveBranch $saveBranch
-    )
-    {
-        $company = $companiesRepository->getById($_GET['id_company']);                
+    ) {
+        $company = $companiesRepository->getById($_GET['id_company']);
         $saveBranch($_POST);
 
         $this->redirectTo(sprintf('/mis-negocios/%s', $company->getSlug()));

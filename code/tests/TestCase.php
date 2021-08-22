@@ -13,6 +13,7 @@ class TestCase extends PHPUnitTestCase
     const ADMIN_COMPANY_1_ID = 2;
     const COMPANY_1_ID = 1;
     const COMPANY_1_BRANCH_1 = 1;
+    const DEFAULT_PASSWORD = 'password';
 
     public function __construct()
     {

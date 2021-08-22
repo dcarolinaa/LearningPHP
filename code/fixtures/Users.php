@@ -7,12 +7,16 @@ use App\services\AddProfileToUser;
 use Faker\Generator as Faker;
 
 use App\services\CreateUser;
+use Tests\TestCase;
 
 class Users
 {
 
-    public function build(CreateUser $createUser, AddProfileToUser $addProfileToUser, Faker $faker)
-    {
+    public function build(
+        CreateUser $createUser,
+        AddProfileToUser $addProfileToUser,
+        Faker $faker
+    ) {
         $user = $createUser(
             [
                 'first_name' => 'Super Admin',
@@ -21,7 +25,7 @@ class Users
                 'email' => 'admin@romitogo.com',
                 'phone_number' => $faker->randomNumber(6),
                 'username' => 'romitogo',
-                'password' => 'password'
+                'password' => TestCase::DEFAULT_PASSWORD
             ]);
 
         $addProfileToUser($user, User::ROLE_SUPERADMIN);
@@ -34,10 +38,21 @@ class Users
                 'email' => 'admin@sushigo.com',
                 'phone_number' => $faker->randomNumber(6),
                 'username' => 'sushigo',
-                'password' => 'password'
+                'password' => TestCase::DEFAULT_PASSWORD
             ]);
 
         $addProfileToUser($user, User::ROLE_ADMIN);
+
+        $user = $createUser(
+            [
+                'first_name' => 'SushiGoDeliver',
+                'last_name' => 'Test',
+                'birthdate' => $faker->date('Y-m-d'),
+                'email' => 'delivertest@sushigo.com',
+                'phone_number' => $faker->randomNumber(6),
+                'username' => 'delivertest',
+                'password' => TestCase::DEFAULT_PASSWORD
+            ]);
 
         for ($i = 0; $i < 100; $i++) {
             $user = [
@@ -47,7 +62,7 @@ class Users
                     'email' => $faker->email,
                     'phone_number' => $faker->randomNumber(6),
                     'username' => $faker->userName,
-                    'password' => 'password'
+                    'password' => TestCase::DEFAULT_PASSWORD
             ];
             $createUser($user);
         }

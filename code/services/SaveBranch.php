@@ -4,7 +4,8 @@ namespace App\services;
 
 use App\repositories\BranchesRepository;
 
-class SaveBranch 
+
+class SaveBranch
 {
     private $saveEntity;
     private $branchesRepository;
@@ -14,14 +15,14 @@ class SaveBranch
         SaveEntity $saveEntity,
         BranchesRepository $branchesRepository,
         GenerateSlug $generateSlug
-    )
-    {
+    ) {
         $this->saveEntity = $saveEntity;
         $this->branchesRepository = $branchesRepository;
         $this->generateSlug = $generateSlug;
     }
 
-    public function __invoke($data){
+    public function __invoke($data)
+    {
         $branch = $this->branchesRepository->getById($data['id']);
         $branch->fill([
 
@@ -34,7 +35,7 @@ class SaveBranch
             'lat' => $data['lat'],
             'lng' => $data['lng']
         ]);
-        
+
         $this->saveEntity->__invoke($branch);
 
         return $branch;
