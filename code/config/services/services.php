@@ -17,6 +17,7 @@ use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
 use App\services\CreateBranch;
+use App\services\CreateDish;
 use App\services\CreateWorker;
 use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
@@ -26,6 +27,7 @@ use App\services\GenerateSlug;
 use App\services\GetDBConnection;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
+use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
@@ -79,4 +81,6 @@ $container->add(CreateUser::class)
     })
     ->add(GenerateSlug::class)
     ->add(SaveBranch::class)
-    ->add(GetDBConnection::class);
+    ->add(GetDBConnection::class)
+    ->add(RemoveProfile::class)
+    ->add(CreateDish::class);
