@@ -3,7 +3,6 @@
 namespace App;
 
 use Exception;
-use phpDocumentor\Reflection\Types\This;
 use ReflectionClass;
 use ReflectionMethod;
 
@@ -69,7 +68,11 @@ class Container
                 $params[] = $this->get($name);
             } catch (Exception $ex) {
                 $classNameParameter = $parameter->getType()->getName();
-                $params[] = $this->get($classNameParameter);
+                try {
+                    $params[] = $this->get($classNameParameter);
+                } catch (Exception $ex) {
+                    throw new Exception("($classNameParameter  $name) Services don't found");
+                }
             }
         }
 
