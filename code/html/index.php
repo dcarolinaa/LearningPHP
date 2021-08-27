@@ -30,6 +30,11 @@ $defaultMethod = 'myprofile';
 $container = new Container();
 
 include "../config/services/services.php";
+$enviroment = $container->get('environment');
+
+if($enviroment != 'production') {
+    include "../config/services/services-{$enviroment}.php";
+}
 
 $controller = isset($_GET['controller']) ? $_GET['controller'] : $defaultController;
 $method = isset($_GET['method']) ? $_GET['method'] : $defaultMethod;

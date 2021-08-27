@@ -6,14 +6,15 @@
     </div>
     <div class="card">
         <div class="card-header">
-
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId(); ?>/sucursales/nuevo" id="btn-new">Nueva Sucursal</a></li>
-            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId(); ?>/equipo">Administrar Equipo</a></li>            
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId(); ?>/equipo">Menus</a></li>
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos">Platillos</a></li>
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getId(); ?>/equipo">Administrar Equipo</a></li>
         </ol>
         </div>
         <div class="card-body">
-            <table class="table table-striped">            
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <td>

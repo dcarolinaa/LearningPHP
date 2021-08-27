@@ -18,6 +18,10 @@ RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/delete$ index.php?control
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/edit index.php?controller=Branches&method=edit&id_company=$1&id_branch=$2 [L]
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/update index.php?controller=Branches&method=update&id_company=$1&id_branch=$2 [L]
 
+### Dishes
+RewriteRule ^mis-negocios/([a-z\-]+)/platillos$ index.php?controller=Dishes&method=index&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/platillos/nuevo$ index.php?controller=Dishes&method=create&slug=$1 [L]
+
 ### Teams
 RewriteRule ^mis-negocios/([0-9]+)/equipo$ index.php?controller=Workers&method=index&id_company=$1 [L]
 RewriteRule ^mis-negocios/([0-9]+)/equipo/invitacion$ index.php?controller=Workers&method=workerRequest&id_company=$1 [L]

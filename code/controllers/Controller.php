@@ -20,7 +20,7 @@ class Controller
     protected $validProfiles = [];
     protected $container;
 
-    public function __construct($method, Container $container)
+    public function __construct(string $method, Container $container)
     {
         $this->setContainer($container);
         $this->validateSession($method);
@@ -115,7 +115,7 @@ class Controller
         $this->content = $content;
     }
 
-    public function view($view, $data, $return = false)
+    public function view($view, $data = [], $return = false)
     {
         extract($data);//array asociativo se obtienen las variables
         ob_start();

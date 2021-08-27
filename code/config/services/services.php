@@ -30,7 +30,6 @@ use App\services\InitSession;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
-use App\services\UserHasProfile;
 
 $container->add(ErrorHelper::class, function ($container) {
     $service = new ErrorHelper($_SESSION);
