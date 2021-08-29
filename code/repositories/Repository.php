@@ -75,4 +75,17 @@ abstract class Repository
         return $this->buildResult($result);
     }
 
+    public function getLastInserted()
+    {
+        $sql = sprintf('SELECT * FROM %s order by id desc limit 1', $this->getTable());
+        $connection = $this->getDBConnection->__invoke();
+
+        $statement = $connection->prepare($sql);
+        $statement->execute();
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        return $this->buildResult($result);
+    }
+
 }

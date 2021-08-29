@@ -30,6 +30,7 @@ use App\services\InitSession;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
+use App\services\UserHasProfile;
 
 $container->add(ErrorHelper::class, function ($container) {
     $service = new ErrorHelper($_SESSION);
@@ -82,4 +83,5 @@ $container->add(CreateUser::class)
     ->add(SaveBranch::class)
     ->add(GetDBConnection::class)
     ->add(RemoveProfile::class)
-    ->add(CreateDish::class);
+    ->add(CreateDish::class)
+    ->add(UserHasProfile::class);
