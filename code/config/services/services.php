@@ -4,6 +4,7 @@ use App\config\Config;
 use App\Container;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
+use App\repositories\DishesRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
 use App\repositories\WorkersRepository;
@@ -31,6 +32,7 @@ use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
+use \Faker\Generator as Faker;
 
 $container->add(ErrorHelper::class, function ($container) {
     $service = new ErrorHelper($_SESSION);
@@ -46,6 +48,10 @@ $container->add(ISendEmailSignUp::class, function ($container) {
 
 $container->add(FlashVars::class, function ($container) {
     return new FlashVars($_SESSION);
+});
+
+$container->add(Faker::class, function($container){
+    return new Faker();
 });
 
 $container->add(InitSession::class, function ($container) {
@@ -84,4 +90,5 @@ $container->add(CreateUser::class)
     ->add(GetDBConnection::class)
     ->add(RemoveProfile::class)
     ->add(CreateDish::class)
-    ->add(UserHasProfile::class);
+    ->add(UserHasProfile::class)
+    ->add(DishesRepository::class);

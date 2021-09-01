@@ -14,10 +14,10 @@
         </div>
         <div class="card-body">
             <table class="table table-striped">
-                <tbody>
+                <tbody>                    
                     <?php foreach ($dishes as $index => $dish) : ?>
                     <tr>
-                        <td><img src="<?php echo  $faker->imageUrl(100,100, 'food'); ?>"/></td>
+                        <td></td>
                         <td>
                               <a href="/sucursales/<?php echo $company->getSlug(); ?>"><?php echo $dish['name']; ?></a>
                               <div><?php echo $dish['description']; ?></div>

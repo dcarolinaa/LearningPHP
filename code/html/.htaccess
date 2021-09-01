@@ -21,6 +21,9 @@ RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/update index.php?controll
 ### Dishes
 RewriteRule ^mis-negocios/([a-z\-]+)/platillos$ index.php?controller=Dishes&method=index&slug=$1 [L]
 RewriteRule ^mis-negocios/([a-z\-]+)/platillos/nuevo$ index.php?controller=Dishes&method=create&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/platillos/store$ index.php?controller=Dishes&method=store&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/platillos/([0-9]+)/confirm-delete$ index.php?controller=Dishes&method=confirmDelete&slug=$1&id_dish=$2 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/platillos/([0-9]+)/delete$ index.php?controller=Dishes&method=delete&slug=$1&id_dish=$2 [L]
 
 ### Teams
 RewriteRule ^mis-negocios/([0-9]+)/equipo$ index.php?controller=Workers&method=index&id_company=$1 [L]

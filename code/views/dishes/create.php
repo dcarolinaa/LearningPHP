@@ -7,9 +7,11 @@
 <div class="card">
     <div class="card-body">
         <?php echo $this->view('dishes/_form', [
-            'action' => '/mis-negocios/store',
+            'action' => sprintf('/mis-negocios/%s/platillos/store',$company->getSlug()),
             'company' => $company,
-            'callAction' => 'Crear'
+            'dish' => $dish,
+            'callAction' => 'Crear',
+            'errors' => $errors
         ], true);?> 
     </div>
 </div>
