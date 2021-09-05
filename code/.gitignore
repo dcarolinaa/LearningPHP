@@ -3,3 +3,4 @@ ConfigTest.php
 vendor
 html/upload
 code/.phpunit.cache
+/cache

@@ -55,7 +55,7 @@ class Users extends Controller
         }
 
         $getAvatar = new GetAvatar();
-        $avatar = $getAvatar( $_GET['id']);
+        $avatar = $getAvatar($_GET['id']);
         $imagine = new Imagine();
         $image = $imagine->open($avatar);
         $image->resize($image->getsize()->widen($_GET['width']));

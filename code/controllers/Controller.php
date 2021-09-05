@@ -164,11 +164,15 @@ class Controller
         $this->redirectTo($_SERVER['HTTP_REFERER']);
     }
 
-    public function redirectTo($URL)
+    public function redirectTo($URL, $permanetly = false)
     {
-        header(
-            sprintf('Location:%s', $URL)
-        );
+        if ($permanetly) {
+            header("HTTP/1.1 301 Moved Permanently");
+        } else {
+            header("HTTP/1.1 302 Moved Temporarily");
+        }
+
+        header(sprintf('Location:%s', $URL));
         die;
     }
 }

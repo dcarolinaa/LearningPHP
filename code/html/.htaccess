@@ -9,7 +9,8 @@ RewriteRule ^mis-negocios/delete/([0-9]+) index.php?controller=Companies&method=
 RewriteRule ^mis-negocios/store index.php?controller=Companies&method=store [L]
 RewriteRule ^mis-negocios/update index.php?controller=Companies&method=update [L]
 RewriteRule ^mis-negocios/([a-z\-]+)$ index.php?controller=Companies&method=show&slug=$1 [L]
-
+RewriteRule ^imagenes/negocios/logo-([a-z\-]+)_w([0-9]+)v([0-9]+).jpg$ index.php?controller=Companies&method=logo&slug=$1&width=$2 [L]
+RewriteRule ^imagenes/negocios/default-logo-w([0-9]+)v([0-9]+).jpg$ index.php?controller=Companies&method=defaultLogo&width=$1 [L]
 ### Branches
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/nuevo index.php?controller=Branches&method=create&id_company=$1 [L]
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/store$ index.php?controller=Branches&method=store&id_company=$1 [L]

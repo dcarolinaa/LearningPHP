@@ -26,8 +26,10 @@ use App\services\DeleteEntity;
 use App\services\FlashVars;
 use App\services\GenerateSlug;
 use App\services\GetDBConnection;
+use App\services\RecoveryAndSendImage;
 use App\services\GetUrlAvatar;
 use App\services\InitSession;
+use App\services\MoveFile;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SendEmailWorkerRequest;
@@ -50,7 +52,7 @@ $container->add(FlashVars::class, function ($container) {
     return new FlashVars($_SESSION);
 });
 
-$container->add(Faker::class, function($container){
+$container->add(Faker::class, function ($container) {
     return new Faker();
 });
 
@@ -71,6 +73,7 @@ $container->add(CreateUser::class)
     ->add(GetURL::class)
     ->add(AddProfileToUser::class)
     ->add(UserHasProfile::class)
+    ->add(MoveFile::class)
     ->add(SaveCompany::class)
     ->add(CreateBranch::class)
     ->add(CompaniesRepository::class)
@@ -91,4 +94,5 @@ $container->add(CreateUser::class)
     ->add(RemoveProfile::class)
     ->add(CreateDish::class)
     ->add(UserHasProfile::class)
-    ->add(DishesRepository::class);
+    ->add(DishesRepository::class)
+    ->add(RecoveryAndSendImage::class);

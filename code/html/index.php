@@ -32,7 +32,7 @@ $container = new Container();
 include "../config/services/services.php";
 $enviroment = $container->get('environment');
 
-if($enviroment != 'production') {
+if ($enviroment != 'production') {
     include "../config/services/services-{$enviroment}.php";
 }
 

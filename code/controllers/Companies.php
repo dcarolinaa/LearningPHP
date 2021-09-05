@@ -7,6 +7,8 @@ use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
+use App\services\RecoveryAndSendImage;
+use Exception;
 
 class Companies extends Controller
 {
@@ -88,5 +90,26 @@ class Companies extends Controller
             'company' => $company,
             'branches' => $branchesRepository->getListByCompany($company->getId())
         ]);
+    }
+
+    public function defaultLogo(string $defaultCompanyLogo, RecoveryAndSendImage $recoveryAndSendImage)
+    {
+        $recoveryAndSendImage($defaultCompanyLogo, $_GET['width']);
+    }
+
+    public function logo(
+        CompaniesRepository $companiesRepository,
+        string $pathCompanyLogo,
+        string $uploadDir,
+        string $urlDefaultCompanyLogo,
+        RecoveryAndSendImage $recoveryAndSendImage
+    ) {
+        $company = $companiesRepository->getBySlug($_GET['slug']);
+        $file = sprintf('%s/%s/logo.jpg', $uploadDir, sprintf($pathCompanyLogo, $company->getId()));
+        try {
+            $recoveryAndSendImage($file, $_GET['width']);
+        } catch (Exception $ex) {
+            $this->redirectTo(sprintf($urlDefaultCompanyLogo, $_GET['width'] ), true);
+        }
     }
 }

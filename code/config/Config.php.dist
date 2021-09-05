@@ -1,6 +1,8 @@
 <?php
 namespace App\config;
 
+define('HOME_DIR', realpath(sprintf('%s/../', __DIR__)));
+
 class Config
 {
     const DB_HOST = 'host';
@@ -10,4 +12,10 @@ class Config
     const DB_NAME = 'db';
     const GOOGLE_API_KEY = '';
     const BASE_URL = 'http://localhost:8081';
+    const ENVIRONMENT = 'dev';
+    const HOME_DIR = HOME_DIR;
+    const UPLOAD_DIR = 'upload';
+    const PATH_COMPANY_LOGO = 'companies/%s';
+    const URL_DEFAULT_COMPANY_LOGO = '/imagenes/negocios/default-logo-w%sv1.jpg';
+    const DEFAULT_COMPANY_LOGO = 'html/img/generic-company.jpeg';
 }

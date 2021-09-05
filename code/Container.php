@@ -6,6 +6,11 @@ use Exception;
 use ReflectionClass;
 use ReflectionMethod;
 
+class ServiceNotFound extends Exception
+{
+
+}
+
 class Container
 {
     private $callbacks = [];
@@ -35,7 +40,7 @@ class Container
             return $this->services[$key];
         }
 
-        throw new Exception("($key) Services don't found");
+        throw new ServiceNotFound("($key) Services don't found");
     }
 
     public function callMethod($method, $object)
@@ -70,7 +75,7 @@ class Container
                 $classNameParameter = $parameter->getType()->getName();
                 try {
                     $params[] = $this->get($classNameParameter);
-                } catch (Exception $ex) {
+                } catch (ServiceNotFound $ex) {
                     throw new Exception("($classNameParameter  $name) Services don't found");
                 }
             }

@@ -4,6 +4,7 @@ namespace App\services;
 
 use App\models\Company;
 use App\repositories\CompaniesRepository;
+use App\services\MoveFile;
 
 class SaveCompany
 {
@@ -11,26 +12,44 @@ class SaveCompany
     private $saveEntity;
     private $companiesRepository;
     private $generateSlug;
+    private $moveFile;
+    private $pathCompanyLogo;
+    private $uploadDir;
+    private $homeDir;
 
     public function __construct(
+        MoveFile $moveFile,
         SaveEntity $saveEntity,
         CompaniesRepository $companiesRepository,
-        GenerateSlug $generateSlug
+        GenerateSlug $generateSlug,
+        string $pathCompanyLogo,
+        string $uploadDir,
+        string $homeDir
     ) {
+        $this->pathCompanyLogo = $pathCompanyLogo;
         $this->saveEntity = $saveEntity;
         $this->companiesRepository = $companiesRepository;
         $this->generateSlug = $generateSlug;
+        $this->moveFile = $moveFile;
+        $this->uploadDir = $uploadDir;
+        $this->homeDir = $homeDir;
     }
 
     public function __invoke($data)
     {
         $logo = isset($data['logo']) ? $data['logo'] : false;
         $this->clearData($data);
-
         $company = $this->getCompany($data);
-        $company->fill($data);
-        $this->saveEntity->__invoke($company);
+        $company->fill([
+            'name' => $data['name'],
+            'slug' => $data['slug'],
+            'update_date' => $data['update_date'],
+            'create_date' => $data['create_date'],
+            'status' => $data['status'] ? $data['status'] : $company->getStatus(),
+            'update_user' => $data['update_user'] ? $data['update_user'] : $company->getUpdate_user()
+        ]);
 
+        $this->saveEntity->__invoke($company);
         if ($logo) {
             $this->saveLogo($logo, $company);
         }
@@ -53,6 +72,7 @@ class SaveCompany
 
         if (isset($data['id'])) {
             $company = $this->companiesRepository->getById($data['id']);
+            $data['create_date']  = $company->getCreate_date();
             unset($data['id']);
         } else {
             $company = new Company();
@@ -64,11 +84,27 @@ class SaveCompany
 
     private function saveLogo($logo, Company $company)
     {
-        $path = sprintf('upload/companies/%s', $company->getId());
-        if (!file_exists($path)) {
-            mkdir($path, 0777, true);
+        $path = sprintf(
+            '%s/%s',
+            $this->uploadDir,
+            sprintf($this->pathCompanyLogo, $company->getId())
+        );
+        $this->moveFile->__invoke($logo, $path, 'logo.jpg');
+        $this->cleanCache($path);
+    }
+
+    private function cleanCache($path)
+    {
+        $cache = sprintf('%s/cache/%s/logo', $this->homeDir, $path);
+        if (!file_exists($cache)) {
+            return;
         }
 
-        move_uploaded_file($logo, sprintf('%s/logo.jpg', $path));
+        foreach (scandir($cache) as $file) {
+            $fullFileName = sprintf('%s/%s', $cache, $file);
+            if (is_file($fullFileName)) {
+                unlink($fullFileName);
+            }
+        }
     }
 }
