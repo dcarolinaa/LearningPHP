@@ -68,18 +68,25 @@ class Dishes  extends Controller
 
         $company = $companiesRepository->getById($_POST['id_company']);
 
-        $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $company->getSlug()));        
+        $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $company->getSlug()));
     }
 
     public function edit() 
     {
+        $faker = $this->getContainer()->get(Faker::class);
+        $dish = new Dish();
+        $dish->setId(rand(100,1000));
+        $dish->setName($faker->words(3,true));
+        $dish->setDescription($faker->words(rand(5,20),true));
+        $errors = [];
         $company = $this->companyRepository->getBySlug($_GET['slug']);
-        $this->view('dishes/edit',  compact('company'));
+        $this->view('dishes/edit',  compact('company', 'dish', 'errors'));
     }
 
     public function update()
     {
-
+        $company = $this->companyRepository->getBySlug($_GET['slug']);
+        $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $company->getSlug()));
     }
 
     public function delete (DishesRepository $dishesRepository, DeleteEntity $deleteEntity) 

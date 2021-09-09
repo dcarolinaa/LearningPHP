@@ -8,7 +8,7 @@
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Descripción:</label>
-            <input class="form-control form-control-lg" value="<?php echo $dish->getDescription(); ?>" type="text" name="description" placeholder="Descripción">
+            <textarea class="form-control form-control-lg" name="description" placeholder="Descripción"><?php echo $dish->getDescription(); ?></textarea>
             <?php echo $this->view('errors', ['attribute' => 'description', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
