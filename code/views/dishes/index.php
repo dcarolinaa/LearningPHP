@@ -14,17 +14,24 @@
         </div>
         <div class="card-body">
             <table class="table table-striped">
-                <tbody>                    
-                    <?php foreach ($dishes as $index => $dish) : ?>
+                <tbody>
+                    <?php
+                    foreach ($dishes as $dish) :
+                            $imageUrl = sprintf('/imagenes/%s/platillos/platillo-%s_w300v%s.jpg',
+                                $company->getSlug(),
+                                $dish->getId(),
+                                (new \DateTime($dish->getUpdate_date()))->format('U')
+                        );
+                        ?>
                     <tr>
-                        <td></td>
+                        <td><img src="<?php echo $imageUrl; ?>" height="35"></td>
                         <td>
-                              <a href="/sucursales/<?php echo $company->getSlug(); ?>"><?php echo $dish['name']; ?></a>
-                              <div><?php echo $dish['description']; ?></div>
+                              <a href="/sucursales/<?php echo $company->getSlug(); ?>"><?php echo $dish->getName(); ?></a>
+                              <div><?php echo $dish->getDescription(); ?></div>
                         </td>
                         <td>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish['id']; ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish['id']; ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish->getId(); ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish->getId(); ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
                      
                         </td>
                     </tr>

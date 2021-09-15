@@ -2,7 +2,6 @@
 
 namespace App\repositories;
 
-use App\controllers\Dishes;
 use App\models\Dish;
 use PDO;
 
@@ -10,7 +9,7 @@ class DishesRepository extends Repository
 {
     protected function getClassName(): string
     {
-        return Dishes::class;
+        return Dish::class;
     }
 
     public function getAllByCompanyId($companyId)
@@ -23,8 +22,13 @@ class DishesRepository extends Repository
             ':id_company' => $companyId
         ]);
 
-        return $statement->fetchAll(PDO::FETCH_ASSOC);
-        
+        $data = [];
+        while ($result = $statement->fetch(PDO::FETCH_ASSOC)) {
+            $data[] = $this->buildResult($result);
+        }
+
+        return $data;
+
     }
 
     public function getDishById($id)

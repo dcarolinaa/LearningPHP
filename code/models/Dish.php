@@ -8,13 +8,18 @@ class Dish extends Model implements IModel
     private $id_company;
     private $name;
     private $description;
+    private $create_date;
+    private $update_date;
 
     public static function getAttributes()
     {
         return [
+            'id',
             'id_company',
             'name',
-            'description'
+            'description',
+            'create_date',
+            'update_date'
         ];
     }
 
@@ -61,6 +66,26 @@ class Dish extends Model implements IModel
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getCreate_date()
+    {
+        return $this->create_date;
+    }
+
+    public function setCreate_date($create_date)
+    {
+        $this->create_date = $create_date;
+    }
+
+    public function getUpdate_date()
+    {
+        return $this->update_date;
+    }
+
+    public function setUpdate_date($update_date)
+    {
+        $this->update_date = $update_date;
     }
 
 }

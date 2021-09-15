@@ -3,10 +3,11 @@
         'company' => $company,
         'title' => sprintf('Editar %s', $dish->getName())
     ], true);
-?>
+    ?>
 <div class="card">
     <div class="card-body">
-        <?php echo $this->view('dishes/_form', [
+        <?php
+        echo $this->view('dishes/_form', [
             'action' => sprintf(
                 '/mis-negocios/%s/platillos/%s/update',
                 $company->getSlug(),
@@ -16,6 +17,7 @@
             'dish' => $dish,
             'callAction' => 'Actualizar',
             'errors' => $errors
-        ], true);?> 
+        ], true);
+        ?>
     </div>
 </div>

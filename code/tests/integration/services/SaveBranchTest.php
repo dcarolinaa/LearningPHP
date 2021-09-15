@@ -14,12 +14,12 @@ class SaveBranchTest extends TestCase
         $faker = $this->getContainer()->get(Faker::class);
         $branchesRepostory = $this->getContainer()->get(BranchesRepository::class);
         $branch = $branchesRepostory->getLastInserted();
-        
+
         $nuevoNombre = $faker->company();
         $slugAnterior = $branch->getSlug();
 
-        $this->assertNotSame($nuevoNombre,$branch->getName());
-        $this->assertSame($slugAnterior,$branch->getSlug());        
+        $this->assertNotSame($nuevoNombre, $branch->getName());
+        $this->assertSame($slugAnterior, $branch->getSlug());
 
         $saveBranch = $this->getContainer()->get(SaveBranch::class);
 
@@ -36,8 +36,8 @@ class SaveBranchTest extends TestCase
         ]);
 
         $this->assertNotEquals($branch, $branchModified);
-        $this->assertSame($nuevoNombre,$branchModified->getName());
-        $this->assertNotSame($slugAnterior,$branchModified->getSlug());
+        $this->assertSame($nuevoNombre, $branchModified->getName());
+        $this->assertNotSame($slugAnterior, $branchModified->getSlug());
 
         $saveBranch([
             'id' => $branch->getId(),

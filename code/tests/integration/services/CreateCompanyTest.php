@@ -17,7 +17,6 @@ class CreateCompanyTest extends TestCase
         $faker = $this->getContainer()->get(Faker::class);
         $userRepository = $this->getContainer()->get(UsersRepository::class);
         $admin = $userRepository->getByEmail(self::ADMIN_COMPANY_1);
-        $now = date('Y-m-d H:i:s');
 
         $company = $saveCompany([
             'user_admin' => $admin->getId(),

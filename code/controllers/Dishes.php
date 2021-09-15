@@ -6,29 +6,31 @@ use App\Container;
 use App\models\Dish;
 use App\repositories\CompaniesRepository;
 use App\repositories\DishesRepository;
-use App\services\CreateDish;
 use App\services\DeleteEntity;
 use App\services\ErrorHelper;
+use App\services\RecoveryAndSendImage;
+use App\services\SaveDish;
+use Exception;
 use \Faker\Generator as Faker;
 
-class Dishes  extends Controller
+class Dishes extends Controller
 {
     private $companyRepository;
     private $dishesRepository;
 
     public function __construct(
-        string $method, 
-        Container $container, 
+        string $method,
+        Container $container,
         CompaniesRepository $companyRepository,
         DishesRepository $dishesRepository
-        )
-    {
+    ) {
         parent::__construct($method, $container);
         $this->companyRepository = $companyRepository;
         $this->dishesRepository = $dishesRepository;
     }
 
-    public function index(Faker $faker) {        
+    public function index(Faker $faker)
+    {
         $slug = $_GET['slug'];
         $company = $this->companyRepository->getBySlug($slug);
         $dishes = $this->dishesRepository->getAllByCompanyId($company->getId());
@@ -47,10 +49,10 @@ class Dishes  extends Controller
     }
 
     public function store(
-        CreateDish $createDish,
+        SaveDish $saveDish,
         CompaniesRepository $companiesRepository,
-        ErrorHelper $errorHelper) 
-    {        
+        ErrorHelper $errorHelper
+    ) {
         $requiredAttributes = ['name', 'description'];
 
         foreach ($requiredAttributes as $attribute) {
@@ -64,44 +66,55 @@ class Dishes  extends Controller
             return;
         }
 
-        $createDish($_POST);
+        $saveDish([
+            'id_company' => $_POST['id_company'],
+            'name' => $_POST['name'],
+            'description' => $_POST['description'],
+            'image' => $_FILES['image']['tmp_name']
+        ]);
 
         $company = $companiesRepository->getById($_POST['id_company']);
 
         $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $company->getSlug()));
     }
 
-    public function edit() 
+    public function edit(ErrorHelper $errorHelper)
     {
-        $faker = $this->getContainer()->get(Faker::class);
-        $dish = new Dish();
-        $dish->setId(rand(100,1000));
-        $dish->setName($faker->words(3,true));
-        $dish->setDescription($faker->words(rand(5,20),true));
-        $errors = [];
-        $company = $this->companyRepository->getBySlug($_GET['slug']);
-        $this->view('dishes/edit',  compact('company', 'dish', 'errors'));
+        $dish = $this->dishesRepository->getDishById($_GET['id_dish']);
+        $company = $this->companyRepository->getById($dish->getId_company());
+        $errors = $errorHelper->getAll();
+        $this->view('dishes/edit', compact('dish', 'company', 'errors'));
     }
 
-    public function update()
+    public function update(SaveDish $saveDish)
     {
-        $company = $this->companyRepository->getBySlug($_GET['slug']);
+        $saveDish([
+            'id' => $_POST['id'],
+            'id_company' => $_POST['id_company'],
+            'name' => $_POST['name'],
+            'description' => $_POST['description'],
+            'image' => $_FILES['image']['tmp_name']
+        ]);
+
+        $company = $this->companyRepository->getById($_POST['id_company']);
+
         $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $company->getSlug()));
     }
 
-    public function delete (DishesRepository $dishesRepository, DeleteEntity $deleteEntity) 
-    {        
+    public function delete(
+        DishesRepository $dishesRepository,
+        DeleteEntity $deleteEntity
+    ) {
         $dish = $dishesRepository->getDishById($_GET['id_dish']);
         $deleteEntity($dish);
-    
-        $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $_GET['slug']));        
+
+        $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $_GET['slug']));
     }
 
     public function confirmDelete(
-        DishesRepository $dishesRepository        
-    ) 
-    {                      
-        $dish = $dishesRepository->getDishById($_GET['id_dish']);       
+        DishesRepository $dishesRepository
+    ) {
+        $dish = $dishesRepository->getDishById($_GET['id_dish']);
         $slug = $_GET['slug'];
 
         $this->view('components/confirm', [
@@ -111,7 +124,37 @@ class Dishes  extends Controller
             'okCss' => 'danger',
             'urlOk' => sprintf('/mis-negocios/%s/platillos/%s/delete', $slug, $dish->getId()),
             'urlCancel' => sprintf('/mis-negocios/%s/platillos', $slug)
-        ]);        
-        
+        ]);
     }
+
+    public function dishImage(
+        DishesRepository $dishesRepository,
+        string $pathCompanyLogo,
+        string $uploadDir,
+        string $urlDefaultDishImage,
+        RecoveryAndSendImage $recoveryAndSendImage
+    ) {
+        $dish = $dishesRepository->getById($_GET['id_dish']);
+        $file = sprintf(
+            '%s/%s/dish%s_image.jpg',
+            $uploadDir,
+            sprintf($pathCompanyLogo, $dish->getId_company()),
+            $dish->getId()
+        );
+
+        try {
+            $recoveryAndSendImage($file, $_GET['width']);
+        } catch (Exception $ex) {
+            $ruta = sprintf($urlDefaultDishImage, $_GET['width'] );
+            $this->redirectTo($ruta, true);
+        }
+    }
+
+    public function defaultImage(
+        string $defaultDishImage,
+        RecoveryAndSendImage $recoveryAndSendImage
+    ) {
+        $recoveryAndSendImage($defaultDishImage, $_GET['width']);
+    }
+
 }

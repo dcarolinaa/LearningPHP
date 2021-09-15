@@ -18,7 +18,6 @@ use App\services\SaveEntity;
 use App\services\SendEmailSignUp;
 use App\services\AddProfileToUser;
 use App\services\CreateBranch;
-use App\services\CreateDish;
 use App\services\CreateWorker;
 use App\services\CreateWorkerRequest;
 use App\services\SaveCompany;
@@ -32,6 +31,7 @@ use App\services\InitSession;
 use App\services\MoveFile;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
+use App\services\SaveDish;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 use \Faker\Generator as Faker;
@@ -92,7 +92,7 @@ $container->add(CreateUser::class)
     ->add(SaveBranch::class)
     ->add(GetDBConnection::class)
     ->add(RemoveProfile::class)
-    ->add(CreateDish::class)
     ->add(UserHasProfile::class)
     ->add(DishesRepository::class)
-    ->add(RecoveryAndSendImage::class);
+    ->add(RecoveryAndSendImage::class)
+    ->add(SaveDish::class);
