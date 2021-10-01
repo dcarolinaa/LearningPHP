@@ -80,9 +80,10 @@ class SaveDish
     private function saveImage($image, $idCompany, $idDish)
     {
         $path = sprintf(
-            '%s/%s',
+            '%s/%s/dishes/%s',
             $this->uploadDir,
-            sprintf($this->pathCompanyLogo, $idCompany)
+            sprintf($this->pathCompanyLogo, $idCompany),
+            $idDish
         );
         $this->moveFile->__invoke($image, $path, sprintf('dish%s_image.jpg', $idDish));
 

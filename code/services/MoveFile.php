@@ -16,7 +16,7 @@ class MoveFile
     {
         $path = sprintf('%s/%s', $this->homeDir, $dir);
         if (!file_exists($path)) {
-            mkdir($path, 0664, true);
+            mkdir($path, 0777, true);
         }
 
         if (!file_exists($file)) {
@@ -27,7 +27,7 @@ class MoveFile
             throw new Exception(sprintf('The directory %s don\'t is writeble', $path));
         }
 
-        chmod($file, 0664);
+        chmod($file, 0777);
         return rename($file, sprintf('%s/%s', $path, $saveAs));
     }
 }

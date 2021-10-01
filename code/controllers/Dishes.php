@@ -6,7 +6,7 @@ use App\Container;
 use App\models\Dish;
 use App\repositories\CompaniesRepository;
 use App\repositories\DishesRepository;
-use App\services\DeleteEntity;
+use App\services\DeleteDish;
 use App\services\ErrorHelper;
 use App\services\RecoveryAndSendImage;
 use App\services\SaveDish;
@@ -102,11 +102,9 @@ class Dishes extends Controller
     }
 
     public function delete(
-        DishesRepository $dishesRepository,
-        DeleteEntity $deleteEntity
+        DeleteDish $deleteDish
     ) {
-        $dish = $dishesRepository->getDishById($_GET['id_dish']);
-        $deleteEntity($dish);
+        $deleteDish($_GET['id_dish']);
 
         $this->redirectTo(sprintf('/mis-negocios/%s/platillos', $_GET['slug']));
     }
@@ -136,7 +134,7 @@ class Dishes extends Controller
     ) {
         $dish = $dishesRepository->getById($_GET['id_dish']);
         $file = sprintf(
-            '%s/%s/dish%s_image.jpg',
+            '%1$s/%2$s/dishes/%3$s/dish%3$s_image.jpg',
             $uploadDir,
             sprintf($pathCompanyLogo, $dish->getId_company()),
             $dish->getId()

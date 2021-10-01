@@ -5,8 +5,8 @@ use App\models\Company;
 use App\models\User;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
+use App\services\DeleteCompany;
 use App\services\SaveCompany;
-use App\services\DeleteEntity;
 use App\services\RecoveryAndSendImage;
 use Exception;
 
@@ -52,10 +52,9 @@ class Companies extends Controller
         ]);
     }
 
-    public function delete(CompaniesRepository $companiesRepository, DeleteEntity $deleteEntity)
+    public function delete(DeleteCompany $deleteCompany)
     {
-        $company = $companiesRepository->getById($_GET['id']);
-        $deleteEntity($company);
+        $deleteCompany($_GET['id']);
         $this->redirectTo('/mis-negocios');
     }
 

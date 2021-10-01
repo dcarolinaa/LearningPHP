@@ -20,8 +20,12 @@ use App\services\AddProfileToUser;
 use App\services\CreateBranch;
 use App\services\CreateWorker;
 use App\services\CreateWorkerRequest;
+use App\services\DeleteCompany;
+use App\services\DeleteDirectory;
+use App\services\DeleteDish;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
+use App\services\DeleteFile;
 use App\services\FlashVars;
 use App\services\GenerateSlug;
 use App\services\GetDBConnection;
@@ -95,4 +99,8 @@ $container->add(CreateUser::class)
     ->add(UserHasProfile::class)
     ->add(DishesRepository::class)
     ->add(RecoveryAndSendImage::class)
-    ->add(SaveDish::class);
+    ->add(SaveDish::class)
+    ->add(DeleteDirectory::class)
+    ->add(DeleteDish::class)
+    ->add(DeleteFile::class)
+    ->add(DeleteCompany::class);
