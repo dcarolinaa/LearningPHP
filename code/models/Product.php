@@ -2,12 +2,13 @@
 
 namespace App\models;
 
-class Dish extends Model implements IModel
+class Product extends Model implements IModel
 {
     protected $id;
     private $id_company;
     private $name;
     private $description;
+    private $id_category;
     private $create_date;
     private $update_date;
 
@@ -18,6 +19,7 @@ class Dish extends Model implements IModel
             'id_company',
             'name',
             'description',
+            'id_category',
             'create_date',
             'update_date'
         ];
@@ -25,7 +27,7 @@ class Dish extends Model implements IModel
 
     public static function getTable()
     {
-        return 'dishes';
+        return 'products';
     }
 
     public function getId()
@@ -66,6 +68,16 @@ class Dish extends Model implements IModel
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    public function getId_category()
+    {
+        return $this->id_category;
+    }
+
+    public function setId_category($id_category)
+    {
+        $this->id_category = $id_category;
     }
 
     public function getCreate_date()

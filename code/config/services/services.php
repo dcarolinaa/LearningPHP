@@ -4,7 +4,7 @@ use App\config\Config;
 use App\Container;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
-use App\repositories\DishesRepository;
+use App\repositories\ProductsRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
 use App\repositories\WorkersRepository;
@@ -22,7 +22,7 @@ use App\services\CreateWorker;
 use App\services\CreateWorkerRequest;
 use App\services\DeleteCompany;
 use App\services\DeleteDirectory;
-use App\services\DeleteDish;
+use App\services\DeleteProduct;
 use App\services\SaveCompany;
 use App\services\DeleteEntity;
 use App\services\DeleteFile;
@@ -35,7 +35,7 @@ use App\services\InitSession;
 use App\services\MoveFile;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
-use App\services\SaveDish;
+use App\services\SaveProduct;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 use \Faker\Generator as Faker;
@@ -97,10 +97,10 @@ $container->add(CreateUser::class)
     ->add(GetDBConnection::class)
     ->add(RemoveProfile::class)
     ->add(UserHasProfile::class)
-    ->add(DishesRepository::class)
+    ->add(ProductsRepository::class)
     ->add(RecoveryAndSendImage::class)
-    ->add(SaveDish::class)
+    ->add(SaveProduct::class)
     ->add(DeleteDirectory::class)
-    ->add(DeleteDish::class)
+    ->add(DeleteProduct::class)
     ->add(DeleteFile::class)
     ->add(DeleteCompany::class);

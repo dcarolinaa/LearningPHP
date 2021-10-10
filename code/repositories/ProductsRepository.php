@@ -2,19 +2,19 @@
 
 namespace App\repositories;
 
-use App\models\Dish;
+use App\models\Product;
 use PDO;
 
-class DishesRepository extends Repository
+class ProductsRepository extends Repository
 {
     protected function getClassName(): string
     {
-        return Dish::class;
+        return Product::class;
     }
 
     public function getAllByCompanyId($companyId)
     {
-        $sql = 'SELECT * FROM dishes WHERE id_company = :id_company';
+        $sql = 'SELECT * FROM products WHERE id_company = :id_company';
         $connection = $this->getDBConnection->__invoke();
 
         $statement = $connection->prepare($sql);
@@ -31,9 +31,9 @@ class DishesRepository extends Repository
 
     }
 
-    public function getDishById($id)
+    public function getProductById($id)
     {
-        $sql = 'SELECT * FROM dishes WHERE id = :id';
+        $sql = 'SELECT * FROM products WHERE id = :id';
         $connection = $this->getDBConnection->__invoke();
 
         $statement = $connection->prepare($sql);
@@ -43,7 +43,7 @@ class DishesRepository extends Repository
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $result !== false ? Dish::build($result) : null;
+        return $result !== false ? Product::build($result) : null;
     }
 
 }

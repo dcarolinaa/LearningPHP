@@ -2,11 +2,11 @@
 
 namespace App\services;
 
-use App\repositories\DishesRepository;
+use App\repositories\ProductsRepository;
 
-class DeleteDish
+class DeleteProduct
 {
-    private $dishesRepository;
+    private $productsRepository;
     private $deleteDirectory;
     private $pathCompanyLogo;
     private $deleteEntity;
@@ -14,7 +14,7 @@ class DeleteDish
     private $homeDir;
 
     public function __construct(
-        DishesRepository $dishesRepository,
+        ProductsRepository $productsRepository,
         DeleteDirectory $deleteDirectory,
         DeleteEntity $deleteEntity,
         string $pathCompanyLogo,
@@ -23,7 +23,7 @@ class DeleteDish
     ) {
         $this->deleteEntity = $deleteEntity;
         $this->deleteDirectory = $deleteDirectory;
-        $this->dishesRepository = $dishesRepository;
+        $this->productsRepository = $productsRepository;
         $this->uploadDir = $uploadDir;
         $this->pathCompanyLogo = $pathCompanyLogo;
         $this->homeDir = $homeDir;
@@ -31,28 +31,28 @@ class DeleteDish
 
     public function __invoke($id)
     {
-        $dish = $this->dishesRepository->getDishById($id);
+        $product = $this->productsRepository->getProductById($id);
 
-        $dishesImagesPath = sprintf(
-            '%s/%s/%s/dishes/%s/',
+        $productsImagesPath = sprintf(
+            '%s/%s/%s/products/%s/',
             $this->homeDir,
             $this->uploadDir,
-            sprintf($this->pathCompanyLogo, $dish->getId_company()),
-            $dish->getId()
+            sprintf($this->pathCompanyLogo, $product->getId_company()),
+            $product->getId()
         );
 
         $cachePath = sprintf(
-            '%s/cache/%s/%s/dishes/%s',
+            '%s/cache/%s/%s/products/%s',
             $this->homeDir,
             $this->uploadDir,
-            sprintf($this->pathCompanyLogo, $dish->getId_company()),
-            $dish->getId()
+            sprintf($this->pathCompanyLogo, $product->getId_company()),
+            $product->getId()
         );
 
-        $this->deleteDirectory->__invoke($dishesImagesPath);
+        $this->deleteDirectory->__invoke($productsImagesPath);
         $this->deleteDirectory->__invoke($cachePath);
 
-        $this->deleteEntity->__invoke($dish);
+        $this->deleteEntity->__invoke($product);
     }
 
 }

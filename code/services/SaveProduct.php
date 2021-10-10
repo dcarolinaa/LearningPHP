@@ -2,13 +2,13 @@
 
 namespace App\services;
 
-use App\models\Dish;
-use App\repositories\DishesRepository;
+use App\models\Product;
+use App\repositories\ProductsRepository;
 
-class SaveDish
+class SaveProduct
 {
     private $saveEntity;
-    private $dishesRepository;
+    private $productsRepository;
     private $uploadDir;
     private $pathCompanyLogo;
     private $moveFile;
@@ -16,14 +16,14 @@ class SaveDish
 
     public function __construct(
         SaveEntity $saveEntity,
-        DishesRepository $dishesRepository,
+        ProductsRepository $productsRepository,
         MoveFile $moveFile,
         string $uploadDir,
         string $pathCompanyLogo,
         string $homeDir
     ) {
         $this->saveEntity = $saveEntity;
-        $this->dishesRepository = $dishesRepository;
+        $this->productsRepository = $productsRepository;
         $this->moveFile = $moveFile;
         $this->uploadDir = $uploadDir;
         $this->pathCompanyLogo = $pathCompanyLogo;
@@ -34,23 +34,24 @@ class SaveDish
     {
         $image = isset($data['image']) ? $data['image'] : false;
         $this->clearData($data);
-        $dish = $this->getDish($data);
+        $product = $this->getProduct($data);
 
-        $dish->fill([
+        $product->fill([
             'id_company' => $data['id_company'],
             'name' => $data['name'],
             'description' => $data['description'],
+            'id_category' => $data['id_category'],
             'create_date' => $data['create_date'],
             'update_date' => $data['update_date']
         ]);
 
-        $this->saveEntity->__invoke($dish);
+        $this->saveEntity->__invoke($product);
 
         if ($image) {
-            $this->saveImage($image, $dish->getId_company(), $dish->getId());
+            $this->saveImage($image, $product->getId_company(), $product->getId());
         }
 
-        return $dish;
+        return $product;
     }
 
     private function clearData(&$data)
@@ -60,43 +61,43 @@ class SaveDish
         unset($data['update_date']);
     }
 
-    private function getDish(&$data)
+    private function getProduct(&$data)
     {
         $now = date('Y-m-d H:i:s');
         $data['update_date'] = $now;
 
         if (isset($data['id'])) {
-            $dish = $this->dishesRepository->getById($data['id']);
-            $data['create_date']  = $dish->getCreate_date();
+            $product = $this->productsRepository->getById($data['id']);
+            $data['create_date']  = $product->getCreate_date();
             unset($data['id']);
         } else {
-            $dish = new Dish();
+            $product = new Product();
             $data['create_date'] = $now;
         }
 
-        return $dish;
+        return $product;
     }
 
-    private function saveImage($image, $idCompany, $idDish)
+    private function saveImage($image, $idCompany, $idProduct)
     {
         $path = sprintf(
-            '%s/%s/dishes/%s',
+            '%s/%s/products/%s',
             $this->uploadDir,
             sprintf($this->pathCompanyLogo, $idCompany),
-            $idDish
+            $idProduct
         );
-        $this->moveFile->__invoke($image, $path, sprintf('dish%s_image.jpg', $idDish));
+        $this->moveFile->__invoke($image, $path, sprintf('product%s_image.jpg', $idProduct));
 
-        $this->cleanCache($path, $idDish);
+        $this->cleanCache($path, $idProduct);
     }
 
-    private function cleanCache($path, $idDish)
+    private function cleanCache($path, $idProduct)
     {
         $cache = sprintf(
-            '%s/cache/%s/dish%s_image',
+            '%s/cache/%s/product%s_image',
             $this->homeDir,
             $path,
-            $idDish
+            $idProduct
         );
 
         if (!file_exists($cache)) {
