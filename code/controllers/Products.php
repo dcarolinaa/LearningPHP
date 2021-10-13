@@ -11,7 +11,6 @@ use App\services\ErrorHelper;
 use App\services\RecoveryAndSendImage;
 use App\services\SaveProduct;
 use Exception;
-use \Faker\Generator as Faker;
 
 class Products extends Controller
 {
@@ -29,13 +28,13 @@ class Products extends Controller
         $this->productRepository = $productRepository;
     }
 
-    public function index(Faker $faker)
+    public function index()
     {
         $slug = $_GET['slug'];
         $company = $this->companyRepository->getBySlug($slug);
         $products = $this->productRepository->getAllByCompanyId($company->getId());
 
-        $this->view('products/index', compact('company', 'products', 'faker'));
+        $this->view('products/index', compact('company', 'products'));
     }
 
     public function create(ErrorHelper $errorHelper)
