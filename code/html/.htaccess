@@ -20,16 +20,20 @@ RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/delete$ index.php?control
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/edit index.php?controller=Branches&method=edit&id_company=$1&id_branch=$2 [L]
 RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/update index.php?controller=Branches&method=update&id_company=$1&id_branch=$2 [L]
 
+### ProductCategory
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos$ index.php?controller=ProductCategory&method=index&slug=$1 [L]
+
 ### Products
 RewriteRule ^mis-negocios/([a-z\-]+)/productos$ index.php?controller=Products&method=index&slug=$1 [L]
 RewriteRule ^mis-negocios/([a-z\-]+)/productos/nuevo$ index.php?controller=Products&method=create&slug=$1 [L]
 RewriteRule ^mis-negocios/([a-z\-]+)/productos/store$ index.php?controller=Products&method=store&slug=$1 [L]
-RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/confirm-delete$ index.php?controller=Products&method=confirmDelete&slug=$1&id_product=$2 [L]
-RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/delete$ index.php?controller=Products&method=delete&slug=$1&id_product=$2 [L]
-RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/edit$ index.php?controller=Products&method=edit&slug=$1&id_product=$2 [L]
-RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/update$ index.php?controller=Products&method=update&slug=$1&id_product=$2 [L]
-RewriteRule ^imagenes/([a-z\-]+)/productos/producto-([0-9]+)_w([0-9]+)v([0-9]+).jpg$ index.php?controller=Products&method=productImage&slug=$1&id_product=$2&width=$3 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/confirm-delete$ index.php?controller=Products&method=confirmDelete&slug=$1&id_dish=$2 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/delete$ index.php?controller=Products&method=delete&slug=$1&id_dish=$2 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/edit$ index.php?controller=Products&method=edit&slug=$1&id_dish=$2 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/productos/([0-9]+)/update$ index.php?controller=Products&method=update&slug=$1&id_dish=$2 [L]
+RewriteRule ^imagenes/([a-z\-]+)/productos/platillo-([0-9]+)_w([0-9]+)v([0-9]+).jpg$ index.php?controller=Products&method=dishImage&slug=$1&id_dish=$2&width=$3 [L]
 RewriteRule ^imagenes/productos/default-producto_w([0-9]+)v([0-9]+).jpg$ index.php?controller=Products&method=defaultImage&width=$1 [L]
+
 
 ### Teams
 RewriteRule ^mis-negocios/([0-9]+)/equipo$ index.php?controller=Workers&method=index&id_company=$1 [L]

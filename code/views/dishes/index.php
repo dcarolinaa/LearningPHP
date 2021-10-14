@@ -3,13 +3,13 @@
 </a>
 <div class="row mb-2 mb-xl-3">
     <div class="col-auto d-none d-sm-block">
-        <h3>Platillos</h3>
+        <h3>Products</h3>
     </div>
     <div class="card">
         <div class="card-header">
 
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/nuevo" id="btn-new">Nuevo Platillo</a></li>
+            <li class="breadcrumb-item"><a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/nuevo" id="btn-new">Nuevo Producto</a></li>
         </ol>
         </div>
         <div class="card-body">
@@ -17,7 +17,7 @@
                 <tbody>
                     <?php
                     foreach ($dishes as $dish) :
-                            $imageUrl = sprintf('/imagenes/%s/platillos/platillo-%s_w300v%s.jpg',
+                            $imageUrl = sprintf('/imagenes/%s/productos/platillo-%s_w300v%s.jpg',
                                 $company->getSlug(),
                                 $dish->getId(),
                                 (new \DateTime($dish->getUpdate_date()))->format('U')
@@ -26,12 +26,12 @@
                     <tr>
                         <td><img src="<?php echo $imageUrl; ?>" height="35"></td>
                         <td>
-                              <a href="/sucursales/<?php echo $company->getSlug(); ?>"><?php echo $dish->getName(); ?></a>
+                              <?php echo $dish->getName(); ?>
                               <div><?php echo $dish->getDescription(); ?></div>
                         </td>
                         <td>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish->getId(); ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos/<?php echo $dish->getId(); ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $dish->getId(); ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $dish->getId(); ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
                      
                         </td>
                     </tr>

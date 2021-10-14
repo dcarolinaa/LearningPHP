@@ -20,6 +20,15 @@
             <?php echo $this->view('errors', ['attribute' => 'description', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
+            <label class="form-label">Categiria:</label>
+            <select class="form-control" name="category">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+            </select>
+            <?php echo $this->view('errors', ['attribute' => 'category', 'errors' => $errors], true); ?>
+        </div>
+        <div class="col-md-6 offset-md-3">
             <label class="form-label">Foto:</label>
             <?php if ($dish->getId()) : ?>
                 <div><img src="<?php echo $imageUrl; ?>" width="300" class="mb-3"/></div>
@@ -28,7 +37,7 @@
         </div>
         <div class="mt-3 offset-md-3 col-md-6 d-flex justify-content-end">        
             <button type="submit" class="btn btn-lg btn-primary me-2"><?php echo $callAction; ?></button>
-            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/platillos" class="btn btn-lg btn-secondary" >Cancelar</a>
+            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos" class="btn btn-lg btn-secondary" >Cancelar</a>
         </div>
     </div>
 </form>

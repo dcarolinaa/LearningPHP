@@ -5,11 +5,14 @@
     ], true);
     ?>
 <div class="card">
+    <div class="card-header">
+        <a href="/mis-negocios/<?php echo $company->getSlug();?>/categorias-de-productos" id="btn-new"> Categorias </a>
+    </div>
     <div class="card-body">
         <?php
         echo $this->view('dishes/_form', [
             'action' => sprintf(
-                '/mis-negocios/%s/platillos/%s/update',
+                '/mis-negocios/%s/productos/%s/update',
                 $company->getSlug(),
                 $dish->getId()
             ),
