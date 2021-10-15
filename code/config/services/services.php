@@ -4,6 +4,7 @@ use App\config\Config;
 use App\Container;
 use App\repositories\BranchesRepository;
 use App\repositories\CompaniesRepository;
+use App\repositories\ProductCategoriesRepository;
 use App\repositories\ProductsRepository;
 use App\repositories\UsersRepository;
 use App\repositories\WorkerRequestsRepository;
@@ -36,6 +37,7 @@ use App\services\MoveFile;
 use App\services\RemoveProfile;
 use App\services\SaveBranch;
 use App\services\SaveProduct;
+use App\services\SaveProductCategory;
 use App\services\SendEmailWorkerRequest;
 use App\services\UserHasProfile;
 use \Faker\Generator as Faker;
@@ -103,4 +105,6 @@ $container->add(CreateUser::class)
     ->add(DeleteDirectory::class)
     ->add(DeleteProduct::class)
     ->add(DeleteFile::class)
-    ->add(DeleteCompany::class);
+    ->add(DeleteCompany::class)
+    ->add(SaveProductCategory::class)
+    ->add(ProductCategoriesRepository::class);
