@@ -13,9 +13,9 @@ abstract class Repository
 
     abstract protected function getClassName():string;
 
-    public function __construct()
+    public function __construct(GetDBConnection $getDBConnection)
     {
-        $this->getDBConnection = new GetDBConnection();
+        $this->getDBConnection = $getDBConnection;
     }
 
     private function getTable()

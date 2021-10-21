@@ -9,9 +9,9 @@ class DeleteEntity
 {
     private $getConnection;
 
-    public function __construct()
+    public function __construct(GetDBConnection $getConnection)
     {
-        $this->getConnection = new GetDBConnection;
+        $this->getConnection = $getConnection;
     }
 
     public function __invoke(IModel $entity)

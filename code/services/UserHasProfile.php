@@ -9,9 +9,13 @@ class UserHasProfile
 {
     protected $getDBConnection;
 
-    public function __invoke($profile, $userId)
+    public function __construct(GetDBConnection $getDBConnection)
     {
-        $this->getDBConnection = new GetDBConnection();
+        $this->getDBConnection = $getDBConnection;
+    }
+
+    public function __invoke($profile, $userId): bool
+    {
         $conection = $this->getDBConnection->__invoke();
 
         $sql = 'SELECT * FROM user_roles WHERE id_user = :id_user AND id_rol = :id_rol';

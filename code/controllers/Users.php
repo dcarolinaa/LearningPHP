@@ -135,9 +135,8 @@ class Users extends Controller
         $this->redirectTo($this->getURL('signIn', $this));
     }
 
-    public function login(InitSession $initSession)
+    public function login(InitSession $initSession, UsersRepository $userRepository)
     {
-        $userRepository = new UsersRepository();
         $username = $_POST['username'];
         $password = $_POST['password'];
 
