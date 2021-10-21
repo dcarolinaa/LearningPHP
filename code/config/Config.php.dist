@@ -5,10 +5,10 @@ define('HOME_DIR', realpath(sprintf('%s/../', __DIR__)));
 
 class Config
 {
-    const DB_HOST = 'host';
-    const DB_USER = 'user';
-    const DB_PASSWORD = '***';
-    const DB_PORT = 'port';
+    const DB_HOST = 'mysql';
+    const DB_USER = 'root';
+    const DB_PASSWORD = 'pass';
+    const DB_PORT = '3306';
     const DB_NAME = 'db';
     const GOOGLE_API_KEY = '';
     const BASE_URL = 'http://localhost:8081';
@@ -18,4 +18,6 @@ class Config
     const PATH_COMPANY_LOGO = 'companies/%s';
     const URL_DEFAULT_COMPANY_LOGO = '/imagenes/negocios/default-logo-w%sv1.jpg';
     const DEFAULT_COMPANY_LOGO = 'html/img/generic-company.jpeg';
+    const URL_DEFAULT_PRODUCT_IMAGE = '/imagenes/productos/default-producto_w%sv123.jpg';
+    const DEFAULT_PRODUCT_IMAGE = 'html/img/default-producto.jpg';
 }
