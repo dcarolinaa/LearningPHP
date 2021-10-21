@@ -140,7 +140,6 @@ class Products extends Controller
             sprintf($pathCompanyLogo, $product->getId_company()),
             $product->getId()
         );
-
         try {
             $recoveryAndSendImage($file, $_GET['width']);
         } catch (Exception $ex) {

@@ -16,22 +16,22 @@
             <table class="table table-striped">
                 <tbody>
                     <?php
-                    foreach ($dishes as $dish) :
-                            $imageUrl = sprintf('/imagenes/%s/productos/platillo-%s_w300v%s.jpg',
+                    foreach ($products as $product) :
+                            $imageUrl = sprintf('/imagenes/%s/productos/producto-%s_w300v%s.jpg',
                                 $company->getSlug(),
-                                $dish->getId(),
-                                (new \DateTime($dish->getUpdate_date()))->format('U')
+                                $product->getId(),
+                                (new \DateTime($product->getUpdate_date()))->format('U')
                         );
                         ?>
                     <tr>
                         <td><img src="<?php echo $imageUrl; ?>" height="35"></td>
                         <td>
-                              <?php echo $dish->getName(); ?>
-                              <div><?php echo $dish->getDescription(); ?></div>
+                              <?php echo $product->getName(); ?>
+                              <div><?php echo $product->getDescription(); ?></div>
                         </td>
                         <td>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $dish->getId(); ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
-                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $dish->getId(); ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $product->getId(); ?>/confirm-delete" class="text-danger"><i class="align-middle me-2" data-feather="trash-2"></i></a>
+                            <a href="/mis-negocios/<?php echo $company->getSlug(); ?>/productos/<?php echo $product->getId(); ?>/edit" class=""><i class="align-middle me-2" data-feather="edit"></i></a>
                      
                         </td>
                     </tr>

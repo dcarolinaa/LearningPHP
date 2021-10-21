@@ -8,10 +8,10 @@
     
     <div class="card-body">
     <?php
-    echo $this->view('dishes/_form', [
+    echo $this->view('products/_form', [
             'action' => sprintf('/mis-negocios/%s/productos/store', $company->getSlug()),
             'company' => $company,
-            'dish' => $dish,
+            'product' => $product,
             'callAction' => 'Crear',
             'errors' => $errors
         ], true);

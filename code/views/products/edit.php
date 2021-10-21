@@ -1,7 +1,7 @@
 <?php
     echo $this->view('components/title', [
         'company' => $company,
-        'title' => sprintf('Editar %s', $dish->getName())
+        'title' => sprintf('Editar %s', $product->getName())
     ], true);
     ?>
 <div class="card">
@@ -10,14 +10,14 @@
     </div>
     <div class="card-body">
         <?php
-        echo $this->view('dishes/_form', [
+        echo $this->view('products/_form', [
             'action' => sprintf(
                 '/mis-negocios/%s/productos/%s/update',
                 $company->getSlug(),
-                $dish->getId()
+                $product->getId()
             ),
             'company' => $company,
-            'dish' => $dish,
+            'product' => $product,
             'callAction' => 'Actualizar',
             'errors' => $errors
         ], true);

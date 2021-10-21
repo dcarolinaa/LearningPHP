@@ -1,22 +1,23 @@
 <?php
-    $imageUrl = $dish->getId() ? sprintf('/imagenes/%s/platillos/platillo-%s_w300v%s.jpg',
+//src="/imagenes/sushi-go/productos/producto-9_w300v1634191837.jpg"
+    $imageUrl = $product->getId() ? sprintf('/imagenes/%s/productos/producto-%s_w300v%s.jpg',
             $company->getSlug(),
-            $dish->getId(),
+            $product->getId(),
             (new \DateTime($company->getUpdate_date()))->format('U')
         ) : '';
     ?>
 <form action="<?php echo $action; ?>" method="POST" enctype="multipart/form-data">
-    <input type="hidden" name="id" value="<?php echo $dish->getId(); ?>" />
+    <input type="hidden" name="id" value="<?php echo $product->getId(); ?>" />
     <input type="hidden" name="id_company" value="<?php echo $company->getId(); ?>" />
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Nombre:</label>
-            <input class="form-control form-control-lg" value="<?php echo $dish->getName(); ?>" type="text" name="name" placeholder="Nombre">
+            <input class="form-control form-control-lg" value="<?php echo $product->getName(); ?>" type="text" name="name" placeholder="Nombre">
             <?php echo $this->view('errors', ['attribute' => 'name', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Descripción:</label>
-            <textarea class="form-control form-control-lg" name="description" placeholder="Descripción"><?php echo $dish->getDescription(); ?></textarea>
+            <textarea class="form-control form-control-lg" name="description" placeholder="Descripción"><?php echo $product->getDescription(); ?></textarea>
             <?php echo $this->view('errors', ['attribute' => 'description', 'errors' => $errors], true); ?>
         </div>
         <div class="col-md-6 offset-md-3">
@@ -30,7 +31,7 @@
         </div>
         <div class="col-md-6 offset-md-3">
             <label class="form-label">Foto:</label>
-            <?php if ($dish->getId()) : ?>
+            <?php if ($product->getId()) : ?>
                 <div><img src="<?php echo $imageUrl; ?>" width="300" class="mb-3"/></div>
             <?php endif ?>
             <input class="form-control form-control-lg" type="file" name="image">
