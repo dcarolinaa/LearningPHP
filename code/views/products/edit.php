@@ -5,9 +5,9 @@
     ], true);
     ?>
 <div class="card">
-    <div class="card-header">
-        <a href="/mis-negocios/<?php echo $company->getSlug();?>/categorias-de-productos" id="btn-new"> Categorias </a>
-    </div>
+    <?php
+    echo $this->view('products/_sub-menu', ['company' => $company], true)
+    ?>
     <div class="card-body">
         <?php
         echo $this->view('products/_form', [

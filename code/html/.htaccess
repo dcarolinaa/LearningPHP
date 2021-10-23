@@ -22,6 +22,12 @@ RewriteRule ^mis-negocios/([0-9]+)/sucursales/([0-9]+)/update index.php?controll
 
 ### ProductCategory
 RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos$ index.php?controller=ProductCategory&method=index&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/nueva$ index.php?controller=ProductCategory&method=create&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/store$ index.php?controller=ProductCategory&method=store&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/([0-9]+)/edit$ index.php?controller=ProductCategory&method=edit&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/update$ index.php?controller=ProductCategory&method=update&slug=$1 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/([0-9]+)/confirm-delete$ index.php?controller=ProductCategory&method=confirmDelete&slug=$1&id_product=$2 [L]
+RewriteRule ^mis-negocios/([a-z\-]+)/categorias-de-productos/([0-9]+)/delete$ index.php?controller=ProductCategory&method=delete&slug=$1&id_product=$2 [L]
 
 ### Products
 RewriteRule ^mis-negocios/([a-z\-]+)/productos$ index.php?controller=Products&method=index&slug=$1 [L]

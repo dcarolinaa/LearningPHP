@@ -1,19 +1,16 @@
 <?php
     echo $this->view('components/title', [
         'company' => $company,
-        'title' => 'Nuevo Producto'
+        'title' => 'Nueva Categoria De Producto'
     ], true);
     ?>
 <div class="card">
-    <?php
-    echo $this->view('products/_sub-menu', ['company' => $company], true)
-    ?>
     <div class="card-body">
     <?php
-    echo $this->view('products/_form', [
-            'action' => sprintf('/mis-negocios/%s/productos/store', $company->getSlug()),
+    echo $this->view('product-category/_form', [
+            'action' => sprintf('/mis-negocios/%s/categorias-de-productos/store', $company->getSlug()),
             'company' => $company,
-            'product' => $product,
+            'category' => $category,
             'callAction' => 'Crear',
             'errors' => $errors
         ], true);
