@@ -1,0 +1,17 @@
+.avatar{
+    width: 200px;
+    height: auto;
+}
+
+.avatarSmall{
+    width: auto;
+    height: 35px;
+}
+
+.hidden{
+    display: none;
+}
+
+.pointer{
+    cursor: pointer;
+}
