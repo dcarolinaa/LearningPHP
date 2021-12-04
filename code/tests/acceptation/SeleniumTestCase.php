@@ -3,6 +3,7 @@
 namespace Tests\acceptation;
 
 use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\LocalFileDetector;
 use Facebook\WebDriver\Remote\RemoteWebDriver;
 use Facebook\WebDriver\Remote\RemoteWebElement;
 use Facebook\WebDriver\WebDriverBy;
@@ -50,6 +51,12 @@ class SeleniumTestCase extends TestCase
             $this->webDriver->quit();
             $this->webDriver = null;
         }
+    }
+
+    public function sendFile($inputFile, $filePath){
+        $fileDetector = new LocalFileDetector();
+        $inputFile->setFileDetector($fileDetector);
+        $inputFile->sendKeys(sprintf('%s%s','/var/www/tests/fixtures/', $filePath));
     }
 
 }

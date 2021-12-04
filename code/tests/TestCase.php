@@ -34,4 +34,8 @@ class TestCase extends PHPUnitTestCase
     {
         return $this->getContainer()->get('baseUrl');
     }
+
+    protected function getUrl($path = ''){
+        return sprintf('%s%s',$this->getBaseUrl(), $path);
+    }
 }
