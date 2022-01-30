@@ -15,8 +15,10 @@ class FruitsTest extends SeleniumTestCase
         $this->fillForm('Mandarina','mangarina');
         $this->fillForm('Fresa','fresa');
         $this->fillForm('Mango','mango');
-        
-        sleep(20);
+
+        $this->getElementByCss('.delete-image')->click();
+        sleep(40);
+
     }
     
     private function fillForm($text, $image){

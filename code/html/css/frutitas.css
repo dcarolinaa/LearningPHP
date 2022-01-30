@@ -15,3 +15,33 @@
 .pointer{
     cursor: pointer;
 }
+
+.confirm {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background: rgba(0,0,0,0.4);
+    bottom: 0;
+}
+
+.confirm-box {
+    width: 50%;
+    background: white;
+    margin: 0 auto;
+    margin-top: 5%;
+    padding: 15px;
+}
+
+.box-top input {
+    border: none;
+    background: none;
+}
+
+.box-top {
+    text-align: right;
+}
+
+.box-buttons {
+    text-align: right;
+    margin-top: 10px;
+}
